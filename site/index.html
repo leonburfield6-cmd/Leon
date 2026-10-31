@@ -9,21 +9,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Archivo:wght@400;500;700&family=Amiri:wght@700&display=swap">
 <style>
-/* Mise en page : une pile de feuilles qui se recouvrent au défilement — clair, sombre, sombre — puis le flux normal.
+/* Couleurs tirées des tapis : bleu nuit du modèle à motifs, blanc lavande, or des franges.
+   Mise en page : une pile de feuilles qui se recouvrent au défilement — clair, sombre, sombre — puis le flux normal.
    Une seule couleur d'accent, l'or des franges du tapis. Thème fixe : chaque section choisit sa surface. */
 :root {
-  --ground: #F1F2EF;
-  --ground-line: #E1E4DF;
-  --ink: #0B0C0B;
-  --ink-muted: rgb(11 12 11 / 0.45);
-  --panel: #0D0F0E;
-  --panel-raised: #1A1D1B;
+  --ground: #F3F1F6;
+  --ground-line: #E2DEEA;
+  --ink: #101728;
+  --ink-muted: rgb(16 23 40 / 0.45);
+  --panel: #121C33;
+  --panel-raised: #1D2A47;
   --on-panel: #FFFFFF;
-  --on-panel-muted: #A9B0AB;
+  --on-panel-muted: #A8B1C7;
   --on-panel-faint: rgb(255 255 255 / 0.4);
   --gold: #D6A84A;
   --gold-soft: rgb(214 168 74 / 0.25);
-  --dot: #3F4440;
+  --dot: #34405A;
   --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
   --font-body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-arabic: "Amiri", "Geeza Pro", "Times New Roman", serif;
@@ -73,7 +74,7 @@ ul { list-style: none; }
 .veil { position: fixed; inset: 0; z-index: 60; background: var(--ground); display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .veil .mat { width: 92px; height: 132px; position: relative; }
 .veil .mat .shell, .veil .mat .fill { position: absolute; inset: 0; -webkit-mask: var(--mat-mask) center / contain no-repeat; mask: var(--mat-mask) center / contain no-repeat; }
-.veil .mat .shell { background: rgb(11 12 11 / 0.12); }
+.veil .mat .shell { background: rgb(16 23 40 / 0.12); }
 .veil .mat .fill { background: var(--ink); transform-origin: top; transform: scaleY(0); }
 .veil .name { margin-top: 28px; font: 500 15px/0.9 var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; }
 .veil .meter { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--ground-line); }
@@ -109,8 +110,7 @@ ul { list-style: none; }
 .meta svg { width: 16px; height: 16px; flex: none; color: var(--gold); }
 .reel { position: relative; width: min(clamp(240px, 24vw, 340px), calc((100svh - 220px) * 9 / 16)); aspect-ratio: 9 / 16; color: var(--ink); padding: 10px; }
 .reel .clip { position: absolute; inset: 10px; overflow: hidden; background: var(--panel); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%); }
-.reel video { width: 100%; height: 100%; object-fit: cover; }
-.reel .sound { position: absolute; right: 22px; top: 22px; z-index: 2; font: 600 12px/1 var(--font-body); text-transform: uppercase; letter-spacing: 0.06em; color: #fff; background: rgb(11 12 11 / 0.55); border: 1px solid rgb(255 255 255 / 0.35); padding: 8px 10px; cursor: pointer; }
+.reel svg#reel { width: 100%; height: 100%; display: block; }
 .panels { display: grid; gap: 28px; justify-self: end; width: 236px; }
 .panel { padding: 18px 20px; }
 .panel .k { font: 600 12px/0.9 var(--font-body); text-transform: uppercase; letter-spacing: -0.01em; color: var(--gold); }
@@ -184,10 +184,10 @@ ul { list-style: none; }
 .row.side.l .pl { left: max(32px, var(--gutter)); }
 .pl .fill { position: absolute; inset: 0; overflow: hidden; background: rgb(255 255 255 / 0.08); clip-path: polygon(2% 0, 98% 0, 100% 3%, 100% 88%, 98% 91%, 63% 91%, 56% 100%, 2% 100%, 0 97%, 0 3%); transition: inset 700ms var(--ease-plate); }
 .pl:hover .fill { inset: 4%; }
-.pl img { position: absolute; left: 0; width: 100%; height: 112%; object-fit: cover; }
+.pl .fill svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .pl svg.out { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .yr { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 6; pointer-events: none; font: 800 clamp(30px, 3vw, 44px)/0.9 var(--font-display); text-transform: uppercase; color: var(--gold); white-space: nowrap; }
-.row:not(.side) .yr { text-shadow: 0 2px 18px rgb(0 0 0 / 0.55); }
+.row:not(.side) .yr { background: var(--panel); padding: 10px 16px 8px; }
 .copy { position: absolute; left: calc(50% + min(23vw, 320px) + 40px); right: max(32px, var(--gutter-r)); top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 6; max-width: 300px; font: 400 17px/1.12 var(--font-body); text-transform: uppercase; pointer-events: none; }
 .copy strong { font-weight: 700; display: block; margin-bottom: 4px; }
 @media (max-width: 1023px) {
@@ -214,7 +214,7 @@ ul { list-style: none; }
 .faq { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 56px; }
 .faq div { border-top: 1px solid var(--ink); padding-top: 18px; display: grid; gap: 12px; align-content: start; }
 .faq h3 { font-size: 28px; font-weight: 700; }
-.faq p { color: rgb(11 12 11 / 0.72); font-size: 16px; max-width: 42ch; }
+.faq p { color: rgb(16 23 40 / 0.72); font-size: 16px; max-width: 42ch; }
 .know .cta-row { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
 .know .cta { color: var(--gold); }
 .band { margin-top: 96px; background: var(--panel); color: var(--on-panel); padding-block: 40px 44px; position: relative; }
@@ -243,8 +243,8 @@ ul { list-style: none; }
 .endfoot { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: end; }
 .endfoot .legal { font: 400 14px/1.15 var(--font-body); text-transform: uppercase; color: var(--on-panel-faint); max-width: 24ch; }
 .endfoot .socials { color: var(--on-panel); }
-.end .figure { position: absolute; right: 18%; bottom: 0; width: min(30vw, 400px); aspect-ratio: 4 / 5; z-index: 1; opacity: 0.9; -webkit-mask: linear-gradient(to top, transparent 0, #000 22%); mask: linear-gradient(to top, transparent 0, #000 22%); }
-.end .figure img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+.end .figure { position: absolute; right: 30%; bottom: -40px; width: min(20vw, 280px); aspect-ratio: 264 / 464; z-index: 1; opacity: 0.95; -webkit-mask: linear-gradient(to top, transparent 0, #000 22%); mask: linear-gradient(to top, transparent 0, #000 22%); }
+.end .figure svg { width: 100%; height: 100%; display: block; }
 @media (max-width: 1023px) {
   .end .figure { display: none; }
   .endfoot { grid-template-columns: 1fr; justify-items: start; }
@@ -273,7 +273,7 @@ ul { list-style: none; }
   <div class="layer">
     <div class="inner">
       <section class="hero wrap" data-hero aria-labelledby="t-hero">
-        <canvas class="contours" data-contours="#E1E4DF" aria-hidden="true"></canvas>
+        <canvas class="contours" data-contours="#E2DEEA" aria-hidden="true"></canvas>
         <header class="mast" data-rise data-gate="hero" data-delay="0">
           <a class="logo" href="#top" aria-label="Noor Mat">NOOR·MAT <b lang="ar">نور</b></a>
           <nav class="nav" aria-label="Principale">
@@ -300,8 +300,7 @@ ul { list-style: none; }
 
           <div class="reel brk" data-rise data-gate="hero" data-delay="600">
             <i></i><i></i><i></i><i></i>
-            <div class="clip"><video id="reel" src="video.mp4" poster="poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Vidéo de présentation du tapis Noor Mat"></video></div>
-            <button class="sound" id="sound" type="button" aria-pressed="false">Son</button>
+            <div class="clip"><svg id="reel" viewBox="0 0 360 640" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Animation : le tapis Noor Mat dans ses quatre couleurs, la mousse s'enfonce sous les genoux"></svg></div>
           </div>
 
           <div class="panels" data-rise data-gate="hero" data-delay="900">
@@ -327,13 +326,13 @@ ul { list-style: none; }
         </div>
 
         <div class="foot" data-rise data-gate="hero" data-delay="1500">
-          <a class="play" href="#reel-anchor" id="play-link">
+          <a class="play" href="#modeles">
             <span class="ring" aria-hidden="true"><svg width="10" height="12" viewBox="0 0 10 12"><path d="M0 0l10 6-10 6Z" fill="currentColor"/></svg></span>
-            <span>Revoir la vidéo<small>00:32</small></span>
+            <span>Voir les modèles<small>4 couleurs</small></span>
           </a>
           <a class="cta" href="#commander">
             <svg class="frame" viewBox="0 0 220 52" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M220 44L212 52H0V0H220Z" fill="#0D0F0E"/>
+              <path d="M220 44L212 52H0V0H220Z" fill="#121C33"/>
               <path class="flood" d="M220 44L212 52H0V0H220Z" fill="#D6A84A"/>
               <path d="M205 51.5H212.5L219.5 44V37M212 0.5H219.5V7M8 0.5H0.5V7M7.5 51.5H0.5V44.5" fill="none" stroke="#D6A84A" vector-effect="non-scaling-stroke"/>
             </svg>
@@ -352,7 +351,7 @@ ul { list-style: none; }
     <div class="inner">
       <section class="why wrap" aria-labelledby="t-why">
         <canvas class="dots" id="dots" aria-hidden="true"></canvas>
-        <canvas class="flag" data-flag="#F1F2EF" aria-hidden="true"></canvas>
+        <canvas class="flag" data-flag="#F3F1F6" aria-hidden="true"></canvas>
         <div class="why-grid">
           <div>
             <h2 id="t-why"><span data-split="words" data-delay="0">Ce qui change</span><br><span style="white-space:nowrap"><span data-split="words" data-delay="130">sous vos genoux</span><span class="stop" data-fade data-delay="240">.</span></span></h2>
@@ -361,10 +360,10 @@ ul { list-style: none; }
           </div>
           <div class="explain">
             <svg class="section-svg" id="cut" viewBox="0 0 800 260" aria-label="Coupe du tapis Noor Mat : tissu doux, mousse épaisse sous les genoux, base antidérapante.">
-              <path d="M40 206H760" stroke="#3F4440" stroke-dasharray="6 6"/>
-              <path d="M40 202V190H250C285 190 292 140 322 138H478C508 140 515 190 550 190H760V202Z" fill="#1A1D1B"/>
+              <path d="M40 206H760" stroke="#34405A" stroke-dasharray="6 6"/>
+              <path d="M40 202V190H250C285 190 292 140 322 138H478C508 140 515 190 550 190H760V202Z" fill="#1D2A47"/>
               <path id="cut-trace" d="M40 190H250C285 190 292 140 322 138H478C508 140 515 190 550 190H760" fill="none" stroke="#D6A84A" stroke-width="3" stroke-linecap="round"/>
-              <path d="M40 202H760" stroke="#A9B0AB" stroke-width="2" stroke-dasharray="2 5"/>
+              <path d="M40 202H760" stroke="#A8B1C7" stroke-width="2" stroke-dasharray="2 5"/>
               <g id="knee" opacity="0">
                 <path d="M340 60C360 40 440 40 460 60C478 80 470 120 440 132H360C330 120 322 80 340 60Z" fill="none" stroke="#FFFFFF" stroke-dasharray="4 5"/>
                 <path d="M370 150V172M400 150V178M430 150V172M352 150L338 166M448 150L462 166" stroke="#D6A84A" stroke-width="1.5"/>
@@ -382,7 +381,7 @@ ul { list-style: none; }
         </div>
         <div class="plate" data-rise data-delay="260">
           <svg class="edge" viewBox="0 0 420 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0.5 0.5H419.5V108L408 119.5H0.5Z" fill="#0D0F0E" stroke="#D6A84A" vector-effect="non-scaling-stroke"/>
+            <path d="M0.5 0.5H419.5V108L408 119.5H0.5Z" fill="#121C33" stroke="#D6A84A" vector-effect="non-scaling-stroke"/>
             <path d="M112 0.5V119.5" stroke="#D6A84A" vector-effect="non-scaling-stroke"/>
           </svg>
           <div class="badge"><b lang="ar">سجدة</b><span>Sajda</span></div>
@@ -411,25 +410,25 @@ ul { list-style: none; }
       </div>
       <div class="rows" id="rows">
         <div class="row">
-          <div class="layerp" data-par="20"><div class="pl"><div class="fill"><img data-scrub src="m-gris.jpg" alt="Tapis Noor Mat gris, motifs en relief" loading="lazy"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#535450" vector-effect="non-scaling-stroke"/></svg></div></div>
+          <div class="layerp" data-par="20"><div class="pl"><div class="fill" data-mat="gris"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#4A5578" vector-effect="non-scaling-stroke"/></svg></div></div>
           <div class="layerp" data-par="20"><div class="yr" data-split="letters" data-stagger="26" data-settle>Gris</div></div>
           <div class="layerp" data-par="110"><p class="copy" data-rise data-delay="220"><strong>Le classique.</strong>Un gris profond avec des motifs en relief, sobre dans toutes les pièces.</p></div>
         </div>
         <div class="row side r">
-          <div class="layerp" data-par="60"><div class="pl"><div class="fill"><img data-scrub src="m-rose.jpg" alt="Tapis Noor Mat rose pendant la prosternation" loading="lazy"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#535450" vector-effect="non-scaling-stroke"/></svg></div></div>
+          <div class="layerp" data-par="60"><div class="pl"><div class="fill" data-mat="rose"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#4A5578" vector-effect="non-scaling-stroke"/></svg></div></div>
           <div class="layerp" data-par="60"><div class="yr" data-split="letters" data-stagger="26">Rose</div></div>
         </div>
         <div class="row">
-          <div class="layerp" data-par="20"><div class="pl"><div class="fill"><img data-scrub src="m-bleu.jpg" alt="Tapis Noor Mat bleu à motifs floraux" loading="lazy"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#535450" vector-effect="non-scaling-stroke"/></svg></div></div>
+          <div class="layerp" data-par="20"><div class="pl"><div class="fill" data-mat="bleu"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#4A5578" vector-effect="non-scaling-stroke"/></svg></div></div>
           <div class="layerp" data-par="20"><div class="yr" data-split="letters" data-stagger="26" data-settle>Bleu à motifs</div></div>
           <div class="layerp" data-par="110"><p class="copy" data-rise data-delay="220"><strong>Le plus travaillé.</strong>Un mihrab dessiné, des fleurs dorées et des franges, pour un tapis qui se remarque.</p></div>
         </div>
         <div class="row side l">
-          <div class="layerp" data-par="60"><div class="pl"><div class="fill"><img data-scrub src="m-mousse.jpg" alt="Gros plan sur la mousse épaisse du tapis lavande" loading="lazy"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#535450" vector-effect="non-scaling-stroke"/></svg></div></div>
+          <div class="layerp" data-par="60"><div class="pl"><div class="fill" data-mat="lavande"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#4A5578" vector-effect="non-scaling-stroke"/></svg></div></div>
           <div class="layerp" data-par="60"><div class="yr" data-split="letters" data-stagger="26">Lavande</div></div>
         </div>
         <div class="row">
-          <div class="layerp" data-par="20"><div class="pl"><div class="fill"><img data-scrub src="m-voyage.jpg" alt="Tapis Noor Mat plié pour le voyage" loading="lazy"></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#535450" vector-effect="non-scaling-stroke"/></svg></div></div>
+          <div class="layerp" data-par="20"><div class="pl"><div class="fill" data-mat="rose" data-folded></div><svg class="out" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 0H98L100 3V88L98 91H63L56 100H2L0 97V3Z" fill="none" stroke="#4A5578" vector-effect="non-scaling-stroke"/></svg></div></div>
           <div class="layerp" data-par="20"><div class="yr" data-split="letters" data-stagger="26" data-settle>Partout</div></div>
           <div class="layerp" data-par="110"><p class="copy" data-rise data-delay="220"><strong>Léger et pratique.</strong>Il se plie et vous suit à la maison, chez la famille ou en voyage.</p></div>
         </div>
@@ -440,8 +439,8 @@ ul { list-style: none; }
 
 <!-- 4 · Ce qu'il faut savoir -->
 <section class="know" id="savoir" aria-labelledby="t-know">
-  <canvas class="contours" data-contours="rgb(11 12 11 / 0.08)" aria-hidden="true"></canvas>
-  <canvas class="flag" data-flag="#0B0C0B" aria-hidden="true"></canvas>
+  <canvas class="contours" data-contours="rgb(16 23 40 / 0.08)" aria-hidden="true"></canvas>
+  <canvas class="flag" data-flag="#101728" aria-hidden="true"></canvas>
   <div class="wrap">
     <h2 id="t-know"><span data-split="words" data-delay="0">Ce qu'il faut</span><br><span style="white-space:nowrap"><span data-split="words" data-delay="130">savoir</span><span class="stop" data-fade data-delay="240">.</span></span></h2>
     <div class="faq">
@@ -452,7 +451,7 @@ ul { list-style: none; }
     <div class="cta-row" data-rise data-delay="420">
       <a class="cta" href="#commander">
         <svg class="frame" viewBox="0 0 220 52" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0.5 0.5H219.5V44L212 51.5H0.5Z" fill="#0D0F0E" stroke="#D6A84A" vector-effect="non-scaling-stroke"/>
+          <path d="M0.5 0.5H219.5V44L212 51.5H0.5Z" fill="#121C33" stroke="#D6A84A" vector-effect="non-scaling-stroke"/>
           <path class="flood" d="M0.5 0.5H219.5V44L212 51.5H0.5Z" fill="#D6A84A"/>
         </svg>
         Choisir mon modèle
@@ -489,7 +488,7 @@ ul { list-style: none; }
       <a href="#modeles" data-split="letters" data-stagger="22" data-delay="420">Modèles</a>
       <a href="#savoir" data-split="letters" data-stagger="22" data-delay="500">Questions</a>
     </nav>
-    <div class="figure" data-rise data-delay="200" aria-hidden="true"><img src="m-bleu.jpg" alt=""></div>
+    <div class="figure" data-rise data-delay="200" aria-hidden="true" data-mat-v="bleu"></div>
     <div class="endfoot">
       <p class="legal" data-rise data-delay="640">© 2026 Noor Mat · Tapis de prière ergonomique · Dunkerque</p>
       <div data-rise data-delay="720" style="font:600 18px/1.2 var(--font-body);text-transform:uppercase">Commandez par message<br><span style="color:var(--gold);user-select:all">@noormat2626</span></div>
@@ -605,17 +604,88 @@ ul { list-style: none; }
   Promise.all(waits).then(ready, ready);
   setTimeout(ready, 4000);
 
-  /* ---------- Vidéo ---------- */
-  var reel = document.getElementById('reel'), sound = document.getElementById('sound');
-  sound.addEventListener('click', function () {
-    reel.muted = !reel.muted; sound.setAttribute('aria-pressed', String(!reel.muted)); sound.textContent = reel.muted ? 'Son' : 'Couper';
-    if (reel.paused) reel.play().catch(function () {});
+  /* ---------- Les tapis, dessinés ---------- */
+  var SETS = {
+    gris:    { name: 'Gris',          b: '#5C616B', f: '#7B808A', a: '#BFC3CB', m: 'key' },
+    rose:    { name: 'Rose',          b: '#C48D9B', f: '#DFB3BE', a: '#F4DAE0', m: 'key' },
+    bleu:    { name: 'Bleu à motifs', b: '#1C3765', f: '#2D5B9B', a: '#D6A84A', m: 'flower', arch: '#E9DAB8' },
+    lavande: { name: 'Lavande',       b: '#5F6198', f: '#8385BD', a: '#C6C7E8', m: 'key' }
+  };
+  var FRINGE = '#D9B66A', uid = 0;
+  // Un tapis vu de dessus, debout : 240 × 420, la tête (le mihrab) en haut, les genoux en bas.
+  function matInner(k) {
+    var c = SETS[k], id = 'm' + (uid++), s = '';
+    s += '<defs><pattern id="' + id + 'k" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M1 11V1H11V8H5V5" fill="none" stroke="' + c.a + '" stroke-width="1.2" opacity=".75"/></pattern>' +
+      '<radialGradient id="' + id + 'g" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>';
+    for (var i = 0; i < 24; i++) { var x = 8 + i * 9.6; s += '<path d="M' + x + ' -12V0M' + x + ' 420V432" stroke="' + FRINGE + '" stroke-width="1.6"/>'; }
+    s += '<rect width="240" height="420" rx="8" fill="' + c.b + '"/>';
+    s += '<rect x="8" y="8" width="224" height="404" rx="5" fill="none" stroke="' + c.a + '" stroke-width="1.5"/>';
+    s += '<path d="M14 14H226V406H14Z M30 30V390H210V30Z" fill-rule="evenodd" fill="url(#' + id + 'k)"/>';
+    s += '<rect x="34" y="34" width="172" height="352" rx="3" fill="' + c.f + '"/>';
+    s += '<path d="M58 160V98Q58 62 120 44Q182 62 182 98V160Z" fill="' + (c.arch || c.b) + '" fill-opacity="' + (c.arch ? 1 : 0.35) + '" stroke="' + c.a + '" stroke-width="1.5"/>';
+    if (c.m === 'flower') {
+      [[120, 112], [70, 220], [170, 220], [120, 250], [70, 300], [170, 300]].forEach(function (p, n) {
+        var r = n === 0 ? 14 : 10;
+        for (var j = 0; j < 6; j++) s += '<ellipse cx="' + p[0] + '" cy="' + (p[1] - r * 0.6) + '" rx="' + r * 0.32 + '" ry="' + r * 0.62 + '" fill="' + c.a + '" transform="rotate(' + j * 60 + ' ' + p[0] + ' ' + p[1] + ')"/>';
+        s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + r * 0.3 + '" fill="' + c.b + '"/>';
+      });
+    } else {
+      s += '<rect x="50" y="176" width="140" height="96" rx="2" fill="none" stroke="' + c.a + '" stroke-opacity=".45"/>';
+      s += '<path d="M120 196L146 224L120 252L94 224Z" fill="none" stroke="' + c.a + '" stroke-opacity=".6"/>';
+      s += '<path d="M120 84L132 100L120 116L108 100Z" fill="' + c.a + '" fill-opacity=".55"/>';
+    }
+    // La zone des genoux : la mousse à mémoire de forme
+    s += '<rect x="42" y="292" width="156" height="80" rx="18" fill="url(#' + id + 'g)" stroke="' + c.a + '" stroke-width="1.3" stroke-dasharray="4 4"/>';
+    return s;
+  }
+  function plateSVG(k, folded) {
+    var floor = '<rect width="500" height="360" fill="#1D2A47"/>';
+    for (var x = 0; x <= 500; x += 72) floor += '<path d="M' + x + ' 0V360" stroke="#fff" stroke-opacity=".05"/>';
+    for (var y = 0; y <= 360; y += 72) floor += '<path d="M0 ' + y + 'H500" stroke="#fff" stroke-opacity=".05"/>';
+    var mat = folded
+      ? '<g transform="translate(250 180) rotate(-90) translate(-120 -120) scale(1)"><g transform="translate(14 14)" opacity=".85"><rect width="240" height="230" rx="8" fill="' + SETS[k].b + '"/></g><svg width="240" height="236" viewBox="0 -12 240 236" overflow="hidden">' + matInner(k) + '</svg></g>'
+      : '<g transform="translate(250 180) rotate(-90) translate(-120 -210)">' + matInner(k) + '</g>';
+    return '<svg viewBox="0 0 500 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="' + (folded ? 'Illustration : tapis plié pour le voyage' : 'Illustration du tapis ' + SETS[k].name) + '">' + floor +
+      '<ellipse cx="250" cy="196" rx="230" ry="110" fill="#000" opacity=".25"/>' + mat + '</svg>';
+  }
+  document.querySelectorAll('[data-mat]').forEach(function (el) { el.innerHTML = plateSVG(el.dataset.mat, el.hasAttribute('data-folded')); });
+  document.querySelectorAll('[data-mat-v]').forEach(function (el) {
+    el.innerHTML = '<svg viewBox="-12 -20 264 464" role="img" aria-label="Illustration du tapis ' + SETS[el.dataset.matV].name + '">' + matInner(el.dataset.matV) + '</svg>';
   });
-  document.getElementById('play-link').addEventListener('click', function (e) {
-    e.preventDefault(); reel.currentTime = 0; reel.play().catch(function () {});
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+
+  /* ---------- L'animation du héros : les quatre couleurs, la mousse sous les genoux ---------- */
+  var reel = document.getElementById('reel'), order = ['bleu', 'rose', 'gris', 'lavande'];
+  var rs = '<defs><linearGradient id="rbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1D2A47"/><stop offset="1" stop-color="#0E1528"/></linearGradient>' +
+    '<linearGradient id="rsh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
+    '<clipPath id="rclip"><rect x="60" y="96" width="240" height="420" rx="8"/></clipPath></defs>' +
+    '<rect width="360" height="640" fill="url(#rbg)"/>';
+  for (var tx = 0; tx <= 360; tx += 60) rs += '<path d="M' + tx + ' 0V640" stroke="#fff" stroke-opacity=".05"/>';
+  for (var ty = 0; ty <= 640; ty += 60) rs += '<path d="M0 ' + ty + 'H360" stroke="#fff" stroke-opacity=".05"/>';
+  rs += '<ellipse cx="180" cy="320" rx="160" ry="250" fill="#000" opacity=".3"/>';
+  order.forEach(function (k, i) { rs += '<g class="rm" opacity="' + (i ? 0 : 1) + '" transform="translate(60 96)">' + matInner(k) + '</g>'; });
+  rs += '<g clip-path="url(#rclip)"><rect id="rsheen" x="-200" y="80" width="160" height="460" fill="url(#rsh)" transform="skewX(-18)"/></g>';
+  [150, 210].forEach(function (cx, i) {
+    rs += '<ellipse class="rk" cx="' + cx + '" cy="428" rx="22" ry="16" fill="#000" opacity="0"/>';
+    rs += '<ellipse class="rr" cx="' + cx + '" cy="428" rx="22" ry="16" fill="none" stroke="#D6A84A" stroke-width="1.5" opacity="0"/>';
   });
-  if (reduce) { reel.removeAttribute('autoplay'); reel.pause(); reel.controls = true; }
+  rs += '<text x="180" y="584" text-anchor="middle" fill="#D6A84A" style="font:800 30px/1 var(--font-display);text-transform:uppercase;letter-spacing:.02em" id="rname">Bleu à motifs</text>';
+  rs += '<text x="180" y="610" text-anchor="middle" fill="#A8B1C7" style="font:500 11px/1 var(--font-body);text-transform:uppercase;letter-spacing:.14em">Mousse sous les genoux</text>';
+  reel.innerHTML = rs;
+  var mats = reel.querySelectorAll('.rm'), knees = reel.querySelectorAll('.rk'), rings = reel.querySelectorAll('.rr');
+  var sheen = document.getElementById('rsheen'), rname = document.getElementById('rname'), SLOT = 3600, shown = 0;
+  function reelFrame(t) {
+    var n = Math.floor(t / SLOT) % order.length, u = (t % SLOT) / SLOT, next = (n + 1) % order.length;
+    var fade = Math.max(0, (u - 0.86) / 0.14);
+    mats.forEach(function (m, i) { m.setAttribute('opacity', i === n ? 1 - fade : i === next ? fade : 0); });
+    if (shown !== n) { shown = n; rname.textContent = SETS[order[n]].name; }
+    sheen.setAttribute('x', -220 + u * 640);
+    var press = u < 0.15 ? 0 : u < 0.4 ? (u - 0.15) / 0.25 : u < 0.7 ? 1 : Math.max(0, 1 - (u - 0.7) / 0.15);
+    var e = press * press * (3 - 2 * press);
+    knees.forEach(function (k) { k.setAttribute('opacity', 0.28 * e); k.setAttribute('ry', 16 - 4 * e); });
+    var ring = u < 0.4 ? 0 : Math.min(1, (u - 0.4) / 0.4);
+    rings.forEach(function (r) { r.setAttribute('rx', 22 + ring * 30); r.setAttribute('ry', 16 + ring * 20); r.setAttribute('opacity', ring > 0 ? 0.8 * (1 - ring) : 0); });
+  }
+  if (reduce) reelFrame(SLOT * 0.5); else tick(reelFrame);
 
   /* ---------- La pile qui recule ---------- */
   var layers = Array.from(document.querySelectorAll('.stack > .layer'));
@@ -681,7 +751,6 @@ ul { list-style: none; }
     mark.setAttribute('transform', 'translate(8 ' + y + ') rotate(' + (y / Math.max(1, rest)) * 1800 + ')');
   }
   var parEls = Array.from(document.querySelectorAll('[data-par]'));
-  var scrubImgs = Array.from(document.querySelectorAll('[data-scrub]'));
   function parallax() {
     var vh = innerHeight, cw = document.documentElement.clientWidth / 1440 * (narrow.matches ? 0.35 : 1);
     parEls.forEach(function (el) {
@@ -690,11 +759,6 @@ ul { list-style: none; }
       var a = +el.dataset.par * cw;
       var off = narrow.matches ? 0 : a - 2 * a * p;
       el.style.top = off + 'px'; el.style.bottom = -off + 'px';
-    });
-    scrubImgs.forEach(function (img) {
-      var r = img.parentNode.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (vh - r.top) / (vh / 2)));
-      img.style.top = (-10 + 10 * p) + '%';
     });
   }
   var rowsBox = document.getElementById('rows');
@@ -730,7 +794,7 @@ ul { list-style: none; }
     var w = dots.clientWidth, h = dots.clientHeight; if (!w) return;
     var r = Math.min(devicePixelRatio || 1, 2); dots.width = w * r; dots.height = h * r;
     dotsBaked = document.createElement('canvas'); dotsBaked.width = dots.width; dotsBaked.height = dots.height;
-    var b = dotsBaked.getContext('2d'); b.setTransform(r, 0, 0, r, 0, 0); b.fillStyle = '#3F4440'; b.beginPath();
+    var b = dotsBaked.getContext('2d'); b.setTransform(r, 0, 0, r, 0, 0); b.fillStyle = '#34405A'; b.beginPath();
     var cx = w * 0.72, cy = h * 0.5, rx = w * 0.42, ry = h * 0.62;
     for (var j = 0; j * PITCH < h; j++) for (var i = 0; i * PITCH < w; i++) {
       var x = i * PITCH + 7, y = j * PITCH + 7, d = ((x - cx) / rx) * ((x - cx) / rx) + ((y - cy) / ry) * ((y - cy) / ry);
