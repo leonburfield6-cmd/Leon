@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sajda Confort</title>
+<title>Noor Mat</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,8 +61,17 @@ section.block { padding-block: clamp(2.5rem, 7vw, 4.5rem); }
 section.block > .wrap { display: grid; gap: 1.6rem; }
 section h2 { font-size: var(--step-2); }
 
-/* Vidéo */
-.video-frame { background: var(--deep); border-radius: 14px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; position: relative; display: grid; place-items: center; }
+/* Vidéo (verticale 9:16) */
+.video-split { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: clamp(1.5rem, 5vw, 3.5rem); align-items: center; }
+.video-split > * { min-width: 0; }
+.video-copy { display: grid; gap: 1rem; }
+.video-copy p { color: var(--muted); max-width: 42ch; }
+.models { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
+.models li { display: flex; align-items: center; gap: .45rem; font-size: .9rem; border: 1px solid var(--line); border-radius: 999px; padding: .3rem .8rem .3rem .4rem; }
+.models i { width: 1.1rem; height: 1.1rem; border-radius: 50%; display: inline-block; }
+.price { font-family: var(--font-display); font-size: var(--step-2); }
+.price small { font-family: var(--font-body); font-size: .95rem; color: var(--muted); }
+.video-frame { background: var(--deep); border-radius: 14px; overflow: hidden; aspect-ratio: 9 / 16; max-width: 100%; position: relative; display: grid; place-items: center; }
 .video-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .empty { color: var(--on-deep); text-align: center; display: grid; gap: .8rem; justify-items: center; padding: 1.5rem; }
 .empty p { opacity: .8; max-width: 36ch; }
@@ -100,11 +109,14 @@ label.upload input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .signup form { display: flex; flex-wrap: wrap; gap: .6rem; }
 .signup input[type=email] { flex: 1 1 16rem; min-width: 0; font: 1rem var(--font-body); padding: .8rem 1rem; border-radius: 999px; border: 1px solid var(--brass); background: transparent; color: var(--on-deep); }
 .signup input::placeholder { color: var(--on-deep); opacity: .6; }
-.msg { min-height: 1.5em; color: var(--brass); }
+.contacts { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; }
+.contacts div { display: grid; gap: .2rem; }
+.contacts strong { font-family: var(--font-data); font-size: var(--step-1); font-weight: 500; user-select: all; }
 footer { padding-block: 2rem; color: var(--muted); font-size: .85rem; }
 
 @media (max-width: 760px) {
-  .split, .benefits { grid-template-columns: 1fr; }
+  .split, .benefits, .video-split { grid-template-columns: 1fr; }
+  .video-frame { max-width: 360px; width: 100%; justify-self: center; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .hero h1, .hero p.lead, .hero .actions { animation: rise .8s ease-out both; }
@@ -133,9 +145,9 @@ footer { padding-block: 2rem; color: var(--muted); font-size: .85rem; }
   <div class="wrap">
     <span class="eyebrow">Tapis de prière ergonomique</span>
     <h1>Priez longtemps, sans douleur aux genoux.</h1>
-    <p class="lead">Sajda Confort intègre une zone en mousse à mémoire de forme exactement là où vos genoux se posent. La surface reste fine et stable pour le front et les pieds.</p>
+    <p class="lead">Noor Mat intègre une mousse à mémoire de forme là où vos genoux se posent. L'ergonomie réduit la pression et les douleurs pendant votre prière.</p>
     <div class="actions">
-      <a class="btn primary" href="#lancement">Être prévenu du lancement</a>
+      <a class="btn primary" href="#commander">Commander · 40 €</a>
       <a class="btn ghost" href="#video">Voir la vidéo</a>
     </div>
   </div>
@@ -143,17 +155,27 @@ footer { padding-block: 2rem; color: var(--muted); font-size: .85rem; }
 
 <main>
   <section class="block" id="video">
-    <div class="wrap">
-      <span class="eyebrow">En vidéo</span>
-      <h2>Le tapis en situation réelle</h2>
+    <div class="wrap video-split">
       <div class="video-frame">
-        <video id="player" controls playsinline preload="metadata" hidden></video>
+        <video id="player" controls playsinline preload="metadata" poster="poster.jpg" hidden></video>
         <div class="empty" id="empty">
           <p>Votre vidéo s'affichera ici. Chargez-la pour voir le rendu de la page.</p>
           <label class="upload">Charger ma vidéo
             <input type="file" id="video-file" accept="video/*">
           </label>
         </div>
+      </div>
+      <div class="video-copy">
+        <span class="eyebrow">En vidéo</span>
+        <h2>Le tapis en situation réelle</h2>
+        <p>Un tissu doux au toucher, une mousse qui amortit chaque appui et un dessous antidérapant. Léger et pratique, il vous suit à la maison comme en voyage.</p>
+        <ul class="models" aria-label="Modèles disponibles">
+          <li><i style="background:#8E939B"></i>Gris</li>
+          <li><i style="background:#D9B4BE"></i>Rose</li>
+          <li><i style="background:#7C7FB0"></i>Lavande</li>
+          <li><i style="background:#3D5F93"></i>Bleu à motifs</li>
+        </ul>
+        <p class="price">40 € <small>l'unité</small></p>
       </div>
     </div>
   </section>
@@ -168,20 +190,17 @@ footer { padding-block: 2rem; color: var(--muted); font-size: .85rem; }
           <rect x="10" y="150" width="400" height="10" fill="var(--muted)" opacity=".55"/>
           <path d="M10 150 L10 138 L150 138 Q165 138 170 110 L250 110 Q255 138 270 138 L410 138 L410 150 Z" fill="var(--foam)"/>
           <path d="M10 138 L150 138 Q165 138 170 110 L250 110 Q255 138 270 138 L410 138" fill="none" stroke="var(--brass)" stroke-width="4"/>
-          <line x1="210" y1="110" x2="210" y2="160" stroke="var(--ink)" stroke-dasharray="3 3"/>
-          <text x="216" y="132">30 mm</text>
-          <line x1="80" y1="138" x2="80" y2="160" stroke="var(--ink)" stroke-dasharray="3 3"/>
-          <text x="86" y="185">8 mm</text>
-          <text x="10" y="185">ANTIDÉRAPANT ↑</text>
+          <text x="176" y="100">MÉMOIRE DE FORME</text>
+          <text x="10" y="185">↑ DESSOUS ANTIDÉRAPANT</text>
         </svg>
       </div>
       <div style="display:grid; gap:1.2rem; min-width:0">
         <span class="eyebrow">Trois couches</span>
         <h2>Une épaisseur là où il faut</h2>
         <ul class="layers">
-          <li><span class="mm">tissu</span><div><strong>Velours doux</strong><span class="d">Agréable au front et facile à nettoyer.</span></div></li>
-          <li><span class="mm">30 mm</span><div><strong>Mousse à mémoire de forme</strong><span class="d">Uniquement sous les genoux, pour répartir la pression.</span></div></li>
-          <li><span class="mm">base</span><div><strong>Dessous antidérapant</strong><span class="d">Le tapis ne glisse pas, même sur carrelage ou parquet.</span></div></li>
+          <li><span class="mm">dessus</span><div><strong>Tissu doux</strong><span class="d">Agréable au toucher, pour le front comme pour les mains.</span></div></li>
+          <li><span class="mm">cœur</span><div><strong>Mousse à mémoire de forme</strong><span class="d">Un confort inégalé : elle épouse vos genoux et répartit la pression.</span></div></li>
+          <li><span class="mm">dessous</span><div><strong>Base antidérapante</strong><span class="d">Le tapis reste en place, même sur carrelage.</span></div></li>
         </ul>
       </div>
     </div>
@@ -204,33 +223,33 @@ footer { padding-block: 2rem; color: var(--muted); font-size: .85rem; }
       <span class="eyebrow">Fiche technique</span>
       <h2>Les détails</h2>
       <table class="specs">
-        <tr><th>Dimensions</th><td>110 × 70 cm</td></tr>
-        <tr><th>Épaisseur zone genoux</th><td>30 mm</td></tr>
-        <tr><th>Épaisseur zone front et pieds</th><td>8 mm</td></tr>
-        <tr><th>Rangement</th><td>Se roule, sangle incluse</td></tr>
-        <tr><th>Entretien</th><td>Housse lavable à 30 °C</td></tr>
+        <tr><th>Prix</th><td>40 € l'unité</td></tr>
+        <tr><th>Confort</th><td>Mousse à mémoire de forme</td></tr>
+        <tr><th>Dessous</th><td>Antidérapant</td></tr>
+        <tr><th>Finition</th><td>Franges dorées</td></tr>
+        <tr><th>Modèles</th><td>Gris, rose, lavande, bleu à motifs</td></tr>
+        <tr><th>Format</th><td>Léger, se plie pour le voyage</td></tr>
+        <tr><th>Livraison</th><td>Dunkerque et alentours</td></tr>
       </table>
-      <p class="note">Valeurs indicatives, à remplacer par celles de votre produit.</p>
     </div>
   </section>
 
-  <section class="block" id="lancement">
+  <section class="block" id="commander">
     <div class="wrap">
       <div class="signup">
-        <span class="eyebrow">Lancement</span>
-        <h2>Soyez prévenu de la sortie</h2>
-        <p>Laissez votre e-mail pour recevoir l'annonce du lancement.</p>
-        <form id="signup-form" novalidate>
-          <input type="email" id="email" placeholder="votre@email.fr" aria-label="Adresse e-mail" required>
-          <button class="btn primary" type="submit">M'inscrire</button>
-        </form>
-        <p class="msg" id="msg" role="status"></p>
+        <span class="eyebrow">Commander</span>
+        <h2>40 € l'unité, livré à Dunkerque et alentours</h2>
+        <p>Envoyez-nous un message avec le modèle choisi et votre adresse.</p>
+        <div class="contacts">
+          <div><span class="eyebrow">Instagram / TikTok</span><strong>@noormat2626</strong></div>
+          <div><span class="eyebrow">Snapchat</span><strong>dubai.parfum</strong></div>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer><div class="wrap">Sajda Confort · Tapis de prière ergonomique</div></footer>
+<footer><div class="wrap">Noor Mat · Tapis de prière ergonomique · Dunkerque</div></footer>
 
 <script>
 (function () {
@@ -246,14 +265,6 @@ footer { padding-block: 2rem; color: var(--muted); font-size: .85rem; }
     if (!f) return;
     player.src = URL.createObjectURL(f);
     show();
-  });
-  document.getElementById('signup-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var email = document.getElementById('email');
-    var msg = document.getElementById('msg');
-    if (!email.value || !email.checkValidity()) { msg.textContent = "Entrez une adresse e-mail valide, par exemple nom@exemple.fr."; return; }
-    msg.textContent = "Merci, votre adresse est notée.";
-    email.value = '';
   });
 })();
 </script>
