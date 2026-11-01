@@ -4,13 +4,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout : une fiche A4 posée sur un fond, bandeau prix façon étiquette de soldes, colonnes qui s'empilent sur mobile */
+/* Layout : une seule feuille A4 (794 × 1123 px), mise à l'échelle pour tenir dans l'écran, y compris sur téléphone */
 :root {
-  --ink: #101a33;        /* bleu encre */
+  --ink: #101a33;
   --ink-soft: #4a5470;
   --paper: #ffffff;
-  --desk: #e7e9ef;       /* fond derrière la fiche */
-  --tag: #ffd21f;        /* jaune étiquette prix */
+  --desk: #e7e9ef;
+  --tag: #ffd21f;
   --cobalt: #2346ff;
   --line: #d9dce6;
   --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
@@ -20,111 +20,82 @@
 }
 * { box-sizing: border-box; }
 body {
-  background: var(--desk); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  background: var(--desk); color: var(--ink); font-family: var(--body); font-size: 13px; line-height: 1.45;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 32px;
+  padding-block: 24px; overflow-x: hidden;
 }
+.frame { margin: 0 auto; width: 794px; max-width: 100%; }
 .sheet {
-  max-width: 860px; margin: 0 auto; background: var(--paper);
+  width: 794px; height: 1123px; background: var(--paper); transform-origin: top left;
   box-shadow: 0 1px 2px rgba(16,26,51,.08), 0 18px 50px rgba(16,26,51,.14);
-  overflow: hidden;
+  display: flex; flex-direction: column; overflow: hidden;
 }
-.pad { padding: 36px clamp(20px, 5vw, 52px); }
+.pad { padding-left: 44px; padding-right: 44px; }
 
-/* En-tête */
-header.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-block: 20px; }
-.brand { font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
-.brand i { width: 30px; height: 30px; background: var(--ink); color: var(--tag); display: grid; place-items: center; font-style: normal; font-size: 15px; border-radius: 4px; }
-.top small { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+header.top { display: flex; justify-content: space-between; align-items: center; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.brand { font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+.brand i { width: 28px; height: 28px; background: var(--ink); color: var(--tag); display: grid; place-items: center; font-style: normal; font-size: 14px; border-radius: 4px; }
+.top small { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
 
-/* Accroche */
-.hero { display: grid; grid-template-columns: 1.35fr 1fr; gap: 32px; align-items: end; }
-.eyebrow { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--cobalt); font-weight: 700; }
-h1 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 6.4vw, 60px); line-height: .95; letter-spacing: -.035em; margin: 12px 0 16px; text-wrap: balance; }
+.hero { display: grid; grid-template-columns: 1.45fr 1fr; gap: 28px; align-items: center; padding-block: 18px 16px; }
+.eyebrow { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--cobalt); font-weight: 700; }
+h1 { font-family: var(--display); font-weight: 800; font-size: 42px; line-height: .96; letter-spacing: -.035em; margin: 10px 0 12px; text-wrap: balance; }
 h1 mark { background: linear-gradient(transparent 58%, var(--tag) 58%); color: inherit; padding: 0 .05em; }
-.lead { color: var(--ink-soft); font-size: 17px; max-width: 46ch; margin: 0; }
-
-.stamp { background: var(--ink); color: var(--paper); padding: 22px 22px 20px; position: relative; transform: rotate(1.5deg); }
-.stamp .from { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--tag); }
-.stamp .big { font-family: var(--display); font-weight: 800; font-size: 76px; line-height: 1; letter-spacing: -.04em; display: flex; align-items: flex-start; gap: 4px; margin: 6px 0; }
-.stamp .big sup { font-size: 30px; margin-top: 10px; }
-.stamp .vs { font-size: 13px; color: #c9cee0; }
+.lead { color: var(--ink-soft); font-size: 13px; margin: 0; }
+.stamp { background: var(--ink); color: var(--paper); padding: 18px 20px; transform: rotate(1.5deg); }
+.stamp .from { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--tag); }
+.stamp .big { font-family: var(--display); font-weight: 800; font-size: 68px; line-height: 1; letter-spacing: -.04em; display: flex; gap: 4px; margin: 4px 0; }
+.stamp .big sup { font-size: 28px; margin-top: 8px; }
+.stamp .vs { font-size: 12px; color: #c9cee0; }
 .stamp .vs s { color: #fff; }
 
-/* Bandeau garanties */
 .strip { background: var(--tag); display: grid; grid-template-columns: repeat(4, 1fr); }
-.strip div { padding: 16px 14px; border-right: 1px solid rgba(16,26,51,.18); }
+.strip div { padding: 12px 14px; border-right: 1px solid rgba(16,26,51,.18); }
 .strip div:last-child { border-right: 0; }
-.strip b { display: block; font-family: var(--display); font-size: 24px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
-.strip span { font-size: 13px; font-weight: 600; }
+.strip b { display: block; font-family: var(--display); font-size: 21px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+.strip span { font-size: 11.5px; font-weight: 600; }
 
-/* Formules */
-h2 { font-family: var(--display); font-size: 28px; font-weight: 800; letter-spacing: -.025em; margin: 0 0 6px; }
-.sub { color: var(--ink-soft); margin: 0 0 22px; }
-.offers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.offer { border: 1.5px solid var(--line); padding: 20px 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.offer.hot { border-color: var(--ink); box-shadow: 6px 6px 0 var(--tag); }
-.offer .name { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.offer h3 { font-family: var(--display); font-size: 20px; margin: 0; letter-spacing: -.02em; }
-.pill { font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--tag); padding: 3px 7px; white-space: nowrap; }
-.price { font-family: var(--display); font-weight: 800; font-size: 44px; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
-.price small { font-family: var(--body); font-size: 13px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0; }
-.was { font-size: 13px; color: var(--ink-soft); }
-.offer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 7px; font-size: 14px; }
-.offer li { padding-left: 22px; position: relative; }
-.offer li::before { content: ""; position: absolute; left: 2px; top: 6px; width: 11px; height: 6px; border-left: 2.5px solid var(--cobalt); border-bottom: 2.5px solid var(--cobalt); transform: rotate(-45deg); }
-.offer .for { margin-top: auto; font-size: 13px; color: var(--ink-soft); border-top: 1px dashed var(--line); padding-top: 10px; }
+h2 { font-family: var(--display); font-size: 21px; font-weight: 800; letter-spacing: -.025em; margin: 0 0 10px; }
+.block { padding-block: 14px 0; }
+.offers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.offer { border: 1.5px solid var(--line); padding: 12px 14px 10px; display: flex; flex-direction: column; gap: 7px; }
+.offer.hot { border-color: var(--ink); box-shadow: 5px 5px 0 var(--tag); }
+.offer .name { display: flex; justify-content: space-between; align-items: center; }
+.offer h3 { font-family: var(--display); font-size: 18px; margin: 0; letter-spacing: -.02em; }
+.pill { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--tag); padding: 3px 6px; }
+.price { font-family: var(--display); font-weight: 800; font-size: 34px; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.price small { font-family: var(--body); font-size: 11.5px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0; }
+.offer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; font-size: 12.5px; }
+.offer li { padding-left: 19px; position: relative; }
+.offer li::before { content: ""; position: absolute; left: 2px; top: 5px; width: 10px; height: 5px; border-left: 2.3px solid var(--cobalt); border-bottom: 2.3px solid var(--cobalt); transform: rotate(-45deg); }
+.offer .for { margin-top: auto; font-size: 11.5px; color: var(--ink-soft); border-top: 1px dashed var(--line); padding-top: 7px; }
 
-/* Comparatif */
-.compare-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
-th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); }
-th { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); font-weight: 700; }
-td.me, th.me { background: #fff6cc; font-weight: 700; }
-td { font-variant-numeric: tabular-nums; }
-
-/* Étapes */
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-.step { min-width: 0; }
-.step .d { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--cobalt); letter-spacing: .06em; }
-.step h4 { font-family: var(--display); font-size: 17px; margin: 4px 0 4px; }
-.step p { margin: 0; font-size: 13.5px; color: var(--ink-soft); }
-.track { height: 4px; background: var(--line); margin: 0 0 14px; position: relative; }
-.track::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 100%; background: linear-gradient(90deg, var(--cobalt), var(--ink)); }
-
-/* Options */
-.extras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 28px; }
-.extras div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dotted var(--line); font-size: 14px; }
+.duo { display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; }
+.steps { display: grid; gap: 7px; }
+.step { display: grid; grid-template-columns: 58px 1fr; gap: 10px; align-items: baseline; }
+.step .d { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--cobalt); letter-spacing: .06em; }
+.step b { font-family: var(--display); font-size: 14.5px; }
+.step span { color: var(--ink-soft); font-size: 12.5px; }
+.extras div { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px dotted var(--line); font-size: 12.5px; }
 .extras b { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-/* Contact */
-.contact { background: var(--ink); color: var(--paper); display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: center; }
-.contact h2 { color: var(--paper); font-size: 32px; }
-.contact p { color: #c9cee0; margin: 0; }
-.coords { display: grid; gap: 10px; }
-.coord { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid rgba(255,255,255,.18); padding: 12px 14px; min-width: 0; }
-.coord .k { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--tag); }
-.coord .v { font-weight: 700; font-size: 16px; user-select: all; overflow-wrap: anywhere; }
-.coord button { background: transparent; color: var(--paper); border: 1px solid rgba(255,255,255,.35); font: 600 12px var(--body); padding: 6px 10px; cursor: pointer; white-space: nowrap; }
+.contact { background: var(--ink); color: var(--paper); display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; align-items: center; padding-block: 16px 14px; margin-top: 14px; }
+.contact h2 { color: var(--paper); font-size: 26px; margin-bottom: 6px; }
+.contact p { color: #c9cee0; margin: 0; font-size: 13px; }
+.promo { background: var(--tag); color: var(--ink); font-weight: 700; padding: 8px 12px; margin-top: 10px; font-size: 12.5px; }
+.coords { display: grid; gap: 6px; }
+.coord { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid rgba(255,255,255,.18); padding: 6px 12px; }
+.coord .k { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--tag); }
+.coord .v { font-weight: 700; font-size: 14.5px; user-select: all; }
+.coord button { background: transparent; color: var(--paper); border: 1px solid rgba(255,255,255,.35); font: 600 11px var(--body); padding: 5px 9px; cursor: pointer; }
 .coord button:hover { background: var(--tag); color: var(--ink); border-color: var(--tag); }
 .coord button:focus-visible { outline: 2px solid var(--tag); outline-offset: 2px; }
-.offer-line { background: var(--tag); color: var(--ink); font-weight: 700; padding: 12px 16px; margin-top: 18px; font-size: 14px; }
-.foot { font-size: 11.5px; color: var(--ink-soft); padding-block: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-
-@media (max-width: 760px) {
-  .hero, .contact { grid-template-columns: 1fr; }
-  .offers { grid-template-columns: 1fr; }
-  .steps, .strip { grid-template-columns: repeat(2, 1fr); }
-  .strip div:nth-child(2) { border-right: 0; }
-  .strip div:nth-child(-n+2) { border-bottom: 1px solid rgba(16,26,51,.18); }
-  .extras { grid-template-columns: 1fr; }
-  .stamp { transform: none; }
-}
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.foot { margin-top: auto; background: var(--paper); border-top: 1px solid var(--line); padding-top: 10px; color: var(--ink-soft); font-size: 10.5px; padding-bottom: 12px; display: flex; justify-content: space-between; }
 </style>
 
-<article class="sheet">
+<div class="frame" id="frame">
+<article class="sheet" id="sheet">
   <header class="top pad">
     <div class="brand"><i>L</i>Léon · Création Web</div>
     <small>Fiche tarifaire 2026</small>
@@ -134,109 +105,82 @@ td { font-variant-numeric: tabular-nums; }
     <div>
       <div class="eyebrow">Sites internet pour artisans, commerces &amp; indépendants</div>
       <h1>Votre site pro, <mark>en ligne en 7&nbsp;jours</mark>, au prix juste.</h1>
-      <p class="lead">Un site moderne, rapide et visible sur Google, avec prise de rendez-vous ou formulaire de contact. Sans abonnement obligatoire et sans frais cachés.</p>
+      <p class="lead">Un site moderne, rapide et visible sur Google, avec prise de rendez-vous ou formulaire de contact. Sans abonnement obligatoire, sans frais cachés.</p>
     </div>
     <div class="stamp">
       <div class="from">Site complet dès</div>
       <div class="big">290<sup>€</sup></div>
-      <div class="vs">Agence classique : <s>1 500 à 3 000 €</s></div>
+      <div class="vs">En agence : <s>1 500 à 3 000 €</s> et 4 à 8 semaines</div>
     </div>
   </section>
 
   <div class="strip">
     <div><b>7 jours</b><span>délai de mise en ligne</span></div>
     <div><b>Offert</b><span>domaine + hébergement 1 an</span></div>
-    <div><b>100 %</b><span>adapté mobile</span></div>
-    <div><b>0 €</b><span>d'acompte avant maquette</span></div>
+    <div><b>100 %</b><span>adapté au mobile</span></div>
+    <div><b>0 €</b><span>à payer avant la maquette</span></div>
   </div>
 
-  <section class="pad">
-    <h2>Trois formules, tout compris</h2>
-    <p class="sub">Prix fixes. Vous savez exactement ce que vous payez avant de commencer.</p>
+  <section class="pad block">
+    <h2>Trois formules à prix fixe</h2>
     <div class="offers">
       <div class="offer">
         <div class="name"><h3>Essentiel</h3></div>
         <div class="price">290 € <small>une fois</small></div>
-        <div class="was">au lieu de <s>590 €</s></div>
         <ul>
-          <li>Site une page (accueil, services, contact)</li>
-          <li>Design sur mesure à vos couleurs</li>
-          <li>Formulaire de contact + bouton d'appel</li>
-          <li>Fiche Google Maps reliée</li>
-          <li>Nom de domaine offert 1 an</li>
+          <li>Site une page sur mesure</li>
+          <li>Formulaire + bouton d'appel</li>
+          <li>Lien Google Maps</li>
+          <li>Domaine offert 1 an</li>
         </ul>
-        <div class="for">Idéal pour : démarrer, auto-entrepreneur, flyer en ligne</div>
+        <div class="for">Pour démarrer, auto-entrepreneurs</div>
       </div>
       <div class="offer hot">
         <div class="name"><h3>Pro</h3><span class="pill">Le + choisi</span></div>
         <div class="price">490 € <small>une fois</small></div>
-        <div class="was">au lieu de <s>990 €</s></div>
         <ul>
           <li>Jusqu'à 5 pages</li>
           <li>Prise de rendez-vous en ligne</li>
-          <li>Galerie photos / réalisations</li>
-          <li>Référencement Google de base (SEO local)</li>
-          <li>Avis clients mis en avant</li>
-          <li>Hébergement + domaine offerts 1 an</li>
+          <li>Galerie photos + avis clients</li>
+          <li>Référencement Google local</li>
+          <li>Hébergement + domaine 1 an</li>
         </ul>
-        <div class="for">Idéal pour : artisans, salons, nettoyage, restauration</div>
+        <div class="for">Artisans, salons, restaurants</div>
       </div>
       <div class="offer">
         <div class="name"><h3>Business</h3></div>
         <div class="price">790 € <small>une fois</small></div>
-        <div class="was">au lieu de <s>1 690 €</s></div>
         <ul>
           <li>Pages illimitées</li>
-          <li>Boutique en ligne ou paiement d'acompte</li>
-          <li>Espace de gestion simple pour vous</li>
-          <li>SEO avancé + Google Analytics</li>
-          <li>Formation de 1 h à la prise en main</li>
-          <li>Hébergement + domaine offerts 1 an</li>
+          <li>Boutique en ligne</li>
+          <li>SEO avancé + statistiques</li>
+          <li>1 h de formation incluse</li>
+          <li>Hébergement + domaine 1 an</li>
         </ul>
-        <div class="for">Idéal pour : vendre en ligne, plusieurs services</div>
+        <div class="for">Pour vendre en ligne</div>
       </div>
     </div>
   </section>
 
-  <section class="pad" style="padding-top:0">
-    <h2>Comparez</h2>
-    <p class="sub">Ce que vous obtenez avec la formule Pro face aux alternatives habituelles.</p>
-    <div class="compare-wrap">
-      <table>
-        <thead><tr><th></th><th class="me">Léon · Pro</th><th>Agence web</th><th>Site à faire soi-même</th></tr></thead>
-        <tbody>
-          <tr><td>Prix de départ</td><td class="me">490 €</td><td>1 500 – 3 000 €</td><td>15 – 30 € / mois à vie</td></tr>
-          <tr><td>Délai</td><td class="me">7 jours</td><td>4 à 8 semaines</td><td>Votre temps libre</td></tr>
-          <tr><td>Design sur mesure</td><td class="me">Oui</td><td>Oui</td><td>Modèle générique</td></tr>
-          <tr><td>Prise de RDV en ligne</td><td class="me">Incluse</td><td>En option</td><td>Abonnement en plus</td></tr>
-          <tr><td>Un interlocuteur unique</td><td class="me">Oui, en direct</td><td>Chef de projet</td><td>Support en ligne</td></tr>
-        </tbody>
-      </table>
+  <section class="pad block duo">
+    <div>
+      <h2>Comment ça se passe</h2>
+      <div class="steps">
+        <div class="step"><div class="d">JOUR 1</div><div><b>On échange.</b> <span>15 min au téléphone.</span></div></div>
+        <div class="step"><div class="d">JOUR 3</div><div><b>Maquette.</b> <span>Vous voyez avant de payer.</span></div></div>
+        <div class="step"><div class="d">JOUR 5</div><div><b>Ajustements.</b> <span>Jusqu'à ce que ça vous plaise.</span></div></div>
+        <div class="step"><div class="d">JOUR 7</div><div><b>En ligne.</b> <span>Visible sur Google.</span></div></div>
+      </div>
     </div>
-  </section>
-
-  <section class="pad" style="padding-top:0">
-    <h2>Comment ça se passe</h2>
-    <p class="sub">Du premier appel à la mise en ligne, en une semaine.</p>
-    <div class="track"></div>
-    <div class="steps">
-      <div class="step"><div class="d">JOUR 1</div><h4>On échange</h4><p>15 minutes au téléphone pour comprendre votre activité.</p></div>
-      <div class="step"><div class="d">JOUR 3</div><h4>Maquette</h4><p>Vous voyez votre site avant de payer quoi que ce soit.</p></div>
-      <div class="step"><div class="d">JOUR 5</div><h4>Ajustements</h4><p>Textes, photos, couleurs : on modifie jusqu'à ce que ça vous plaise.</p></div>
-      <div class="step"><div class="d">JOUR 7</div><h4>En ligne</h4><p>Votre site est publié et visible sur Google.</p></div>
-    </div>
-  </section>
-
-  <section class="pad" style="padding-top:0">
-    <h2>Options à la carte</h2>
-    <p class="sub">Uniquement si vous en avez besoin.</p>
-    <div class="extras">
-      <div><span>Maintenance &amp; mises à jour</span><b>19 € / mois</b></div>
-      <div><span>Page supplémentaire</span><b>49 €</b></div>
-      <div><span>Rédaction des textes</span><b>79 €</b></div>
-      <div><span>Logo simple</span><b>89 €</b></div>
-      <div><span>Hébergement après la 1re année</span><b>59 € / an</b></div>
-      <div><span>Refonte d'un site existant</span><b>dès 390 €</b></div>
+    <div>
+      <h2>Options à la carte</h2>
+      <div class="extras">
+        <div><span>Maintenance &amp; mises à jour</span><b>19 € / mois</b></div>
+        <div><span>Page supplémentaire</span><b>49 €</b></div>
+        <div><span>Rédaction des textes</span><b>79 €</b></div>
+        <div><span>Logo simple</span><b>89 €</b></div>
+        <div><span>Refonte d'un site existant</span><b>dès 390 €</b></div>
+      </div>
     </div>
   </section>
 
@@ -244,29 +188,34 @@ td { font-variant-numeric: tabular-nums; }
     <div>
       <h2>Parlons de votre projet</h2>
       <p>Devis gratuit sous 24 h, sans engagement. Je réponds personnellement à chaque demande.</p>
-      <div class="offer-line">Offre de lancement : −10 % pour toute commande avant le 31/12/2026</div>
+      <div class="promo">Offre de lancement : −10 % pour toute commande avant le 31/12/2026</div>
     </div>
     <div class="coords">
       <div class="coord"><div><div class="k">Téléphone</div><div class="v" id="tel">06 XX XX XX XX</div></div><button type="button" data-copy="tel">Copier</button></div>
       <div class="coord"><div><div class="k">E-mail</div><div class="v" id="mail">contact@votre-domaine.fr</div></div><button type="button" data-copy="mail">Copier</button></div>
-      <div class="coord"><div><div class="k">Zone</div><div class="v">Votre ville et alentours · à distance partout en France</div></div></div>
+      <div class="coord"><div><div class="k">Zone</div><div class="v">Votre ville · à distance partout en France</div></div></div>
     </div>
   </section>
-
-  <div class="pad foot">
-    <span>Léon · Création Web</span>
-    <span>Devis gratuit et sans engagement · Tarifs valables jusqu'au 31/12/2026</span>
-  </div>
+  <div class="pad foot"><span>Léon · Création Web</span><span>Devis gratuit et sans engagement · Tarifs valables jusqu'au 31/12/2026</span></div>
 </article>
+</div>
 
 <script>
+(function () {
+  var frame = document.getElementById('frame'), sheet = document.getElementById('sheet');
+  function fit() {
+    var s = Math.min(1, frame.clientWidth / 794);
+    sheet.style.transform = s < 1 ? 'scale(' + s + ')' : '';
+    frame.style.height = (1123 * s) + 'px';
+  }
+  addEventListener('resize', fit); fit();
+})();
 document.querySelectorAll('[data-copy]').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var el = document.getElementById(btn.dataset.copy);
-    var text = el.textContent.trim();
     var done = function () { btn.textContent = 'Copié'; setTimeout(function () { btn.textContent = 'Copier'; }, 1600); };
     var fallback = function () { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); };
-    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+    try { navigator.clipboard.writeText(el.textContent.trim()).then(done, fallback); } catch (e) { fallback(); }
   });
 });
 </script>
