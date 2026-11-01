@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nymeliaa Crochet</title>
+<meta name="description" content="L'atelier crochet de @nymeliaa_c : projets, compteur de rangs, points et calculs de laine.">
+<meta name="theme-color" content="#c9708a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf4ef; --card:#ffffff; --ink:#3b2a30; --muted:#8a7178; --line:#efdcd6;
+  --rose:#c9708a; --rose-soft:#f6dde3; --sage:#8fa98a; --sage-soft:#e3ece0;
+  --butter:#f3d98b; --shadow:0 6px 20px rgba(120,60,80,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1f171a; --card:#2b2024; --ink:#f5e8eb; --muted:#b59ca3; --line:#3d2e33;
+    --rose:#e391a8; --rose-soft:#4a2a34; --sage:#a9c4a3; --sage-soft:#2f3a2d;
+    --butter:#d9bd6a; --shadow:0 6px 20px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1f171a; --card:#2b2024; --ink:#f5e8eb; --muted:#b59ca3; --line:#3d2e33;
+  --rose:#e391a8; --rose-soft:#4a2a34; --sage:#a9c4a3; --sage-soft:#2f3a2d;
+  --butter:#d9bd6a; --shadow:0 6px 20px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;
+  min-height:100vh;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+header{padding:22px 0 10px;display:flex;align-items:center;gap:12px}
+header .logo{width:46px;height:46px;flex:none}
+header h1{font-size:1.5rem;line-height:1.1}
+header p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+header .theme{margin-left:auto;background:var(--card);border:1px solid var(--line);
+  border-radius:999px;width:40px;height:40px;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+.muted{color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{border:0;border-radius:14px;padding:11px 16px;font-weight:800;cursor:pointer;
+  background:var(--rose);color:#fff}
+.btn.ghost{background:var(--rose-soft);color:var(--ink)}
+.btn.sage{background:var(--sage);color:#fff}
+.btn.small{padding:7px 12px;font-size:.85rem;border-radius:10px}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);
+  border-radius:12px;padding:10px 12px}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-weight:600;font-size:.88rem;margin:10px 0 4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:10}
+nav.tabs button{background:none;border:0;display:flex;flex-direction:column;align-items:center;
+  gap:2px;font-size:.72rem;font-weight:700;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:12px}
+nav.tabs button span{font-size:1.35rem}
+nav.tabs button.on{color:var(--rose);background:var(--rose-soft)}
+section{display:none}section.on{display:block}
+
+/* Projects */
+.proj{display:flex;gap:14px;align-items:center;cursor:pointer}
+.swatch{width:52px;height:52px;border-radius:16px;flex:none;display:grid;place-items:center;font-size:1.5rem}
+.proj h3{font-size:1.05rem}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--sage);border-radius:99px}
+.chip{display:inline-block;font-size:.75rem;font-weight:800;padding:3px 9px;border-radius:99px;
+  background:var(--sage-soft);color:var(--ink)}
+.chip.done{background:var(--butter);color:#3b2a30}
+.empty{text-align:center;padding:30px 10px}
+.empty .big{font-size:3rem}
+
+/* Counter */
+.counter{text-align:center}
+.counter .num{font-family:Fraunces,serif;font-size:5.5rem;line-height:1;margin:8px 0;font-weight:700;color:var(--rose)}
+.counter .plus{width:150px;height:150px;border-radius:50%;font-size:3rem;margin:8px auto;display:grid;place-items:center}
+.counter .sub{display:flex;justify-content:center;gap:10px;margin-top:10px}
+.stcount{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px}
+.stcount b{font-size:1.6rem;min-width:50px;display:inline-block}
+.timer{font-variant-numeric:tabular-nums;font-weight:800}
+
+/* Stitches */
+.stitch{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start;padding:12px 0;border-bottom:1px dashed var(--line)}
+.stitch:last-child{border-bottom:0}
+.stitch .sym{width:56px;height:56px;border-radius:14px;background:var(--rose-soft);display:grid;place-items:center}
+.stitch .sym svg{width:34px;height:34px;stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round}
+.stitch h3{font-size:1rem}
+.stitch .ab{font-weight:800;color:var(--rose);font-size:.85rem}
+.stitch p{margin:4px 0 0;font-size:.92rem}
+.lvl{font-size:.7rem;font-weight:800;padding:2px 7px;border-radius:99px;background:var(--sage-soft);margin-left:6px}
+
+/* Calc */
+.result{background:var(--sage-soft);border-radius:14px;padding:14px;margin-top:12px;font-weight:600}
+.result b{font-size:1.3rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
+
+.modal{position:fixed;inset:0;background:rgba(40,20,28,.45);display:none;align-items:flex-end;justify-content:center;z-index:20}
+.modal.on{display:flex}
+.sheet{background:var(--card);width:100%;max-width:640px;border-radius:24px 24px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+.colors{display:flex;gap:8px;flex-wrap:wrap}
+.colors button{width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer}
+.colors button.on{border-color:var(--ink)}
+.emojis{display:flex;gap:6px;flex-wrap:wrap}
+.emojis button{font-size:1.4rem;background:var(--bg);border:2px solid transparent;border-radius:12px;width:44px;height:44px;cursor:pointer}
+.emojis button.on{border-color:var(--rose)}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
+  padding:10px 16px;border-radius:12px;font-weight:700;opacity:0;transition:.25s;pointer-events:none;z-index:30}
+.toast.on{opacity:1}
+.social{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="30" cy="34" r="22" fill="var(--rose)"/>
+      <path d="M12 30c10-6 26-6 36 0M10 38c12 6 28 6 40 0M22 14c-4 12-4 28 2 40M36 12c6 12 6 30-2 44" stroke="#fff" stroke-width="2.4" fill="none" opacity=".7"/>
+      <path d="M46 18l12-12" stroke="var(--sage)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M58 6c3 1 3 5 0 6" stroke="var(--sage)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <h1>Nymeliaa Crochet</h1>
+      <p>L'atelier de @nymeliaa_c</p>
+    </div>
+    <button class="theme" id="themeBtn" aria-label="Changer le thème">🌙</button>
+  </header>
+
+  <!-- PROJETS -->
+  <section id="tab-projets" class="on">
+    <div class="row" style="justify-content:space-between;margin-top:6px">
+      <h2 style="font-size:1.25rem">Mes projets</h2>
+      <button class="btn" id="newProj">+ Nouveau</button>
+    </div>
+    <div id="projList"></div>
+  </section>
+
+  <!-- COMPTEUR -->
+  <section id="tab-compteur">
+    <div class="card">
+      <label for="curProj">Projet</label>
+      <select id="curProj"></select>
+    </div>
+    <div class="card counter" id="counterCard">
+      <div class="muted" id="cName">—</div>
+      <div class="num" id="cRow">0</div>
+      <div class="muted" id="cGoal"></div>
+      <button class="btn plus" id="cPlus" aria-label="Rang suivant">＋</button>
+      <div class="sub">
+        <button class="btn ghost small" id="cMinus">− 1 rang</button>
+        <button class="btn ghost small" id="cReset">Remettre à 0</button>
+      </div>
+      <div class="stcount">
+        <button class="btn ghost small" id="sMinus">−</button>
+        <span>Mailles du rang : <b id="sNum">0</b></span>
+        <button class="btn ghost small" id="sPlus">＋</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:16px">
+        <span>⏱️ <span class="timer" id="tView">00:00:00</span></span>
+        <button class="btn sage small" id="tBtn">Démarrer</button>
+      </div>
+    </div>
+    <div class="card">
+      <label for="cNotes">Notes du projet</label>
+      <textarea id="cNotes" placeholder="Ex. R5 : *2ms, 1aug* x6 (24)"></textarea>
+    </div>
+  </section>
+
+  <!-- POINTS -->
+  <section id="tab-points">
+    <div class="card">
+      <input id="stSearch" placeholder="Chercher un point (ms, bride, augmentation…)">
+      <div id="stList"></div>
+    </div>
+  </section>
+
+  <!-- CALCULS -->
+  <section id="tab-calculs">
+    <div class="card">
+      <h2 style="font-size:1.1rem">Augmentations régulières</h2>
+      <p class="muted" style="margin:4px 0 0;font-size:.9rem">Répartis tes augmentations ou diminutions sur un rang.</p>
+      <div class="grid2">
+        <div><label for="incFrom">Mailles actuelles</label><input id="incFrom" type="number" min="1" value="24"></div>
+        <div><label for="incTo">Mailles voulues</label><input id="incTo" type="number" min="1" value="30"></div>
+      </div>
+      <div class="result" id="incRes"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:1.1rem">Rond magique : amigurumi</h2>
+      <p class="muted" style="margin:4px 0 0;font-size:.9rem">Génère les rangs d'une boule en mailles serrées.</p>
+      <div class="grid2">
+        <div><label for="amStart">Mailles de départ</label><input id="amStart" type="number" min="3" value="6"></div>
+        <div><label for="amMax">Rangs d'augmentation</label><input id="amMax" type="number" min="1" max="15" value="6"></div>
+      </div>
+      <div class="grid2">
+        <div><label for="amFlat">Rangs droits</label><input id="amFlat" type="number" min="0" value="6"></div>
+        <div style="display:flex;align-items:flex-end"><button class="btn sage" id="amCopy" style="width:100%">Copier dans les notes</button></div>
+      </div>
+      <div id="amRes" style="margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:1.1rem">Échantillon → dimensions</h2>
+      <div class="grid2">
+        <div><label for="gSt">Mailles pour 10 cm</label><input id="gSt" type="number" min="1" value="16"></div>
+        <div><label for="gRw">Rangs pour 10 cm</label><input id="gRw" type="number" min="1" value="18"></div>
+        <div><label for="gW">Largeur voulue (cm)</label><input id="gW" type="number" min="1" value="50"></div>
+        <div><label for="gH">Hauteur voulue (cm)</label><input id="gH" type="number" min="1" value="60"></div>
+      </div>
+      <div class="result" id="gRes"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:1.1rem">Pelotes nécessaires</h2>
+      <div class="grid2">
+        <div><label for="yNeed">Métrage total (m)</label><input id="yNeed" type="number" min="1" value="600"></div>
+        <div><label for="yBall">Mètres par pelote</label><input id="yBall" type="number" min="1" value="125"></div>
+      </div>
+      <div class="result" id="yRes"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:1.1rem">Crochet ↔ épaisseur de laine</h2>
+      <table>
+        <thead><tr><th>Laine</th><th>Crochet</th><th>Idéal pour</th></tr></thead>
+        <tbody>
+          <tr><td>0 · Lace</td><td>1,5 – 2,25 mm</td><td>Dentelle, napperons</td></tr>
+          <tr><td>1 · Fingering</td><td>2,25 – 3,5 mm</td><td>Chaussettes, bijoux</td></tr>
+          <tr><td>2 · Sport</td><td>3,5 – 4,5 mm</td><td>Bébé, petits hauts</td></tr>
+          <tr><td>3 · DK</td><td>4,5 – 5,5 mm</td><td>Amigurumi, tops, sacs</td></tr>
+          <tr><td>4 · Worsted</td><td>5,5 – 6,5 mm</td><td>Pulls, couvertures</td></tr>
+          <tr><td>5 · Chunky</td><td>6,5 – 9 mm</td><td>Bonnets, écharpes</td></tr>
+          <tr><td>6 · Super bulky</td><td>9 – 15 mm</td><td>Plaids, peluches douces</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <a class="social" href="https://www.tiktok.com/@nymeliaa_c" target="_blank" rel="noopener">
+        <span style="font-size:1.8rem">🎬</span>
+        <span><b>Suivre @nymeliaa_c sur TikTok</b><br><span class="muted">Tutos et créations au crochet</span></span>
+      </a>
+    </div>
+  </section>
+</div>
+
+<nav class="tabs">
+  <button data-tab="projets" class="on"><span>🧶</span>Projets</button>
+  <button data-tab="compteur"><span>🔢</span>Compteur</button>
+  <button data-tab="points"><span>🪡</span>Points</button>
+  <button data-tab="calculs"><span>📐</span>Calculs</button>
+</nav>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h2 style="font-size:1.2rem" id="mTitle">Nouveau projet</h2>
+    <label for="pName">Nom</label><input id="pName" placeholder="Ex. Petit lapin, sac tote…">
+    <div class="grid2">
+      <div><label for="pHook">Crochet (mm)</label><input id="pHook" type="number" step="0.25" placeholder="3.5"></div>
+      <div><label for="pGoal">Rangs prévus</label><input id="pGoal" type="number" min="0" placeholder="40"></div>
+    </div>
+    <label for="pYarn">Laine</label><input id="pYarn" placeholder="Coton, acrylique, couleur…">
+    <label>Icône</label><div class="emojis" id="pEmoji"></div>
+    <label>Couleur</label><div class="colors" id="pColor"></div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn" id="pSave" style="flex:1">Enregistrer</button>
+      <button class="btn ghost" id="pCancel">Annuler</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn ghost small" id="pDone">Marquer terminé</button>
+      <button class="btn ghost small" id="pDel" style="color:#b33">Supprimer</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const KEY = 'nymeliaa-crochet-v1';
+  const COLORS = ['#f6c7d3','#c9708a','#f3d98b','#cfe3c9','#8fa98a','#c7d8f0','#d9c7f0','#f1c9a5','#e8e0d6'];
+  const EMOJIS = ['🧶','🐰','🐻','🌸','👜','🧣','🧢','🍓','🐙','🌼','💖','🐱'];
+
+  let store;
+  try { store = JSON.parse(localStorage.getItem(KEY)) || null; } catch(e) { store = null; }
+  if (!store) store = { projects: [], current: null, theme: null };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e) {} };
+  const uid = () => Math.random().toString(36).slice(2, 10);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const toast = msg => { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 1600); };
+  const vibrate = ms => { try { navigator.vibrate && navigator.vibrate(ms); } catch(e) {} };
+
+  // ---------- Theme ----------
+  const applyTheme = () => {
+    if (store.theme) document.documentElement.dataset.theme = store.theme;
+    else delete document.documentElement.dataset.theme;
+    const dark = store.theme ? store.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    $('#themeBtn').textContent = dark ? '☀️' : '🌙';
+  };
+  $('#themeBtn').onclick = () => {
+    const dark = store.theme ? store.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    store.theme = dark ? 'light' : 'dark'; save(); applyTheme();
+  };
+  applyTheme();
+
+  // ---------- Tabs ----------
+  const showTab = name => {
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
+    document.querySelectorAll('section').forEach(s => s.classList.toggle('on', s.id === 'tab-' + name));
+    if (name === 'compteur') renderCounter();
+    window.scrollTo(0, 0);
+  };
+  document.querySelectorAll('nav.tabs button').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+
+  // ---------- Projects ----------
+  const cur = () => store.projects.find(p => p.id === store.current);
+  const renderProjects = () => {
+    const el = $('#projList');
+    if (!store.projects.length) {
+      el.innerHTML = `<div class="card empty"><div class="big">🧶</div><h3>Aucun projet pour l'instant</h3>
+        <p class="muted">Crée ton premier projet pour suivre tes rangs, ton temps et tes notes.</p></div>`;
+      return;
+    }
+    el.innerHTML = store.projects.map(p => {
+      const pct = p.goal ? Math.min(100, Math.round(p.row / p.goal * 100)) : 0;
+      return `<div class="card proj" data-id="${p.id}">
+        <div class="swatch" style="background:${p.color}">${p.emoji}</div>
+        <div style="flex:1;min-width:0">
+          <div class="row" style="justify-content:space-between">
+            <h3>${esc(p.name)}</h3>
+            ${p.done ? '<span class="chip done">Terminé ✨</span>' : `<span class="chip">Rang ${p.row}${p.goal ? ' / ' + p.goal : ''}</span>`}
+          </div>
+          <div class="muted" style="font-size:.85rem">${[p.hook ? p.hook + ' mm' : '', esc(p.yarn), fmtTime(p.time)].filter(Boolean).join(' · ')}</div>
+          ${p.goal ? `<div class="bar"><i style="width:${p.done ? 100 : pct}%"></i></div>` : ''}
+        </div>
+        <button class="btn ghost small" data-edit="${p.id}" aria-label="Modifier">✏️</button>
+      </div>`;
+    }).join('');
+    el.querySelectorAll('.proj').forEach(c => c.onclick = e => {
+      const id = c.dataset.id;
+      if (e.target.closest('[data-edit]')) { openModal(id); return; }
+      store.current = id; save(); showTab('compteur');
+    });
+  };
+
+  let editing = null, pick = { color: COLORS[0], emoji: EMOJIS[0] };
+  const renderPickers = () => {
+    $('#pColor').innerHTML = COLORS.map(c => `<button style="background:${c}" class="${c === pick.color ? 'on' : ''}" data-c="${c}" aria-label="Couleur"></button>`).join('');
+    $('#pEmoji').innerHTML = EMOJIS.map(e => `<button class="${e === pick.emoji ? 'on' : ''}" data-e="${e}">${e}</button>`).join('');
+    $('#pColor').querySelectorAll('button').forEach(b => b.onclick = () => { pick.color = b.dataset.c; renderPickers(); });
+    $('#pEmoji').querySelectorAll('button').forEach(b => b.onclick = () => { pick.emoji = b.dataset.e; renderPickers(); });
+  };
+  const openModal = id => {
+    editing = id ? store.projects.find(p => p.id === id) : null;
+    $('#mTitle').textContent = editing ? 'Modifier le projet' : 'Nouveau projet';
+    $('#pName').value = editing?.name || '';
+    $('#pHook').value = editing?.hook || '';
+    $('#pGoal').value = editing?.goal || '';
+    $('#pYarn').value = editing?.yarn || '';
+    pick = { color: editing?.color || COLORS[Math.floor(Math.random() * COLORS.length)], emoji: editing?.emoji || EMOJIS[0] };
+    $('#pDone').style.display = $('#pDel').style.display = editing ? '' : 'none';
+    $('#pDone').textContent = editing?.done ? 'Remettre en cours' : 'Marquer terminé';
+    renderPickers();
+    $('#modal').classList.add('on');
+    setTimeout(() => $('#pName').focus(), 50);
+  };
+  const closeModal = () => $('#modal').classList.remove('on');
+  $('#newProj').onclick = () => openModal(null);
+  $('#pCancel').onclick = closeModal;
+  $('#modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
+  $('#pSave').onclick = () => {
+    const name = $('#pName').value.trim();
+    if (!name) { toast('Donne un nom à ton projet'); return; }
+    const data = { name, hook: parseFloat($('#pHook').value) || '', goal: parseInt($('#pGoal').value) || 0,
+      yarn: $('#pYarn').value.trim(), color: pick.color, emoji: pick.emoji };
+    if (editing) Object.assign(editing, data);
+    else { const p = { id: uid(), row: 0, stitches: 0, time: 0, notes: '', done: false, created: Date.now(), ...data };
+      store.projects.unshift(p); store.current = p.id; }
+    save(); closeModal(); renderProjects(); renderSelect(); toast('Projet enregistré 🧶');
+  };
+  $('#pDone').onclick = () => { editing.done = !editing.done; save(); closeModal(); renderProjects();
+    toast(editing.done ? 'Bravo, projet terminé ! 🎉' : 'Projet remis en cours'); };
+  $('#pDel').onclick = () => {
+    if (!confirm('Supprimer « ' + editing.name + ' » ?')) return;
+    store.projects = store.projects.filter(p => p !== editing);
+    if (store.current === editing.id) store.current = store.projects[0]?.id || null;
+    save(); closeModal(); renderProjects(); renderSelect();
+  };
+
+  // ---------- Counter ----------
+  const fmtTime = s => { if (!s) return ''; const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60);
+    return h ? `${h} h ${String(m).padStart(2, '0')}` : `${m} min`; };
+  const clock = s => [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, '0')).join(':');
+  const renderSelect = () => {
+    $('#curProj').innerHTML = store.projects.length
+      ? store.projects.map(p => `<option value="${p.id}" ${p.id === store.current ? 'selected' : ''}>${p.emoji} ${esc(p.name)}</option>`).join('')
+      : '<option value="">Compteur libre</option>';
+  };
+  let free = { row: 0, stitches: 0, time: 0, notes: '' };
+  const target = () => cur() || free;
+  const renderCounter = () => {
+    renderSelect();
+    const p = target();
+    $('#cName').textContent = cur() ? cur().emoji + ' ' + cur().name : 'Compteur libre';
+    $('#cRow').textContent = p.row;
+    $('#cGoal').textContent = p.goal ? `sur ${p.goal} rangs` : 'rangs';
+    $('#sNum').textContent = p.stitches || 0;
+    $('#cNotes').value = p.notes || '';
+    $('#tView').textContent = clock(p.time || 0);
+  };
+  $('#curProj').onchange = e => { stopTimer(); store.current = e.target.value || null; save(); renderCounter(); };
+  const bump = d => { const p = target(); p.row = Math.max(0, p.row + d); if (d > 0) p.stitches = 0;
+    if (p.goal && p.row === p.goal) toast('Dernier rang atteint ! 🎉');
+    vibrate(d > 0 ? 25 : 10); save(); renderCounter(); renderProjects(); };
+  $('#cPlus').onclick = () => bump(1);
+  $('#cMinus').onclick = () => bump(-1);
+  $('#cReset').onclick = () => { if (confirm('Remettre le compteur à 0 ?')) { const p = target(); p.row = 0; p.stitches = 0; save(); renderCounter(); renderProjects(); } };
+  $('#sPlus').onclick = () => { const p = target(); p.stitches = (p.stitches || 0) + 1; vibrate(10); save(); renderCounter(); };
+  $('#sMinus').onclick = () => { const p = target(); p.stitches = Math.max(0, (p.stitches || 0) - 1); save(); renderCounter(); };
+  $('#cNotes').oninput = e => { target().notes = e.target.value; save(); };
+
+  let tick = null;
+  const stopTimer = () => { if (tick) { clearInterval(tick); tick = null; $('#tBtn').textContent = 'Démarrer'; save(); renderProjects(); } };
+  $('#tBtn').onclick = () => {
+    if (tick) { stopTimer(); return; }
+    const p = target(); $('#tBtn').textContent = 'Pause';
+    tick = setInterval(() => { p.time = (p.time || 0) + 1; $('#tView').textContent = clock(p.time); if (p.time % 15 === 0) save(); }, 1000);
+  };
+  document.addEventListener('keydown', e => {
+    if (!$('#tab-compteur').classList.contains('on') || e.target.matches('input,textarea,select')) return;
+    if (e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); bump(1); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); bump(-1); }
+  });
+
+  // ---------- Stitches ----------
+  const SYM = {
+    ml:'<ellipse cx="17" cy="17" rx="10" ry="6"/>',
+    mc:'<circle cx="17" cy="17" r="5" fill="currentColor"/>',
+    ms:'<path d="M9 9l16 16M25 9L9 25"/>',
+    dbr:'<path d="M17 6v22M10 10h14"/>',
+    br:'<path d="M17 5v24M10 9h14M12 18l10-4"/>',
+    dbbr:'<path d="M17 4v26M10 8h14M12 15l10-4M12 22l10-4"/>',
+    aug:'<path d="M17 28L9 8M17 28l8-20"/>',
+    dim:'<path d="M9 28l8-20 8 20"/>',
+    rm:'<circle cx="17" cy="17" r="10"/><path d="M17 7v-3"/>',
+    pop:'<ellipse cx="17" cy="15" rx="7" ry="10"/><path d="M17 25v5"/>',
+    pc:'<path d="M17 28L11 8M17 28l6-20M17 28V6M9 10h16"/>',
+    bp:'<path d="M12 6v22M22 6v22M12 17h10"/>',
+    gr:'<path d="M17 28L8 10M17 28l9-18M17 28V8M5 12h7M22 12h7"/>',
+    bkl:'<path d="M8 26h18M10 26V10h14v16"/>',
+    crab:'<path d="M26 17H8M13 11l-5 6 5 6"/>',
+  };
+  const STITCHES = [
+    { s:'ml', n:'Maille en l\'air', ab:'ml · ch', lvl:'Débutant', d:'Jeté, ramène le fil à travers la boucle. C\'est la base de la chaînette de départ et des arceaux.' },
+    { s:'mc', n:'Maille coulée', ab:'mc · sl st', lvl:'Débutant', d:'Pique, jeté, ramène le fil à travers la maille et la boucle du crochet. Sert à fermer un rond ou se déplacer.' },
+    { s:'ms', n:'Maille serrée', ab:'ms · sc', lvl:'Débutant', d:'Pique, jeté, tire une boucle (2 boucles), jeté, passe à travers les 2. Le point star de l\'amigurumi.' },
+    { s:'dbr', n:'Demi-bride', ab:'dB · hdc', lvl:'Débutant', d:'Jeté, pique, jeté, tire une boucle (3 boucles), jeté, passe à travers les 3 d\'un coup.' },
+    { s:'br', n:'Bride', ab:'B · dc', lvl:'Débutant', d:'Jeté, pique, tire une boucle (3), jeté à travers 2, puis jeté à travers les 2 dernières.' },
+    { s:'dbbr', n:'Double bride', ab:'DB · tr', lvl:'Intermédiaire', d:'2 jetés, pique, tire une boucle (4), puis 3 fois : jeté à travers 2 boucles.' },
+    { s:'rm', n:'Cercle magique', ab:'CM · MR', lvl:'Débutant', d:'Fais une boucle autour des doigts, crochète tes mailles dedans puis tire le bout du fil pour fermer sans trou.' },
+    { s:'aug', n:'Augmentation', ab:'aug · inc', lvl:'Débutant', d:'2 mailles dans la même maille du rang précédent.' },
+    { s:'dim', n:'Diminution invisible', ab:'dim · inv dec', lvl:'Débutant', d:'Pique dans le brin avant de 2 mailles, jeté, tire à travers les 2 brins, puis termine comme une ms. Idéal pour l\'amigurumi.' },
+    { s:'bkl', n:'Brin arrière / avant', ab:'BAR / BAV · BLO / FLO', lvl:'Débutant', d:'Pique uniquement dans le brin arrière (ou avant) pour créer une ligne en relief ou un effet côtelé.' },
+    { s:'pop', n:'Point popcorn', ab:'pop', lvl:'Intermédiaire', d:'5 brides dans la même maille, retire le crochet, pique dans la 1re bride et ramène la dernière boucle à travers.' },
+    { s:'pc', n:'Point bouffant', ab:'pb · puff', lvl:'Intermédiaire', d:'(Jeté, pique, tire une boucle allongée) 3 à 5 fois, puis jeté à travers toutes les boucles. Texture toute douce.' },
+    { s:'gr', n:'Granny (groupe de brides)', ab:'gr · cluster', lvl:'Débutant', d:'3 brides dans le même espace, séparées par des ml aux coins. La base du granny square.' },
+    { s:'bp', n:'Bride en relief', ab:'BRav / BRar · FPdc / BPdc', lvl:'Intermédiaire', d:'Bride crochetée autour du pied de la maille (par devant ou derrière). Parfait pour les côtes et les tresses.' },
+    { s:'crab', n:'Point d\'écrevisse', ab:'pt écr · rev sc', lvl:'Intermédiaire', d:'Maille serrée crochetée de gauche à droite. Bordure torsadée très jolie.' },
+  ];
+  const renderStitches = () => {
+    const q = $('#stSearch').value.trim().toLowerCase();
+    const list = STITCHES.filter(s => !q || (s.n + ' ' + s.ab + ' ' + s.d).toLowerCase().includes(q));
+    $('#stList').innerHTML = list.length ? list.map(s => `<div class="stitch">
+      <div class="sym"><svg viewBox="0 0 34 34" style="color:var(--ink)">${SYM[s.s]}</svg></div>
+      <div><h3>${s.n}<span class="lvl">${s.lvl}</span></h3><div class="ab">${s.ab}</div><p>${s.d}</p></div>
+    </div>`).join('') : '<p class="muted" style="text-align:center;padding:20px">Aucun point trouvé.</p>';
+  };
+  $('#stSearch').oninput = renderStitches;
+
+  // ---------- Calculators ----------
+  const n = id => parseFloat($(id).value) || 0;
+  const calcInc = () => {
+    const a = Math.round(n('#incFrom')), b = Math.round(n('#incTo')), el = $('#incRes');
+    if (a < 1 || b < 1) { el.textContent = 'Entre des nombres valides.'; return; }
+    if (a === b) { el.innerHTML = 'Rien à changer : 1 ms dans chaque maille.'; return; }
+    if (b > a) {
+      const inc = b - a;
+      if (inc > a) { el.textContent = 'Trop d\'augmentations : au plus une par maille (max ' + a * 2 + ').'; return; }
+      const base = Math.floor(a / inc), extra = a % inc;
+      const each = base - 1;
+      let txt = `<b>${inc} augmentations</b><br>`;
+      txt += extra === 0
+        ? `*${each ? each + ' ms, ' : ''}1 aug* × ${inc} (${b})`
+        : `*${each ? each + ' ms, ' : ''}1 aug* × ${inc - extra}, *${each + 1} ms, 1 aug* × ${extra} (${b})`;
+      el.innerHTML = txt;
+    } else {
+      const dec = a - b;
+      if (dec * 2 > a) { el.textContent = 'Trop de diminutions : au plus une toutes les 2 mailles (min ' + Math.ceil(a / 2) + ').'; return; }
+      const base = Math.floor(a / dec), extra = a % dec, each = base - 2;
+      let txt = `<b>${dec} diminutions</b><br>`;
+      txt += extra === 0
+        ? `*${each ? each + ' ms, ' : ''}1 dim* × ${dec} (${b})`
+        : `*${each ? each + ' ms, ' : ''}1 dim* × ${dec - extra}, *${each + 1} ms, 1 dim* × ${extra} (${b})`;
+      el.innerHTML = txt;
+    }
+  };
+  let amText = '';
+  const calcAm = () => {
+    const s = Math.max(3, Math.round(n('#amStart'))), k = Math.min(15, Math.max(1, Math.round(n('#amMax')))), f = Math.max(0, Math.round(n('#amFlat')));
+    const lines = [`R1 : ${s} ms dans un cercle magique (${s})`];
+    let r = 2;
+    for (let i = 1; i < k; i++) {
+      const tot = s * (i + 1);
+      lines.push(`R${r++} : ${i === 1 ? '1 aug dans chaque maille' : `*${i - 1} ms, 1 aug* × ${s}`} (${tot})`);
+    }
+    const max = s * k;
+    if (f) lines.push(`R${r}${f > 1 ? '–R' + (r + f - 1) : ''} : 1 ms dans chaque maille (${max})`), r += f;
+    for (let i = k - 1; i >= 1; i--) {
+      lines.push(`R${r++} : ${i === 1 ? '1 dim × ' + s : `*${i - 1} ms, 1 dim* × ${s}`} (${s * i})`);
+    }
+    lines.push('Rembourre avant de fermer, puis tire le fil à travers les mailles restantes.');
+    amText = lines.join('\n');
+    $('#amRes').innerHTML = '<div class="result" style="font-weight:400;white-space:pre-line;font-size:.92rem">' + esc(amText) + '</div>';
+  };
+  $('#amCopy').onclick = () => {
+    const p = target(); p.notes = (p.notes ? p.notes + '\n\n' : '') + amText; save();
+    toast(cur() ? 'Ajouté aux notes de « ' + cur().name + ' »' : 'Ajouté aux notes du compteur');
+  };
+  const calcGauge = () => {
+    const st = n('#gSt'), rw = n('#gRw'), w = n('#gW'), h = n('#gH');
+    $('#gRes').innerHTML = st && rw ? `Monte <b>${Math.round(st * w / 10)}</b> mailles et crochète <b>${Math.round(rw * h / 10)}</b> rangs.` : 'Entre ton échantillon.';
+  };
+  const calcYarn = () => {
+    const need = n('#yNeed'), ball = n('#yBall');
+    if (!need || !ball) { $('#yRes').textContent = 'Entre des valeurs.'; return; }
+    const balls = Math.ceil(need / ball), safe = Math.ceil(need * 1.1 / ball);
+    $('#yRes').innerHTML = `<b>${balls}</b> pelote${balls > 1 ? 's' : ''}, ou <b>${safe}</b> avec 10 % de marge (conseillé, même bain).`;
+  };
+  ['#incFrom','#incTo'].forEach(i => $(i).oninput = calcInc);
+  ['#amStart','#amMax','#amFlat'].forEach(i => $(i).oninput = calcAm);
+  ['#gSt','#gRw','#gW','#gH'].forEach(i => $(i).oninput = calcGauge);
+  ['#yNeed','#yBall'].forEach(i => $(i).oninput = calcYarn);
+
+  // ---------- Init ----------
+  if (!store.current && store.projects.length) store.current = store.projects[0].id;
+  renderProjects(); renderSelect(); renderStitches(); calcInc(); calcAm(); calcGauge(); calcYarn();
+  window.addEventListener('beforeunload', save);
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+})();
+</script>
+</body>
+</html>
