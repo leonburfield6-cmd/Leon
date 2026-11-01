@@ -248,24 +248,15 @@ footer a:hover{color:var(--ink)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-/* Intro : photo fixe de la RS3, bouton de démarrage, son du moteur */
+/* Intro : un seul bouton START / STOP, son de moteur de 2 s */
 html.intro-on,html.intro-on body{overflow:hidden}
-.intro{position:fixed;inset:0;z-index:100;background:#000;transition:opacity .8s ease}
+.intro{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:radial-gradient(circle at 50% 45%,#1A1E24 0%,#07080A 62%,#000 100%);transition:opacity .6s ease;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));text-align:center}
 .intro.out{opacity:0;pointer-events:none}
-.intro-bg{position:absolute;inset:0}
-.intro-bg img{width:100%;height:100%;object-fit:cover;object-position:40% 60%;filter:brightness(.5) saturate(.9)}
-.intro-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.75),rgba(0,0,0,.05) 35%,rgba(0,0,0,.1) 55%,rgba(0,0,0,.9))}
-.intro-ui{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding-block:calc(44px + env(safe-area-inset-top,0px)) calc(32px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.intro-brand{font:900 clamp(44px,11vw,72px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.03em;color:#fff}
-.intro-brand b{color:var(--sodium)}
-.intro-cta{display:flex;flex-direction:column;align-items:center;gap:18px}
-.start{width:124px;height:124px;border-radius:50%;border:2px solid rgba(255,255,255,.75);background:rgba(0,0,0,.4);color:#fff;font:800 22px/1 var(--f-display);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .2s,color .2s,transform .1s}
-.start:hover{border-color:var(--sodium);color:var(--sodium)}
-.start:active{transform:scale(.96)}
-.start:disabled{opacity:.5;cursor:default;transform:none}
-.intro-msg{font:500 15px/1.5 var(--f-body);color:rgba(255,255,255,.85);min-height:1.5em}
-.intro-skip{background:none;border:0;color:rgba(255,255,255,.75);text-decoration:underline;text-underline-offset:3px;font:500 15px/1 var(--f-body);cursor:pointer;padding:10px}
-.intro-skip:hover{color:#fff}
+.ignite{width:176px;height:176px;border-radius:50%;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#E9EDF2;background:radial-gradient(circle at 50% 30%,#454B55,#1A1E24 58%,#0B0D10);box-shadow:0 0 0 7px #23272D,0 0 0 9px #0B0D10,0 0 0 12px rgba(255,46,46,.9),0 0 46px 12px rgba(255,30,30,.32),inset 0 2px 3px rgba(255,255,255,.18);font:600 12px/1 var(--f-mono);letter-spacing:.22em;text-transform:uppercase;transition:transform .12s}
+.ignite b{font:900 40px/1 var(--f-display);letter-spacing:.08em;color:#fff}
+.ignite:active{transform:scale(.95)}
+.ignite:disabled{cursor:default;transform:none;box-shadow:0 0 0 7px #23272D,0 0 0 9px #0B0D10,0 0 0 12px rgba(255,46,46,.55),0 0 30px 6px rgba(255,30,30,.18),inset 0 2px 3px rgba(255,255,255,.18)}
+.intro-msg{font:500 13px/1.5 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);min-height:1.5em}
 
 /* Marques de la flotte */
 .brands{border-top:1px solid var(--line);padding-block:44px 52px}
@@ -282,15 +273,8 @@ html.intro-on,html.intro-on body{overflow:hidden}
 </head>
 <body>
 <div class="intro" id="intro" hidden>
-  <div class="intro-bg"><img id="introImg" src="img/rs3-carbone.jpg" alt=""></div>
-  <div class="intro-ui">
-    <p class="intro-brand">Emz<b>Cars</b></p>
-    <div class="intro-cta">
-      <button class="start" id="startBtn" type="button">Start</button>
-      <p class="intro-msg" id="introMsg">Appuie pour démarrer le moteur. Mets le son.</p>
-    </div>
-    <button class="intro-skip" id="introSkip" type="button">Entrer sur le site</button>
-  </div>
+  <button class="ignite" id="startBtn" type="button" aria-label="Start, démarrer le moteur et entrer sur le site"><span>Start</span><b>Stop</b><span>Entrer</span></button>
+  <p class="intro-msg" id="introMsg">Appuie pour démarrer</p>
 </div>
 <script>
 (function(){
@@ -815,30 +799,28 @@ renderFleet("all");
 update();
 </script>
 <script>
-/* ===== Intro : son de moteur synthétisé (9 s), photo fixe ===== */
+/* ===== Intro : son de gros moteur, 2 s, sans animation ===== */
 (function(){
 const intro=document.getElementById("intro");
 if(!intro||intro.hidden) return;
-const END=9.2;
-const sm=p=>p*p*(3-2*p), cl=x=>Math.max(0,Math.min(1,x)), lerp=(a,b,p)=>a+(b-a)*p;
+const END=2.3;
+const sm=p=>p*p*(3-2*p), lerp=(a,b,p)=>a+(b-a)*p;
 
-/* Régime moteur, accélérateur et pétarades d'échappement sur 9 s */
+/* Régime : démarreur, prise du moteur, ralenti, coup de gaz à fond, lâcher de pied */
 function rpmAt(t){
-  if(t<0.8) return 220+60*Math.sin(t*2*Math.PI*8);                 // démarreur
-  if(t<1.0) return lerp(220,1500,(t-0.8)/0.2);                      // le moteur prend
-  if(t<1.6) return 950+30*Math.sin(t*38);                           // ralenti
-  if(t<2.3) return 950+3050*sm((t-1.6)/0.7);                        // coup de gaz
-  if(t<2.5) return lerp(4000,950,sm((t-2.3)/0.2));                  // relâché
-  if(t<3.6) return 950+5550*Math.pow((t-2.5)/1.1,1.1);              // 1re à fond
-  if(t<4.4) return lerp(6500,7300,(t-3.6)/0.8);                     // 2e à fond
-  if(t<5.5) return 950+6350*Math.exp(-(t-4.4)*2.2);                 // lâcher de pied
-  return 950+30*Math.sin(t*31);                                     // ralenti final
+  if(t<0.4) return 240+50*Math.sin(t*2*Math.PI*8);
+  if(t<0.6) return lerp(240,1100,(t-0.4)/0.2);
+  if(t<1.0) return 1000+40*Math.sin(t*38);
+  if(t<1.35) return 1000+5000*sm((t-1.0)/0.35);
+  if(t<1.5) return lerp(6000,1100,sm((t-1.35)/0.15));
+  if(t<2.1) return 1000+30*Math.sin(t*31);
+  return 1000+30*Math.sin(t*31);
 }
-function thrAt(t){ if(t<0.8) return .15; if(t<1.6) return .12; if(t<2.3) return 1; if(t<2.5) return .05; if(t<4.4) return 1; if(t<5.5) return .03; return .1; }
-const POPS=[[2.5,1.0],[4.5,1.5],[4.66,1.1],[4.86,1.4],[5.07,.9],[5.42,1.2],[5.95,.8],[6.6,.9],[7.25,.7],[7.9,.8],[8.55,1.0]];
+function thrAt(t){ if(t<0.6) return .15; if(t<1.0) return .1; if(t<1.35) return 1; if(t<1.5) return .03; return .1; }
+const POPS=[[1.5,1.2],[1.63,.8],[1.9,.9],[2.06,.7]];
 
 function synth(ac){
-  const sr=ac.sampleRate, N=Math.floor(sr*(END+.3)), out=new Float32Array(N);
+  const sr=ac.sampleRate, N=Math.floor(sr*(END+.2)), out=new Float32Array(N);
   let seed=7; const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
   const PL=Math.floor(sr*.03), pulse=new Float32Array(PL);
   for(let i=0;i<PL;i++){ const u=i/sr;
@@ -849,20 +831,20 @@ function synth(ac){
     const t=i/sr, rpm=rpmAt(t), thr=thrAt(t);
     ph+=rpm/24/sr;                                       // 5 cylindres : rpm/24 explosions par seconde
     if(ph>=1){ ph-=1; k++;
-      const a=(.2+.8*thr)*cyl[k%5]*(.88+.24*rnd())*(t<.8?.22:1)*(.75+.35*rpm/7000);
+      const a=(.2+.8*thr)*cyl[k%5]*(.88+.24*rnd())*(t<.6?.22:1)*(.75+.35*rpm/7000);
       for(let j=0;j<PL&&i+j<N;j++) out[i+j]+=pulse[j]*a; }
     const n=rnd()*2-1; lp+=(n-lp)*.22; lp2+=(lp-lp2)*.5;
-    out[i]+=lp2*.14*thr*(rpm/7000);                     // souffle d'admission
-    if(t<.82){ const e=Math.min(1,t/.03)*Math.min(1,(.82-t)/.06), m=.55+.45*Math.sin(2*Math.PI*9*t);
-      out[i]+=e*m*.14*(.5*Math.sign(Math.sin(2*Math.PI*165*t))+.5*Math.sin(2*Math.PI*330*t)); } // démarreur
+    out[i]+=lp2*.14*thr*(rpm/7000);
+    if(t<.42){ const e=Math.min(1,t/.03)*Math.min(1,(.42-t)/.05), m=.55+.45*Math.sin(2*Math.PI*9*t);
+      out[i]+=e*m*.14*(.5*Math.sign(Math.sin(2*Math.PI*165*t))+.5*Math.sin(2*Math.PI*330*t)); }
   }
   for(const [pt,pa] of POPS){ const s=Math.floor(pt*sr);
     for(let j=0;j<sr*.14&&s+j<N;j++){ const u=j/sr; out[s+j]+=pa*((rnd()*2-1)*Math.exp(-u/.011)*1.2+Math.sin(2*Math.PI*56*u)*Math.exp(-u/.04)*1.5); }
-    const c=3+Math.floor(rnd()*5);
-    for(let q=0;q<c;q++){ const cs=s+Math.floor(sr*(.025+rnd()*.1)); for(let j=0;j<sr*.005&&cs+j<N;j++) out[cs+j]+=pa*.5*(rnd()*2-1)*Math.exp(-j/sr/.0012); }
+    const c=3+Math.floor(rnd()*4);
+    for(let q=0;q<c;q++){ const cs=s+Math.floor(sr*(.025+rnd()*.08)); for(let j=0;j<sr*.005&&cs+j<N;j++) out[cs+j]+=pa*.5*(rnd()*2-1)*Math.exp(-j/sr/.0012); }
   }
   let pk=0; for(let i=0;i<N;i++){ out[i]=Math.tanh(out[i]*1.5); pk=Math.max(pk,Math.abs(out[i])); }
-  const fade=Math.floor(sr*.6);
+  const fade=Math.floor(sr*.25);
   for(let i=0;i<N;i++){ let v=out[i]/pk*.95; if(i>N-fade) v*=(N-i)/fade; out[i]=v; }
   const b=ac.createBuffer(2,N,sr), r=new Float32Array(N), d=Math.floor(sr*.0007);
   for(let i=d;i<N;i++) r[i]=out[i-d];
@@ -894,18 +876,17 @@ function finish(){
   if(done) return; done=true;
   try{ sessionStorage.setItem("emzIntro","1"); }catch(_){}
   intro.classList.add("out"); document.documentElement.classList.remove("intro-on");
-  setTimeout(()=>intro.remove(),850);
-  if(snd){ setTimeout(()=>{ try{ snd.ac.close(); }catch(_){} }, 900); }
+  setTimeout(()=>intro.remove(),650);
+  if(snd){ setTimeout(()=>{ try{ snd.ac.close(); }catch(_){} }, 700); }
 }
 async function start(){
-  btn.disabled=true; msg.textContent="Moteur en marche…";
+  btn.disabled=true; msg.textContent="Moteur en marche";
   try{ snd=await playSound(); }catch(_){ snd=null; }
   if(!snd){ setTimeout(finish,END*1000); return; }
   const tick=()=>{ if(done) return; const t=snd.ac.currentTime-snd.t0; if(t>=END) finish(); else requestAnimationFrame(tick); };
   tick();
 }
 btn.addEventListener("click",start,{once:true});
-document.getElementById("introSkip").addEventListener("click",finish);
 })();
 </script>
 </body>
