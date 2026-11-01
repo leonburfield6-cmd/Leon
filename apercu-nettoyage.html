@@ -1,0 +1,563 @@
+<title>Lustra Auto Clean</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: signalétique de station de lavage — bandes pleine largeur, panneau jaune pour l'action, fiche de réservation en colonne droite */
+:root{
+  --bg:#EEF2F5; --surface:#FFFFFF; --ink:#0B1D2A; --muted:#566876; --line:#D3DCE3;
+  --accent:#F4BE0B; --on-accent:#0B1D2A; --deep:#0B1D2A; --on-deep:#EAF0F4; --ok:#1F8A5B;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08131B; --surface:#0F1E29; --ink:#E6EDF2; --muted:#93A5B3; --line:#1F3241;
+  --accent:#F6C624; --on-accent:#0B1D2A; --deep:#040B10; --on-deep:#E6EDF2; --ok:#3CC487; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08131B; --surface:#0F1E29; --ink:#E6EDF2; --muted:#93A5B3; --line:#1F3241;
+  --accent:#F6C624; --on-accent:#0B1D2A; --deep:#040B10; --on-deep:#E6EDF2; --ok:#3CC487; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-stretch:118%;line-height:1.02;text-wrap:balance;margin:0}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px/1 var(--f-body);padding:15px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn-deep{background:var(--ink);color:var(--bg)}
+
+/* Bandeau démo */
+.demo{background:var(--accent);color:var(--on-accent);font:600 13px/1.4 var(--f-body)}
+.demo .wrap{padding-block:8px;display:flex;gap:10px;justify-content:center;text-align:center}
+
+/* En-tête */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{font-family:var(--f-display);font-weight:900;font-stretch:125%;font-size:22px;letter-spacing:-.02em;text-decoration:none;display:flex;align-items:baseline;gap:6px}
+.logo span{font:700 11px var(--f-mono);letter-spacing:.14em;color:var(--muted)}
+nav.links{display:flex;gap:22px;font-weight:500;font-size:15px}
+nav.links a{text-decoration:none;color:var(--muted)}
+nav.links a:hover{color:var(--ink)}
+@media (max-width:760px){nav.links{display:none}}
+header.top .btn{padding:11px 18px;font-size:14px}
+
+/* Hero */
+.hero .wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:48px;align-items:end;padding-block:64px 56px}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:32px;padding-block:40px}}
+.hero h1{font-size:clamp(44px,7.4vw,92px);font-weight:900;letter-spacing:-.035em;position:relative}
+.hero h1 .clean{position:relative;display:inline-block;background:linear-gradient(100deg,var(--ink) 0 40%,var(--muted) 50%,var(--ink) 60% 100%);background-size:300% 100%;background-position:0 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 2.4s .4s ease-out both}
+@keyframes shine{from{background-position:100% 0}to{background-position:0 0}}
+.squeegee{height:10px;background:var(--accent);border-radius:999px;margin-top:22px;width:120px;transform-origin:left;animation:wipe 1s .2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes wipe{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+.hero p.lead{font-size:19px;color:var(--muted);max-width:52ch;margin-top:22px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.ticket{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:16px;min-width:0}
+.ticket .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:12px}
+.ticket .row:last-child{border-bottom:0;padding-bottom:0}
+.ticket .k{color:var(--muted);font-size:14px}
+.ticket .v{font:700 15px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.ticket .big{font-family:var(--f-display);font-weight:900;font-stretch:120%;font-size:30px;line-height:1.05}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:middle;box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 25%,transparent)}
+
+/* Bande atouts */
+.strip{background:var(--deep);color:var(--on-deep)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-block:26px}
+.strip b{display:block;font-family:var(--f-display);font-stretch:115%;font-size:17px;font-weight:800}
+.strip small{color:color-mix(in srgb,var(--on-deep) 65%,transparent);font-size:14px}
+@media (max-width:760px){.strip .wrap{grid-template-columns:1fr 1fr}}
+
+section.block .wrap{padding-block:80px}
+@media (max-width:760px){section.block .wrap{padding-block:56px}}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+.sec-head h2{font-size:clamp(32px,4.6vw,52px);font-weight:850;letter-spacing:-.03em;margin-top:10px}
+.sec-head p{color:var(--muted);max-width:44ch}
+
+/* Sélecteur gabarit */
+.sizes{display:inline-flex;flex-wrap:wrap;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px}
+.sizes button{font:600 14px var(--f-body);border:0;background:transparent;color:var(--muted);padding:9px 14px;border-radius:999px;cursor:pointer}
+.sizes button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* Formules */
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:1000px){.plans{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.plan.star{border:2px solid var(--accent)}
+.plan .tag{align-self:flex-start;font:700 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--on-accent);padding:4px 8px;border-radius:4px}
+.plan .tag.ghost{background:transparent;color:var(--muted);padding:4px 0}
+.plan h3{font-size:22px;font-weight:850}
+.plan .price{display:flex;align-items:baseline;gap:8px}
+.plan .price strong{font-family:var(--f-display);font-weight:900;font-stretch:110%;font-size:40px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.plan .price span{font:500 13px var(--f-mono);color:var(--muted)}
+.plan ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15px;flex:1}
+.plan li{display:grid;grid-template-columns:16px 1fr;gap:8px}
+.plan li::before{content:"";width:10px;height:10px;margin-top:7px;border-radius:2px;background:var(--accent)}
+.plan .btn{width:100%;padding:13px}
+
+/* Options */
+.opts{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.opt{display:flex;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);background:color-mix(in srgb,var(--surface) 60%,transparent);font-size:15px}
+.opt b{font:700 14px var(--f-mono);white-space:nowrap}
+
+/* Étapes */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:s}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.step{border-top:3px solid var(--ink);padding-top:18px;display:grid;gap:8px}
+.step::before{counter-increment:s;content:"Étape " counter(s);font:700 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.step h3{font-size:22px;font-weight:800}
+.step p{color:var(--muted)}
+
+/* Réservation */
+.book{background:var(--deep);color:var(--on-deep)}
+.book .eyebrow{color:color-mix(in srgb,var(--on-deep) 60%,transparent)}
+.book .sec-head p{color:color-mix(in srgb,var(--on-deep) 70%,transparent)}
+.book-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:start}
+@media (max-width:900px){.book-grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);color:var(--ink);border-radius:14px;padding:26px;display:grid;gap:26px;min-width:0}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}
+legend{font-family:var(--f-display);font-stretch:115%;font-weight:800;font-size:18px;padding:0;margin-bottom:12px;display:flex;gap:10px;align-items:center}
+legend i{font:700 12px var(--f-mono);font-style:normal;background:var(--ink);color:var(--surface);border-radius:4px;padding:3px 7px}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.choice label{display:flex;flex-direction:column;gap:2px;height:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:var(--r);cursor:pointer;font-weight:600;font-size:15px}
+.choice label small{font:500 12px var(--f-mono);color:var(--muted)}
+.choice input:checked + label{border-color:var(--ink);background:color-mix(in srgb,var(--accent) 22%,var(--surface));box-shadow:inset 0 0 0 1px var(--ink)}
+.choice input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.choice input:disabled + label{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.days .choice{flex:0 0 74px;scroll-snap-align:start}
+.days .choice label{align-items:center;text-align:center;padding:10px 6px}
+.days .choice label b{font-family:var(--f-display);font-size:24px;font-weight:900;line-height:1.1}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px}
+.slots .choice label{align-items:center;font:700 15px var(--f-mono);padding:11px 6px}
+.hint{font-size:14px;color:var(--muted)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.fields{grid-template-columns:1fr}}
+.field{display:grid;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label{font-size:14px;font-weight:600}
+.field input,.field textarea{font:500 16px var(--f-body);padding:12px 14px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--ink);width:100%}
+.field input:focus,.field textarea:focus{border-color:var(--ink);outline:none}
+.field textarea{min-height:80px;resize:vertical}
+.err{color:#C23A2B;font-size:14px;font-weight:600}
+:root[data-theme="dark"] .err{color:#FF8A7A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .err{color:#FF8A7A}}
+
+.summary{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);background:var(--accent);color:var(--on-accent);border-radius:14px;padding:24px;display:grid;gap:14px}
+.summary h3{font-size:22px;font-weight:900}
+.summary dl{margin:0;display:grid;gap:10px}
+.summary dl div{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid color-mix(in srgb,var(--on-accent) 20%,transparent);padding-bottom:9px;font-size:15px}
+.summary dt{opacity:.75}
+.summary dd{margin:0;font-weight:700;text-align:right}
+.summary .total{display:flex;justify-content:space-between;align-items:baseline}
+.summary .total strong{font-family:var(--f-display);font-weight:900;font-stretch:110%;font-size:44px;font-variant-numeric:tabular-nums}
+.summary .btn{background:var(--on-accent);color:var(--accent);border-color:var(--on-accent);width:100%}
+.summary .fine{font-size:13px;opacity:.8}
+
+/* Envoi */
+.send{display:grid;gap:18px}
+.send h3{font-size:28px;font-weight:900}
+.msg{font:500 14px/1.6 var(--f-mono);white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:16px;max-height:280px;overflow:auto;user-select:all}
+.channels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:560px){.channels{grid-template-columns:1fr}}
+.ch{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:16px;border-radius:var(--r);text-decoration:none;font-weight:700;border:2px solid var(--ink);color:var(--ink);background:var(--surface);cursor:pointer;font-family:var(--f-body);font-size:16px;text-align:left}
+.ch small{font-weight:500;font-size:13px;color:var(--muted)}
+.ch.snap{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.ch.snap small{color:color-mix(in srgb,var(--on-accent) 70%,transparent)}
+.ch:hover{transform:translateY(-1px)}
+.row-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.toast{font-size:14px;font-weight:600;color:var(--ok)}
+.numbox{font:700 15px var(--f-mono);user-select:all}
+
+/* Infos */
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+@media (max-width:760px){.info{grid-template-columns:1fr}}
+.info h3{font-size:18px;font-weight:800;margin-bottom:10px}
+.info p,.info td{color:var(--muted);font-size:15px}
+.info table{border-collapse:collapse;width:100%}
+.info td{padding:5px 0;border-bottom:1px solid var(--line)}
+.info td:last-child{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="demo"><div class="wrap">Aperçu de démonstration — nom, numéro et tarifs sont modifiables avant la mise en ligne.</div></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">LUSTRA <span>AUTO CLEAN</span></a>
+    <nav class="links" aria-label="Navigation">
+      <a href="#formules">Formules</a>
+      <a href="#etapes">Comment ça marche</a>
+      <a href="#infos">Zone & horaires</a>
+    </nav>
+    <a class="btn btn-accent" href="#reserver">Réserver</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Nettoyage auto à domicile · intérieur & extérieur</p>
+        <h1 style="margin-top:16px">Votre voiture, <span class="clean">comme au premier&nbsp;jour.</span></h1>
+        <div class="squeegee" aria-hidden="true"></div>
+        <p class="lead">On vient chez vous ou au travail avec l'eau, l'électricité et les produits. Vous réservez votre créneau en ligne en une minute, on s'occupe du reste.</p>
+        <div class="ctas">
+          <a class="btn btn-deep" href="#reserver">Choisir un créneau</a>
+          <a class="btn" href="#formules">Voir les tarifs</a>
+        </div>
+      </div>
+      <aside class="ticket" aria-label="Disponibilités">
+        <div class="row"><span class="k"><span class="dot"></span>Prochain créneau libre</span></div>
+        <div class="big" id="nextSlot">Demain · 09:00</div>
+        <div class="row"><span class="k">Formule la plus demandée</span><span class="v">Intégral</span></div>
+        <div class="row"><span class="k">À partir de</span><span class="v">35 €</span></div>
+        <div class="row"><span class="k">Déplacement</span><span class="v">offert ≤ 15 km</span></div>
+        <div class="row"><span class="k">Paiement</span><span class="v">après prestation</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <div><b>On se déplace</b><small>Domicile, bureau, parking</small></div>
+      <div><b>Lavage à la main</b><small>Microfibres, sans rouleaux</small></div>
+      <div><b>Produits pros</b><small>pH neutre, sans traces</small></div>
+      <div><b>Réponse rapide</b><small>Confirmation par message</small></div>
+    </div>
+  </div>
+
+  <section class="block" id="formules">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Tarifs</p>
+          <h2>Les formules</h2>
+        </div>
+        <div style="display:grid;gap:8px">
+          <span class="hint">Prix selon le gabarit de votre véhicule</span>
+          <div class="sizes" role="group" aria-label="Gabarit" id="sizeToggle"></div>
+        </div>
+      </div>
+      <div class="plans" id="plans"></div>
+      <div class="opts" id="opts"></div>
+    </div>
+  </section>
+
+  <section class="block" id="etapes" style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Réservation</p><h2>Comment ça marche</h2></div></div>
+      <div class="steps">
+        <div class="step"><h3>Vous choisissez</h3><p>Formule, gabarit, options, jour et heure. Le prix s'affiche directement.</p></div>
+        <div class="step"><h3>Vous envoyez</h3><p>La demande part par Snap, WhatsApp ou SMS, déjà rédigée. Rien à taper.</p></div>
+        <div class="step"><h3>On confirme</h3><p>Réponse rapide pour valider le créneau. On arrive à l'heure, prêt à travailler.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block book" id="reserver">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow">Prise de rendez-vous</p><h2>Réservez votre créneau</h2></div>
+        <p>Remplissez la fiche, puis envoyez-la en un clic par Snapchat, WhatsApp ou SMS.</p>
+      </div>
+
+      <div class="book-grid">
+        <form class="panel" id="bookForm" novalidate>
+          <fieldset>
+            <legend><i>1</i>Votre véhicule</legend>
+            <div class="choices" id="fSize"></div>
+          </fieldset>
+          <fieldset>
+            <legend><i>2</i>La formule</legend>
+            <div class="choices" id="fPlan"></div>
+          </fieldset>
+          <fieldset>
+            <legend><i>3</i>Options <span class="hint" style="font-family:var(--f-body);font-weight:500">facultatif</span></legend>
+            <div class="choices" id="fOpts"></div>
+          </fieldset>
+          <fieldset>
+            <legend><i>4</i>Le jour</legend>
+            <div class="days" id="fDays"></div>
+          </fieldset>
+          <fieldset>
+            <legend><i>5</i>L'heure</legend>
+            <div class="slots" id="fSlots"></div>
+            <p class="hint" id="slotHint">Les créneaux barrés sont déjà pris.</p>
+          </fieldset>
+          <fieldset>
+            <legend><i>6</i>Vos coordonnées</legend>
+            <div class="choices" id="fPlace">
+              <div class="choice"><input type="radio" name="place" id="place-home" value="domicile" checked><label for="place-home">À domicile / au travail<small>on se déplace</small></label></div>
+              <div class="choice"><input type="radio" name="place" id="place-shop" value="local"><label for="place-shop">Au local<small>vous déposez le véhicule</small></label></div>
+            </div>
+            <div class="fields">
+              <div class="field"><label for="fName">Prénom et nom</label><input id="fName" autocomplete="name" placeholder="Karim Benali"></div>
+              <div class="field"><label for="fPhone">Téléphone</label><input id="fPhone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78"></div>
+              <div class="field full" id="addrField"><label for="fAddr">Adresse d'intervention</label><input id="fAddr" autocomplete="street-address" placeholder="12 rue des Lilas, 69100 Villeurbanne"></div>
+              <div class="field"><label for="fCar">Modèle (facultatif)</label><input id="fCar" placeholder="Peugeot 308 grise"></div>
+              <div class="field"><label for="fNote">Remarque (facultatif)</label><input id="fNote" placeholder="Poils de chien à l'arrière"></div>
+            </div>
+            <p class="err" id="formErr" hidden></p>
+          </fieldset>
+        </form>
+
+        <aside class="summary" aria-live="polite">
+          <p class="eyebrow" style="color:inherit;opacity:.7">Récapitulatif</p>
+          <h3 id="sPlan">Intégral</h3>
+          <dl>
+            <div><dt>Véhicule</dt><dd id="sSize">—</dd></div>
+            <div><dt>Options</dt><dd id="sOpts">Aucune</dd></div>
+            <div><dt>Rendez-vous</dt><dd id="sWhen">—</dd></div>
+            <div><dt>Durée estimée</dt><dd id="sDur">—</dd></div>
+          </dl>
+          <div class="total"><span>Total estimé</span><strong id="sTotal">0 €</strong></div>
+          <button class="btn" type="submit" form="bookForm">Préparer ma demande</button>
+          <p class="fine">Paiement sur place après la prestation. Le créneau est validé quand on vous répond.</p>
+        </aside>
+      </div>
+
+      <div class="panel send" id="sendPanel" hidden style="margin-top:24px">
+        <div>
+          <p class="eyebrow">Dernière étape</p>
+          <h3 style="margin-top:8px">Envoyez votre demande</h3>
+          <p class="hint" style="margin-top:8px">Le message est prêt. Choisissez comment l'envoyer. Pour Snapchat, il est copié automatiquement : collez-le dans la conversation.</p>
+        </div>
+        <div class="msg" id="msgBox"></div>
+        <div class="channels">
+          <a class="ch snap" id="chSnap" href="#" target="_blank" rel="noopener">Snapchat<small>copie le message et ouvre le profil</small></a>
+          <a class="ch" id="chWa" href="#" target="_blank" rel="noopener">WhatsApp<small>message pré-rempli</small></a>
+          <a class="ch" id="chSms" href="#">SMS<small>ouvre l'appli Messages</small></a>
+        </div>
+        <div class="row-actions">
+          <button class="btn" type="button" id="copyBtn">Copier le message</button>
+          <span class="hint">ou envoyez-le au <span class="numbox" id="numText"></span></span>
+          <span class="toast" id="toast" role="status"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="infos">
+    <div class="wrap">
+      <div class="info">
+        <div><h3>Zone d'intervention</h3><p>Lyon et alentours : Villeurbanne, Vénissieux, Bron, Caluire. Déplacement offert jusqu'à 15 km, puis 0,50 € / km.</p></div>
+        <div><h3>Horaires</h3>
+          <table><tbody>
+            <tr><td>Lundi – Vendredi</td><td>09:00 – 18:00</td></tr>
+            <tr><td>Samedi</td><td>09:00 – 17:00</td></tr>
+            <tr><td>Dimanche</td><td>fermé</td></tr>
+          </tbody></table>
+        </div>
+        <div><h3>Contact</h3><p>Snapchat, WhatsApp ou SMS au <span class="numbox" id="numText2"></span>. Réponse en général dans l'heure.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Lustra Auto Clean</span><span>Site de démonstration</span></div></footer>
+
+<script>
+/* ===== À personnaliser pour le client ===== */
+const BUSINESS = {
+  name: "Lustra Auto Clean",
+  phoneDisplay: "06 00 00 00 00",
+  phoneIntl: "33600000000",          // format international sans + (pour WhatsApp/SMS)
+  snapUrl: "https://snapchat.com/t/E9cob0bQ"
+};
+const SIZES = [
+  {id:"citadine", label:"Citadine", hint:"Clio, 208, Polo", mult:1},
+  {id:"berline", label:"Berline / Break", hint:"308, Golf, Série 3", mult:1.2},
+  {id:"suv", label:"SUV / 4x4", hint:"3008, Tiguan, X3", mult:1.4},
+  {id:"van", label:"Utilitaire / 7 pl.", hint:"Trafic, Scénic, Kangoo", mult:1.6}
+];
+const PLANS = [
+  {id:"express", name:"Express extérieur", base:35, min:45, items:["Prélavage mousse active","Lavage main deux seaux","Jantes et passages de roues","Vitres extérieures","Séchage microfibre"]},
+  {id:"interieur", name:"Intérieur complet", base:59, min:90, items:["Aspiration complète, coffre inclus","Plastiques et tableau de bord","Vitres intérieures","Tapis et seuils de porte","Parfum au choix"]},
+  {id:"integral", name:"Intégral", base:89, min:150, star:true, items:["Express extérieur + Intérieur complet","Cire de protection carrosserie","Brillant pneus","Désinfection volant et poignées"]},
+  {id:"premium", name:"Rénovation premium", base:169, min:240, items:["Intégral inclus","Shampoing sièges et moquettes","Décontamination carrosserie","Polish une étape","Protection céramique 6 mois"]}
+];
+const OPTIONS = [
+  {id:"poils", name:"Poils d'animaux", price:15, min:20},
+  {id:"ozone", name:"Désodorisation ozone", price:20, min:30},
+  {id:"cuir", name:"Soin cuir", price:25, min:30},
+  {id:"phares", name:"Rénovation phares", price:30, min:30},
+  {id:"moteur", name:"Compartiment moteur", price:20, min:20}
+];
+const HOURS = ["09:00","10:00","11:00","13:00","14:00","15:00","16:00","17:00"];
+
+const $ = s => document.querySelector(s);
+const state = {size:"berline", plan:"integral", opts:new Set(), day:null, time:null};
+const price = (p, sizeId) => Math.round(p.base * SIZES.find(s=>s.id===sizeId).mult / 5) * 5;
+const fmtMin = m => (m>=60 ? Math.floor(m/60)+"h"+(m%60?String(m%60).padStart(2,"0"):"") : m+" min");
+const DAYN = ["dim.","lun.","mar.","mer.","jeu.","ven.","sam."];
+const DAYL = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+const MON = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+
+/* Jours ouvrés à venir (sans dimanche) */
+const days = [];
+{ const d = new Date(); d.setHours(0,0,0,0);
+  for (let i=1; days.length<14; i++){ const x = new Date(d); x.setDate(d.getDate()+i); if (x.getDay()!==0) days.push(x); } }
+state.day = 0;
+/* Créneaux "déjà pris" simulés, stables par date */
+function taken(day, hour){
+  const seed = day.getDate()*31 + day.getMonth()*7 + hour.charCodeAt(1)*13 + hour.charCodeAt(0);
+  if (day.getDay()===6 && hour==="17:00") return true;
+  return (seed % 5) === 0 || (seed % 7) === 0;
+}
+
+/* ===== Section formules ===== */
+function renderSizeToggle(){
+  $("#sizeToggle").innerHTML = SIZES.map(s=>`<button type="button" data-size="${s.id}" aria-pressed="${s.id===state.size}">${s.label}</button>`).join("");
+}
+function renderPlans(){
+  $("#plans").innerHTML = PLANS.map(p=>`
+    <article class="plan${p.star?" star":""}">
+      <span class="tag${p.star?"":" ghost"}">${p.star?"Le plus demandé":fmtMin(p.min)}</span>
+      <h3>${p.name}</h3>
+      <div class="price"><strong>${price(p,state.size)} €</strong><span>${p.star?fmtMin(p.min):""}</span></div>
+      <ul>${p.items.map(i=>`<li>${i}</li>`).join("")}</ul>
+      <a class="btn ${p.star?"btn-accent":""}" href="#reserver" data-pick="${p.id}">Réserver</a>
+    </article>`).join("");
+  $("#opts").innerHTML = OPTIONS.map(o=>`<div class="opt"><span>${o.name}</span><b>+${o.price} €</b></div>`).join("");
+}
+$("#sizeToggle").addEventListener("click", e=>{
+  const b = e.target.closest("button[data-size]"); if(!b) return;
+  state.size = b.dataset.size; syncAll();
+});
+$("#plans").addEventListener("click", e=>{
+  const a = e.target.closest("[data-pick]"); if(!a) return;
+  state.plan = a.dataset.pick; syncAll();
+});
+
+/* ===== Formulaire ===== */
+function radio(name, id, value, checked, labelHtml, disabled){
+  return `<div class="choice"><input type="radio" name="${name}" id="${id}" value="${value}" ${checked?"checked":""} ${disabled?"disabled":""}><label for="${id}">${labelHtml}</label></div>`;
+}
+function renderForm(){
+  $("#fSize").innerHTML = SIZES.map(s=>radio("size","size-"+s.id,s.id,s.id===state.size,`${s.label}<small>${s.hint}</small>`)).join("");
+  $("#fPlan").innerHTML = PLANS.map(p=>radio("plan","plan-"+p.id,p.id,p.id===state.plan,`${p.name}<small>${price(p,state.size)} € · ${fmtMin(p.min)}</small>`)).join("");
+  $("#fOpts").innerHTML = OPTIONS.map(o=>`<div class="choice"><input type="checkbox" name="opt" id="opt-${o.id}" value="${o.id}" ${state.opts.has(o.id)?"checked":""}><label for="opt-${o.id}">${o.name}<small>+${o.price} €</small></label></div>`).join("");
+  $("#fDays").innerHTML = days.map((d,i)=>radio("day","day-"+i,i,i===state.day,`<small>${DAYN[d.getDay()]}</small><b>${d.getDate()}</b><small>${MON[d.getMonth()].slice(0,4)}.</small>`)).join("");
+  renderSlots();
+}
+function renderSlots(){
+  const d = days[state.day];
+  const hours = d.getDay()===6 ? HOURS.slice(0,7) : HOURS;
+  if (state.time && (taken(d,state.time) || !hours.includes(state.time))) state.time = null;
+  $("#fSlots").innerHTML = hours.map(h=>radio("time","time-"+h.replace(":",""),h,h===state.time,h,taken(d,h))).join("");
+}
+function totals(){
+  const p = PLANS.find(x=>x.id===state.plan);
+  let t = price(p,state.size), m = p.min;
+  const names = [];
+  OPTIONS.forEach(o=>{ if(state.opts.has(o.id)){ t+=o.price; m+=o.min; names.push(o.name);} });
+  return {p, t, m, names};
+}
+function whenText(){
+  const d = days[state.day];
+  return `${DAYL[d.getDay()]} ${d.getDate()} ${MON[d.getMonth()]}` + (state.time ? ` à ${state.time}` : "");
+}
+function renderSummary(){
+  const {p,t,m,names} = totals();
+  $("#sPlan").textContent = p.name;
+  $("#sSize").textContent = SIZES.find(s=>s.id===state.size).label;
+  $("#sOpts").textContent = names.length ? names.join(", ") : "Aucune";
+  $("#sWhen").textContent = state.time ? whenText() : whenText() + " · heure à choisir";
+  $("#sDur").textContent = fmtMin(m);
+  $("#sTotal").textContent = t + " €";
+}
+function syncAll(){ renderSizeToggle(); renderPlans(); renderForm(); renderSummary(); }
+
+$("#bookForm").addEventListener("change", e=>{
+  const t = e.target;
+  if (t.name==="size") { state.size = t.value; renderForm(); renderSizeToggle(); renderPlans(); }
+  else if (t.name==="plan") state.plan = t.value;
+  else if (t.name==="opt") { t.checked ? state.opts.add(t.value) : state.opts.delete(t.value); }
+  else if (t.name==="day") { state.day = +t.value; renderSlots(); }
+  else if (t.name==="time") state.time = t.value;
+  else if (t.name==="place") $("#addrField").hidden = t.value!=="domicile";
+  renderSummary();
+});
+
+function buildMessage(){
+  const {p,t,m,names} = totals();
+  const place = document.querySelector('input[name="place"]:checked').value;
+  const v = id => $(id).value.trim();
+  const lines = [
+    `Bonjour ${BUSINESS.name}, je voudrais réserver :`,
+    ``,
+    `• Formule : ${p.name}`,
+    `• Véhicule : ${SIZES.find(s=>s.id===state.size).label}${v("#fCar")?" ("+v("#fCar")+")":""}`,
+    `• Options : ${names.length?names.join(", "):"aucune"}`,
+    `• Rendez-vous : ${whenText()}`,
+    `• Lieu : ${place==="domicile" ? "à domicile, "+v("#fAddr") : "au local"}`,
+    `• Durée estimée : ${fmtMin(m)}`,
+    `• Total estimé : ${t} €`,
+    ``,
+    `Nom : ${v("#fName")}`,
+    `Tél : ${v("#fPhone")}`
+  ];
+  if (v("#fNote")) lines.push(`Remarque : ${v("#fNote")}`);
+  lines.push(``, `Merci de me confirmer le créneau.`);
+  return lines.join("\n");
+}
+
+$("#bookForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  const place = document.querySelector('input[name="place"]:checked').value;
+  const missing = [];
+  if (!state.time) missing.push("l'heure");
+  if (!$("#fName").value.trim()) missing.push("votre nom");
+  if ($("#fPhone").value.replace(/\D/g,"").length < 10) missing.push("un numéro de téléphone valide");
+  if (place==="domicile" && !$("#fAddr").value.trim()) missing.push("l'adresse");
+  const err = $("#formErr");
+  if (missing.length){ err.textContent = "Il manque " + missing.join(", ") + "."; err.hidden = false; err.scrollIntoView({behavior:"smooth",block:"center"}); return; }
+  err.hidden = true;
+  const msg = buildMessage();
+  $("#msgBox").textContent = msg;
+  const enc = encodeURIComponent(msg);
+  $("#chWa").href = `https://wa.me/${BUSINESS.phoneIntl}?text=${enc}`;
+  $("#chSms").href = `sms:+${BUSINESS.phoneIntl}?&body=${enc}`;
+  $("#chSnap").href = BUSINESS.snapUrl;
+  $("#toast").textContent = "";
+  const panel = $("#sendPanel"); panel.hidden = false;
+  panel.scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+function copyMsg(){
+  const text = $("#msgBox").textContent;
+  const done = ok => { $("#toast").textContent = ok ? "Message copié." : "Sélectionnez le message ci-dessus pour le copier."; };
+  try {
+    navigator.clipboard.writeText(text).then(()=>done(true), ()=>{ selectMsg(); done(false); });
+  } catch(_) { selectMsg(); done(false); }
+}
+function selectMsg(){ const r = document.createRange(); r.selectNodeContents($("#msgBox")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+$("#copyBtn").addEventListener("click", copyMsg);
+$("#chSnap").addEventListener("click", copyMsg);
+
+/* Prochain créneau libre dans le hero */
+(function(){
+  for (let i=0;i<days.length;i++){
+    const d = days[i]; const hours = d.getDay()===6 ? HOURS.slice(0,7) : HOURS;
+    const h = hours.find(x=>!taken(d,x));
+    if (h){ $("#nextSlot").textContent = (i===0 && (d - new Date())/864e5 < 1.1 ? "Demain" : `${DAYL[d.getDay()][0].toUpperCase()+DAYL[d.getDay()].slice(1)} ${d.getDate()}`) + " · " + h; break; }
+  }
+})();
+$("#numText").textContent = BUSINESS.phoneDisplay;
+$("#numText2").textContent = BUSINESS.phoneDisplay;
+
+syncAll();
+</script>
