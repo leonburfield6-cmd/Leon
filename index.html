@@ -6,264 +6,270 @@
 <title>Atelier Crochet</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Appli crochet créée pour Nymelia : projets, compteur de rangs, guide des points et calculs.">
-<meta name="theme-color" content="#f7f3fb">
+<meta name="theme-color" content="#e8f1ec">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Crochet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23231a3a'/%3E%3Ccircle cx='30' cy='35' r='17' fill='%23ff7aa2'/%3E%3Cpath d='M16 31c9-5 19-5 28 0M15 39c10 5 21 5 30 0M24 19c-4 10-3 23 2 33M35 18c5 10 5 24-2 35' stroke='%23fff' stroke-width='2' fill='none' opacity='.75'/%3E%3Cpath d='M43 21l11-11' stroke='%23b8f2d0' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23231a3a'/%3E%3Ccircle cx='30' cy='35' r='17' fill='%23ff7aa2'/%3E%3Cpath d='M16 31c9-5 19-5 28 0M15 39c10 5 21 5 30 0M24 19c-4 10-3 23 2 33M35 18c5 10 5 24-2 35' stroke='%23fff' stroke-width='2' fill='none' opacity='.75'/%3E%3Cpath d='M43 21l11-11' stroke='%23b8f2d0' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d2340'/%3E%3Crect x='10' y='10' width='44' height='44' rx='6' fill='%23ff6f91'/%3E%3Crect x='18' y='18' width='28' height='28' rx='4' fill='%23ffc145'/%3E%3Crect x='26' y='26' width='12' height='12' rx='3' fill='%233d5afe'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231d2340'/%3E%3Crect x='10' y='10' width='44' height='44' rx='6' fill='%23ff6f91'/%3E%3Crect x='18' y='18' width='28' height='28' rx='4' fill='%23ffc145'/%3E%3Crect x='26' y='26' width='12' height='12' rx='3' fill='%233d5afe'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-/* Layout: one-column app shell, glass cards over soft yarn-colour blobs, floating pill tab bar */
+/* Layout: patchwork of "stitched" blocks on a crochet-chart background; granny-square hero; the row counter draws real rounds of stitches */
 :root{
-  --bg:#f7f3fb; --surface:rgba(255,255,255,.72); --solid:#ffffff; --ink:#231a3a; --muted:#7a7090;
-  --line:rgba(35,26,58,.09); --berry:#e8467c; --berry-soft:#ffe1ea; --mint:#2fae7b; --mint-soft:#d9f5e7;
-  --lilac:#c9b6ff; --peach:#ffc9a8; --on-accent:#ffffff;
-  --blob1:#ffd0de; --blob2:#d9ccff; --blob3:#c8f1dc;
-  --shadow:0 1px 2px rgba(35,26,58,.04), 0 12px 32px -12px rgba(35,26,58,.18);
-  --display:"Bricolage Grotesque", ui-rounded, "Avenir Next", system-ui, sans-serif;
-  --body:Figtree, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --r:22px;
+  --bg:#e8f1ec; --block:#fbfdfb; --ink:#1d2340; --muted:#5d6480; --stitch:rgba(29,35,64,.22);
+  --coral:#ff6f91; --mustard:#ffc145; --cobalt:#3d5afe; --mint:#5cc99b; --lav:#b9a7ff;
+  --on-bright:#1d2340; --on-cobalt:#ffffff; --chart:rgba(29,35,64,.07);
+  --display:Syne, "Arial Black", system-ui, sans-serif;
+  --body:Outfit, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"DM Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#120d1d; --surface:rgba(34,26,52,.72); --solid:#1d1630; --ink:#f3eefc; --muted:#a79dbd;
-    --line:rgba(255,255,255,.08); --berry:#ff6b9a; --berry-soft:#3d1a2c; --mint:#5fd6a3; --mint-soft:#163327;
-    --lilac:#8c74e6; --peach:#e0946a; --on-accent:#1a0f1f;
-    --blob1:#4a1d35; --blob2:#2c2160; --blob3:#123a2b;
-    --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.6);
+    --bg:#141729; --block:#1e2240; --ink:#eef0ff; --muted:#a3a9c9; --stitch:rgba(238,240,255,.2);
+    --coral:#ff7f9e; --mustard:#ffcb5c; --cobalt:#6f86ff; --mint:#6fd6aa; --lav:#a796ff;
+    --on-bright:#141729; --on-cobalt:#0f1230; --chart:rgba(238,240,255,.05);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#120d1d; --surface:rgba(34,26,52,.72); --solid:#1d1630; --ink:#f3eefc; --muted:#a79dbd;
-  --line:rgba(255,255,255,.08); --berry:#ff6b9a; --berry-soft:#3d1a2c; --mint:#5fd6a3; --mint-soft:#163327;
-  --lilac:#8c74e6; --peach:#e0946a; --on-accent:#1a0f1f;
-  --blob1:#4a1d35; --blob2:#2c2160; --blob3:#123a2b;
-  --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.6);
+  --bg:#141729; --block:#1e2240; --ink:#eef0ff; --muted:#a3a9c9; --stitch:rgba(238,240,255,.2);
+  --coral:#ff7f9e; --mustard:#ffcb5c; --cobalt:#6f86ff; --mint:#6fd6aa; --lav:#a796ff;
+  --on-bright:#141729; --on-cobalt:#0f1230; --chart:rgba(238,240,255,.05);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.5 var(--body);min-height:100vh;
-  padding-bottom:calc(110px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;overflow-x:hidden}
-.blobs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
-.blobs i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.9}
-.blobs i:nth-child(1){width:340px;height:340px;background:var(--blob1);top:-120px;right:-80px}
-.blobs i:nth-child(2){width:300px;height:300px;background:var(--blob2);top:35%;left:-140px}
-.blobs i:nth-child(3){width:280px;height:280px;background:var(--blob3);bottom:-80px;right:-60px}
-h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+body{margin:0;color:var(--ink);font:500 16px/1.5 var(--body);min-height:100vh;overflow-x:hidden;
+  padding-bottom:calc(112px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(45deg,transparent 46%,var(--chart) 46%,var(--chart) 54%,transparent 54%),
+    linear-gradient(-45deg,transparent 46%,var(--chart) 46%,var(--chart) 54%,transparent 54%);
+  background-size:28px 28px;background-position:center top}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
-:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
 .wrap{max-width:560px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));padding-block:0}
-
-header.top{display:flex;align-items:center;gap:12px;padding-block:18px 8px}
-.mark{width:44px;height:44px;border-radius:14px;background:var(--ink);display:grid;place-items:center;flex:none}
-.mark svg{width:30px;height:30px}
-header.top h1{font-size:1.35rem;font-weight:800;line-height:1}
-header.top p{margin:3px 0 0;color:var(--muted);font-size:.85rem}
-.iconbtn{margin-left:auto;width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:var(--surface);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center}
-.iconbtn svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-.glass{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
-  backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%)}
-.pad{padding:18px}
 .stack{display:flex;flex-direction:column;gap:14px}
-.muted{color:var(--muted)}
-.eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-h2.sec{font-size:1.5rem;font-weight:800}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .between{justify-content:space-between}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.02em}
 
-.btn{border:0;border-radius:14px;padding:12px 18px;font-weight:700;background:var(--ink);color:var(--bg);
-  transition:transform .15s ease, opacity .15s}
-.btn:active{transform:scale(.96)}
-.btn.berry{background:var(--berry);color:var(--on-accent)}
-.btn.soft{background:var(--berry-soft);color:var(--ink)}
-.btn.line{background:transparent;border:1px solid var(--line);color:var(--ink)}
-.btn.sm{padding:8px 13px;font-size:.85rem;border-radius:11px}
-.btn.danger{background:transparent;color:var(--berry);border:1px solid var(--berry-soft)}
+/* "stitched" block: dashed running stitch inset from the edge */
+.block{position:relative;background:var(--block);border-radius:20px;padding:18px;
+  outline:1.5px dashed var(--stitch);outline-offset:-7px;box-shadow:0 2px 0 var(--stitch)}
+.block.tight{padding:14px}
 
-input,select,textarea{width:100%;background:var(--solid);border:1px solid var(--line);border-radius:14px;padding:12px 14px;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--berry)}
-textarea{min-height:100px;resize:vertical;line-height:1.5}
+header.top{display:flex;align-items:center;gap:12px;padding-block:18px 10px}
+.gs-mini{width:42px;height:42px;border-radius:9px;flex:none;background:var(--coral);
+  box-shadow:inset 0 0 0 6px var(--coral),inset 0 0 0 12px var(--mustard),inset 0 0 0 21px var(--cobalt);transform:rotate(-6deg)}
+header.top h1{font-size:1.3rem;font-weight:800;line-height:1}
+header.top p{margin:4px 0 0}
+.iconbtn{margin-left:auto;width:42px;height:42px;border-radius:50%;border:1.5px dashed var(--stitch);background:var(--block);display:grid;place-items:center}
+.iconbtn svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.btn{border:0;border-radius:999px;padding:12px 20px;font-weight:700;background:var(--ink);color:var(--bg);transition:transform .15s}
+.btn:active{transform:scale(.95)}
+.btn.coral{background:var(--coral);color:var(--on-bright)}
+.btn.mustard{background:var(--mustard);color:var(--on-bright)}
+.btn.line{background:transparent;color:var(--ink);border:1.5px dashed var(--stitch)}
+.btn.sm{padding:8px 14px;font-size:.85rem}
+.btn.danger{background:transparent;color:var(--coral);border:1.5px dashed var(--coral)}
+
+input,select,textarea{width:100%;background:var(--bg);border:1.5px solid transparent;border-radius:14px;padding:12px 14px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--cobalt)}
+textarea{min-height:110px;resize:vertical;line-height:1.55;font-family:var(--mono);font-size:.88rem}
 label{display:block;font-weight:600;font-size:.85rem;margin:0 0 6px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid2>*{min-width:0}
-section{display:none;animation:in .35s ease both}section.on{display:block}
+section{display:none;animation:in .3s ease both}section.on{display:block}
 @keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:1.65rem;font-weight:800;line-height:1}
 
-/* hero */
-.hero{position:relative;overflow:hidden;padding:22px;border-radius:28px;background:var(--ink);color:var(--bg)}
-.hero h2{font-size:clamp(1.7rem,7vw,2.2rem);font-weight:800;line-height:1.02;max-width:12ch}
-.hero p{margin:10px 0 18px;opacity:.75;max-width:30ch;font-size:.95rem}
-.hero .ball{position:absolute;right:-28px;top:-18px;width:150px;height:150px;animation:spin 40s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.links{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative}
-.links a{display:flex;align-items:center;gap:10px;padding:12px;border-radius:16px;text-decoration:none;color:var(--ink);
-  background:var(--bg);font-weight:700;font-size:.9rem;min-width:0;transition:transform .15s}
-.links a:active{transform:scale(.97)}
-.links a span{display:block;font-weight:500;font-size:.75rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.links a div{min-width:0}
-.links svg{width:30px;height:30px;flex:none}
+/* hero: a granny square */
+.hero{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:22px 20px;background:var(--ink);color:var(--bg);
+  border-radius:24px;outline:1.5px dashed rgba(255,255,255,.25);outline-offset:-8px;overflow:hidden}
+.hero>div{min-width:0}
+.hero h2{font-size:clamp(1.75rem,8vw,2.35rem);font-weight:800;line-height:.98}
+.hero h2 em{font-style:normal;color:var(--mustard)}
+.hero p{margin:10px 0 0;opacity:.75;font-size:.93rem;max-width:26ch}
+.granny{width:118px;height:118px;border-radius:12px;transform:rotate(8deg);flex:none;position:relative;
+  background:var(--cobalt);
+  box-shadow:inset 0 0 0 10px var(--coral),inset 0 0 0 13px var(--ink),inset 0 0 0 23px var(--mustard),inset 0 0 0 26px var(--ink),inset 0 0 0 36px var(--mint),inset 0 0 0 39px var(--ink);
+  animation:wob 6s ease-in-out infinite}
+.granny::after{content:"";position:absolute;inset:50px;border-radius:50%;background:var(--bg)}
+@keyframes wob{50%{transform:rotate(-4deg) scale(1.03)}}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.link{display:flex;align-items:center;gap:10px;padding:14px;border-radius:18px;text-decoration:none;color:var(--on-bright);min-width:0;
+  outline:1.5px dashed rgba(29,35,64,.3);outline-offset:-6px;transition:transform .15s}
+.link:active{transform:scale(.97) rotate(-1deg)}
+.link.lt{background:var(--mint)}
+.link.tt{background:var(--lav)}
+.link b{display:block;font-family:var(--display);font-size:1rem;line-height:1.1}
+.link span{display:block;font-family:var(--mono);font-size:.7rem;opacity:.75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link div{min-width:0}
+.link svg{width:30px;height:30px;flex:none}
 
-/* stats */
+/* stats as yarn-label tags */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.stat{padding:14px;text-align:left}
-.stat b{display:block;font-family:var(--display);font-size:1.6rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
-.stat span{font-size:.75rem;color:var(--muted);font-weight:600}
+.tag{border-radius:16px;padding:12px 12px 12px 14px;position:relative;color:var(--on-bright);min-width:0}
+.tag::before{content:"";position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--bg)}
+.tag b{display:block;font-family:var(--body);font-size:1.9rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.tag span{font-size:.75rem;font-weight:600}
+.tag:nth-child(1){background:var(--coral)}.tag:nth-child(2){background:var(--mustard)}.tag:nth-child(3){background:var(--mint)}
 
 /* projects */
-.proj{display:flex;gap:14px;align-items:center;padding:14px;cursor:pointer;transition:transform .15s}
+.proj{display:flex;gap:14px;align-items:center;cursor:pointer;transition:transform .15s}
 .proj:active{transform:scale(.985)}
-.swatch{width:56px;height:56px;border-radius:18px;flex:none;display:grid;place-items:center;font-size:1.6rem;position:relative}
+.swatch{width:58px;height:58px;border-radius:12px;flex:none;display:grid;place-items:center;font-size:1.5rem;transform:rotate(-4deg);
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.45)}
 .proj .info{flex:1;min-width:0}
 .proj h3{font-size:1.05rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.meta{font-size:.8rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--berry),var(--lilac));border-radius:99px;transition:width .4s}
-.pill{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--mint-soft);color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
-.pill.done{background:var(--berry-soft)}
-.edit{width:36px;height:36px;border-radius:12px;border:0;background:transparent;display:grid;place-items:center;flex:none}
+.meta{font-size:.82rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chainbar{display:flex;gap:3px;margin-top:9px;flex-wrap:nowrap;overflow:hidden}
+.chainbar i{flex:1;height:8px;border-radius:50%;border:1.5px solid var(--stitch);min-width:6px}
+.chainbar i.on{background:var(--coral);border-color:var(--coral)}
+.pill{font-family:var(--mono);font-size:.72rem;padding:3px 9px;border-radius:99px;background:var(--bg);white-space:nowrap}
+.pill.done{background:var(--mustard);color:var(--on-bright)}
+.edit{width:36px;height:36px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;flex:none}
 .edit svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round}
-.empty{text-align:center;padding:34px 18px}
-.empty svg{width:72px;height:72px;margin-bottom:8px}
+.empty{text-align:center;padding:30px 18px}
+.empty .granny{width:80px;height:80px;margin:4px auto 16px;box-shadow:inset 0 0 0 8px var(--coral),inset 0 0 0 11px var(--block),inset 0 0 0 19px var(--mustard),inset 0 0 0 22px var(--block)}
+.empty .granny::after{inset:32px;background:var(--block)}
 
-/* counter */
-.ringwrap{position:relative;width:min(280px,78vw);aspect-ratio:1;margin:6px auto 0;max-width:100%}
-.ringwrap svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ringwrap circle{fill:none;stroke-width:14}
-.ringwrap .track{stroke:var(--line)}
-.ringwrap .prog{stroke:url(#grad);stroke-linecap:round;transition:stroke-dashoffset .5s cubic-bezier(.2,.8,.2,1)}
-.tap{position:absolute;inset:22px;border-radius:50%;border:0;background:var(--solid);box-shadow:var(--shadow);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .12s}
-.tap:active{transform:scale(.95)}
-.tap .n{font-family:var(--display);font-size:clamp(4rem,20vw,5.6rem);font-weight:800;line-height:.9;font-variant-numeric:tabular-nums;color:var(--ink)}
-.tap .l{font-size:.85rem;color:var(--muted);font-weight:600}
-.tap .hint{font-size:.72rem;color:var(--berry);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+/* counter: magic ring + rounds of stitches */
+.ringwrap{position:relative;width:min(300px,80vw);aspect-ratio:1;margin:0 auto;max-width:100%}
+.ringwrap svg{width:100%;height:100%;display:block}
+.tap{position:absolute;inset:31%;border-radius:50%;border:0;background:var(--ink);color:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .12s;
+  outline:1.5px dashed rgba(255,255,255,.35);outline-offset:-6px}
+.tap:active{transform:scale(.93)}
+.tap .n{font-family:var(--display);font-size:clamp(2.6rem,13vw,3.4rem);font-weight:800;line-height:.9;font-variant-numeric:tabular-nums}
+.tap .l{font-family:var(--mono);font-size:.68rem;opacity:.7;margin-top:4px}
 .pop{animation:pop .3s ease}
-@keyframes pop{40%{transform:scale(1.08)}}
+@keyframes pop{40%{transform:scale(1.15)}}
+.stitchmark{animation:drop .35s ease both}
+@keyframes drop{from{opacity:0;transform:scale(.3)}}
+.counthead{display:flex;justify-content:space-between;align-items:baseline;gap:4px 10px;margin-bottom:6px;flex-wrap:wrap}
+.counthead h2{white-space:nowrap}
+.counthead .goal{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
 .ctrl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mini{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px}
-.mini .v{font-family:var(--display);font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums}
+.mini{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mini .v{font-family:var(--display);font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
 .mini .k{font-size:.75rem;color:var(--muted);font-weight:600}
-.round{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--solid);font-size:1.2rem;font-weight:700;display:grid;place-items:center}
+.round{width:40px;height:40px;border-radius:50%;border:1.5px dashed var(--stitch);background:var(--bg);font-size:1.2rem;font-weight:700;display:grid;place-items:center;flex:none}
 
 /* stitches */
 .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:7px 14px;font-size:.85rem;font-weight:600;white-space:nowrap}
-.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.stitch{display:grid;grid-template-columns:58px 1fr;gap:14px;padding:14px}
+.chip{border:1.5px dashed var(--stitch);background:var(--block);border-radius:99px;padding:7px 15px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.chip.on{background:var(--ink);color:var(--bg);border-style:solid;border-color:var(--ink)}
+.stitch{display:grid;grid-template-columns:60px 1fr;gap:14px}
 .stitch>div{min-width:0}
-.sym{width:58px;height:58px;border-radius:18px;display:grid;place-items:center}
-.sym svg{width:32px;height:32px;stroke:var(--ink);fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
-.stitch h3{font-size:1rem;font-weight:700}
-.abbr{font-size:.78rem;font-weight:700;color:var(--berry);margin-top:1px}
+.sym{width:60px;height:60px;border-radius:14px;display:grid;place-items:center;color:var(--on-bright)}
+.sym svg{width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.stitch h3{font-size:1.02rem;font-weight:700}
+.abbr{font-family:var(--mono);font-size:.75rem;color:var(--cobalt);margin-top:2px}
 .stitch p{margin:6px 0 0;font-size:.9rem;color:var(--muted);line-height:1.45}
-.lvl{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--mint-soft);margin-left:6px;vertical-align:2px;font-family:var(--body);letter-spacing:0}
-.lvl.mid{background:var(--berry-soft)}
+.lvl{font-family:var(--mono);font-size:.62rem;padding:2px 7px;border-radius:99px;border:1px dashed var(--stitch);margin-left:6px;vertical-align:3px;letter-spacing:0;font-weight:500}
 
 /* calc */
-.calc h3{font-size:1.1rem;font-weight:700}
+.calc h3{font-size:1.15rem;font-weight:800}
 .calc .d{margin:2px 0 14px;font-size:.88rem;color:var(--muted)}
-.result{margin-top:14px;padding:14px 16px;border-radius:16px;background:var(--mint-soft);font-weight:600;line-height:1.5}
-.result b{font-family:var(--display);font-size:1.35rem;font-weight:800}
-.result.pattern{font-weight:500;font-size:.9rem;white-space:pre-line}
-.tablewrap{overflow-x:auto;margin:0 -4px}
+.result{margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--bg);font-family:var(--mono);font-size:.88rem;line-height:1.6;border-left:4px solid var(--mint)}
+.result b{font-family:var(--display);font-size:1.3rem;font-weight:800}
+.result.pattern{white-space:pre-line}
+.tablewrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:320px}
-th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
-td,th{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;color:var(--muted);font-weight:500;letter-spacing:.05em}
+td,th{padding:10px 6px;border-bottom:1.5px dashed var(--stitch);text-align:left}
 tr:last-child td{border-bottom:0}
-td:nth-child(2){font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+td:nth-child(2){font-family:var(--mono);white-space:nowrap}
 
-/* nav */
+/* nav: pills on a strand of yarn */
 nav.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:10;
-  display:flex;gap:4px;padding:6px;border-radius:24px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);
-  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);width:max-content;max-width:calc(100% - 24px)}
-nav.tabs button{border:0;background:transparent;border-radius:18px;padding:9px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;
-  font-size:.7rem;font-weight:700;color:var(--muted);transition:background .2s,color .2s;min-width:64px}
-nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-nav.tabs button.on{background:var(--ink);color:var(--bg)}
+  display:flex;gap:4px;padding:6px;border-radius:999px;background:var(--ink);width:max-content;max-width:calc(100% - 24px);
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.45);outline:1.5px dashed rgba(255,255,255,.2);outline-offset:-4px}
+nav.tabs button{border:0;background:transparent;border-radius:999px;padding:9px 13px;display:flex;align-items:center;gap:6px;
+  font-size:.82rem;font-weight:700;color:var(--bg);opacity:.65;transition:background .2s,opacity .2s}
+nav.tabs svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+nav.tabs button span{display:none}
+nav.tabs button.on{opacity:1;color:var(--on-bright)}
+nav.tabs button.on span{display:inline}
+nav.tabs button[data-tab=projets].on{background:var(--coral)}
+nav.tabs button[data-tab=compteur].on{background:var(--mustard)}
+nav.tabs button[data-tab=points].on{background:var(--mint)}
+nav.tabs button[data-tab=calculs].on{background:var(--lav)}
 
 /* sheet */
-.modal{position:fixed;inset:0;background:rgba(18,12,30,.5);display:flex;align-items:flex-end;justify-content:center;z-index:20;
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.sheet{background:var(--solid);width:100%;max-width:560px;border-radius:28px 28px 0 0;max-height:92vh;overflow:auto;
-  padding:10px max(18px, env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(18px, env(safe-area-inset-left,0px));
-  animation:up .3s cubic-bezier(.2,.8,.2,1)}
+.modal{position:fixed;inset:0;background:rgba(15,18,40,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet{background:var(--block);width:100%;max-width:560px;border-radius:28px 28px 0 0;max-height:92vh;overflow:auto;
+  padding:12px max(18px, env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(18px, env(safe-area-inset-left,0px));
+  animation:up .3s cubic-bezier(.2,.8,.2,1);outline:1.5px dashed var(--stitch);outline-offset:-8px}
 @keyframes up{from{transform:translateY(40px);opacity:.5}}
-.grab{width:42px;height:5px;border-radius:9px;background:var(--line);margin:0 auto 14px}
+.grab{width:42px;height:5px;border-radius:9px;background:var(--stitch);margin:0 auto 14px}
 .colors,.emojis{display:flex;gap:8px;flex-wrap:wrap}
-.colors button{width:38px;height:38px;border-radius:50%;border:3px solid var(--solid);box-shadow:0 0 0 1px var(--line)}
-.colors button.on{box-shadow:0 0 0 3px var(--ink)}
-.emojis button{font-size:1.35rem;background:var(--bg);border:2px solid transparent;border-radius:14px;width:46px;height:46px}
-.emojis button.on{border-color:var(--berry)}
-.toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom,0px));transform:translate(-50%,10px);background:var(--ink);color:var(--bg);
-  padding:11px 18px;border-radius:14px;font-weight:700;font-size:.9rem;opacity:0;transition:.25s;pointer-events:none;z-index:30;max-width:calc(100% - 32px);text-align:center}
+.colors button{width:38px;height:38px;border-radius:10px;border:0;transform:rotate(-4deg);box-shadow:inset 0 0 0 4px rgba(255,255,255,.45)}
+.colors button.on{outline:3px solid var(--ink);outline-offset:2px}
+.emojis button{font-size:1.35rem;background:var(--bg);border:2px solid transparent;border-radius:12px;width:46px;height:46px}
+.emojis button.on{border-color:var(--coral)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,10px);background:var(--mustard);color:var(--on-bright);
+  padding:11px 18px;border-radius:999px;font-weight:700;font-size:.9rem;opacity:0;transition:.25s;pointer-events:none;z-index:30;max-width:calc(100% - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
-footer{text-align:center;font-size:.8rem;color:var(--muted);padding-block:22px 0}
-footer a{color:var(--berry);font-weight:700;text-decoration:none}
+footer{text-align:center;font-size:.82rem;color:var(--muted);padding-block:24px 0}
+footer a{color:var(--ink);font-weight:700}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-@media (max-width:370px){nav.tabs button{min-width:56px;padding:9px 10px}.stats b{font-size:1.35rem}}
+@media (max-width:380px){.granny{width:92px;height:92px}.granny::after{inset:38px}.hero{gap:10px}nav.tabs button{padding:9px 11px}}
 </style>
 </head>
 <body>
-<div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
-
 <div class="wrap">
   <header class="top">
-    <div class="mark" aria-hidden="true">
-      <svg viewBox="0 0 64 64"><circle cx="30" cy="35" r="19" fill="#ff7aa2"/><path d="M14 31c10-6 22-6 32 0M13 40c11 5 23 5 34 0M23 17c-5 11-4 26 2 37M36 16c6 11 6 27-2 39" stroke="#fff" stroke-width="2.4" fill="none" opacity=".75"/><path d="M44 20l12-12" stroke="#b8f2d0" stroke-width="4.5" stroke-linecap="round"/></svg>
-    </div>
+    <div class="gs-mini" aria-hidden="true"></div>
     <div>
       <h1>Atelier Crochet</h1>
-      <p>Un petit cadeau pour Nymelia</p>
+      <p class="mono muted">un petit cadeau pour Nymelia</p>
     </div>
     <button class="iconbtn" id="themeBtn" aria-label="Changer le thème">
       <svg viewBox="0 0 24 24" id="themeIco"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
     </button>
   </header>
 
-  <!-- ACCUEIL / PROJETS -->
+  <!-- PROJETS -->
   <section id="tab-projets" class="on">
     <div class="stack">
       <div class="hero">
-        <svg class="ball" viewBox="0 0 100 100" aria-hidden="true">
-          <circle cx="50" cy="50" r="44" fill="var(--berry)" opacity=".9"/>
-          <g stroke="#fff" stroke-width="2.2" fill="none" opacity=".55">
-            <path d="M8 44c26-14 58-14 84 0"/><path d="M8 58c26 14 58 14 84 0"/>
-            <path d="M34 8c-12 26-12 58 2 86"/><path d="M60 7c14 26 14 60-4 88"/><path d="M14 26c22 4 50 30 66 62"/>
-          </g>
-        </svg>
-        <div class="eyebrow" style="color:inherit;opacity:.6;position:relative">Bienvenue à l'atelier</div>
-        <h2 style="position:relative;margin-top:6px">Une maille après l'autre.</h2>
-        <p style="position:relative">Suis tes projets, compte tes rangs et calcule tes augmentations sans prise de tête.</p>
-        <div class="links">
-          <a href="https://linktr.ee/nymelia_crochet" target="_blank" rel="noopener">
-            <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#43e660"/><path d="M14.6 6h2.8v5.2l3.7-3.8 2 1.9-4 3.8h5.6v2.8h-5.6l4 3.9-2 1.9L16 16.6l-5.1 5.1-2-1.9 4-3.9H7.3v-2.8h5.6l-4-3.8 2-1.9 3.7 3.8zM14.6 19.6h2.8V26h-2.8z" fill="#0b2b13"/></svg>
-            <div>Linktree<span>@nymelia_crochet</span></div>
-          </a>
-          <a href="https://www.tiktok.com/@nymeliaa_c" target="_blank" rel="noopener">
-            <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#111"/><path d="M18.6 7h3c.3 2.2 1.7 3.6 3.9 3.8v3c-1.5 0-2.8-.4-3.9-1.2v6.2c0 3.4-2.6 5.8-5.8 5.8S10 22.2 10 19c0-3.4 2.9-5.9 6.4-5.5v3.1c-1.6-.4-3.3.8-3.3 2.5 0 1.4 1.1 2.6 2.6 2.6 1.6 0 2.9-1.1 2.9-3z" fill="#fff"/><path d="M18.6 7h3c.3 2.2 1.7 3.6 3.9 3.8" stroke="#ff2d6a" stroke-width="1" fill="none" opacity=".8"/></svg>
-            <div>TikTok<span>@nymeliaa_c</span></div>
-          </a>
+        <div>
+          <h2>Une maille,<br>puis <em>l'autre.</em></h2>
+          <p>Tes projets, tes rangs et tes calculs, au même endroit.</p>
         </div>
+        <div class="granny" aria-hidden="true"></div>
+      </div>
+
+      <div class="links">
+        <a class="link lt" href="https://linktr.ee/nymelia_crochet" target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M14.6 5h2.8v5.4l3.8-3.9 2 2-4.1 3.9h5.8v2.9h-5.8l4.1 4-2 2L16 16l-5.2 5.3-2-2 4.1-4H7.1v-2.9h5.8L8.8 8.5l2-2 3.8 3.9zM14.6 19.4h2.8V27h-2.8z" fill="currentColor"/></svg>
+          <div><b>Linktree</b><span>@nymelia_crochet</span></div>
+        </a>
+        <a class="link tt" href="https://www.tiktok.com/@nymeliaa_c" target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18.6 5h3.3c.3 2.4 1.9 4 4.3 4.2v3.3c-1.6 0-3.1-.5-4.3-1.3v6.8c0 3.7-2.9 6.4-6.4 6.4S9 21.7 9 18.2c0-3.7 3.2-6.5 7-6v3.4c-1.8-.4-3.6.9-3.6 2.7 0 1.6 1.2 2.9 2.9 2.9 1.8 0 3.2-1.2 3.2-3.3z" fill="currentColor"/></svg>
+          <div><b>TikTok</b><span>@nymeliaa_c</span></div>
+        </a>
       </div>
 
       <div class="stats">
-        <div class="glass stat"><b id="stA">0</b><span>en cours</span></div>
-        <div class="glass stat"><b id="stB">0</b><span>terminés</span></div>
-        <div class="glass stat"><b id="stC">0</b><span>rangs faits</span></div>
+        <div class="tag"><b id="stA">0</b><span>en cours</span></div>
+        <div class="tag"><b id="stB">0</b><span>terminés</span></div>
+        <div class="tag"><b id="stC">0</b><span>rangs faits</span></div>
       </div>
 
-      <div class="row between" style="margin-top:6px">
+      <div class="row between" style="margin-top:8px">
         <h2 class="sec">Mes projets</h2>
-        <button class="btn berry sm" id="newProj">+ Nouveau</button>
+        <button class="btn coral sm" id="newProj">+ Nouveau</button>
       </div>
       <div id="projList" class="stack"></div>
     </div>
@@ -273,43 +279,40 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
   <section id="tab-compteur">
     <div class="stack">
       <div>
-        <label for="curProj" class="eyebrow">Projet en cours</label>
+        <label for="curProj">Projet en cours</label>
         <select id="curProj"></select>
       </div>
-      <div class="glass pad" style="padding-bottom:22px">
+      <div class="block">
+        <div class="counthead"><h2 class="sec" style="font-size:1.25rem">Tes rangs</h2><span class="goal" id="cGoalTxt"></span></div>
         <div class="ringwrap">
-          <svg viewBox="0 0 200 200" aria-hidden="true">
-            <defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--berry)"/><stop offset="1" stop-color="var(--lilac)"/></linearGradient></defs>
-            <circle class="track" cx="100" cy="100" r="90"/>
-            <circle class="prog" id="ring" cx="100" cy="100" r="90" stroke-dasharray="565.5" stroke-dashoffset="565.5"/>
-          </svg>
+          <svg viewBox="-150 -150 300 300" id="rounds" aria-hidden="true"></svg>
           <button class="tap" id="cPlus" aria-label="Rang suivant">
             <span class="n" id="cRow">0</span>
-            <span class="l" id="cGoal">rangs</span>
-            <span class="hint">Touche pour +1</span>
+            <span class="l" id="cGoal">touche +1</span>
           </button>
         </div>
-        <div class="row" style="justify-content:center;margin-top:16px">
+        <p class="mono muted" style="text-align:center;margin:6px 0 0">chaque rang ajoute un tour de mailles</p>
+        <div class="row" style="justify-content:center;margin-top:14px">
           <button class="btn line sm" id="cMinus">− 1 rang</button>
           <button class="btn line sm" id="cReset">Remettre à 0</button>
         </div>
       </div>
       <div class="ctrl">
-        <div class="glass mini">
+        <div class="block tight mini">
           <button class="round" id="sMinus" aria-label="Retirer une maille">−</button>
           <div style="text-align:center"><div class="v" id="sNum">0</div><div class="k">mailles</div></div>
           <button class="round" id="sPlus" aria-label="Ajouter une maille">+</button>
         </div>
-        <div class="glass mini">
-          <div><div class="v" id="tView" style="font-size:1.2rem">00:00:00</div><div class="k">temps passé</div></div>
-          <button class="round" id="tBtn" aria-label="Démarrer le chrono">
+        <div class="block tight mini">
+          <div style="min-width:0"><div class="v" id="tView" style="font-size:1.15rem">00:00:00</div><div class="k">temps passé</div></div>
+          <button class="round" id="tBtn" aria-label="Démarrer ou arrêter le chrono">
             <svg viewBox="0 0 24 24" width="16" height="16" id="tIco"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
           </button>
         </div>
       </div>
-      <div class="glass pad">
+      <div class="block">
         <label for="cNotes">Notes du projet</label>
-        <textarea id="cNotes" placeholder="Ex. R5 : *3 ms, 1 aug* × 6 (30)"></textarea>
+        <textarea id="cNotes" placeholder="R5 : *3 ms, 1 aug* × 6 (30)"></textarea>
       </div>
     </div>
   </section>
@@ -333,7 +336,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
     <div class="stack">
       <h2 class="sec">Calculs</h2>
 
-      <div class="glass pad calc">
+      <div class="block calc">
         <h3>Augmenter ou diminuer</h3>
         <p class="d">Répartit les augmentations ou diminutions sur tout le rang.</p>
         <div class="grid2">
@@ -343,19 +346,19 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
         <div class="result" id="incRes"></div>
       </div>
 
-      <div class="glass pad calc">
+      <div class="block calc">
         <h3>Boule amigurumi</h3>
         <p class="d">Génère le patron d'une boule en mailles serrées, rang par rang.</p>
         <div class="grid2">
           <div><label for="amStart">Mailles au départ</label><input id="amStart" type="number" inputmode="numeric" min="3" value="6"></div>
           <div><label for="amMax">Rangs d'augmentation</label><input id="amMax" type="number" inputmode="numeric" min="1" max="15" value="6"></div>
           <div><label for="amFlat">Rangs droits</label><input id="amFlat" type="number" inputmode="numeric" min="0" value="6"></div>
-          <div style="display:flex;align-items:flex-end"><button class="btn sm" id="amCopy" style="width:100%;padding:12px">Ajouter aux notes</button></div>
+          <div style="display:flex;align-items:flex-end"><button class="btn mustard sm" id="amCopy" style="width:100%;padding:12px">Ajouter aux notes</button></div>
         </div>
         <div class="result pattern" id="amRes"></div>
       </div>
 
-      <div class="glass pad calc">
+      <div class="block calc">
         <h3>Échantillon</h3>
         <p class="d">Combien de mailles et de rangs pour la taille voulue.</p>
         <div class="grid2">
@@ -367,7 +370,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
         <div class="result" id="gRes"></div>
       </div>
 
-      <div class="glass pad calc">
+      <div class="block calc">
         <h3>Pelotes</h3>
         <p class="d">Combien de pelotes acheter pour ton projet.</p>
         <div class="grid2">
@@ -377,7 +380,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
         <div class="result" id="yRes"></div>
       </div>
 
-      <div class="glass pad calc">
+      <div class="block calc">
         <h3>Quel crochet pour quelle laine ?</h3>
         <p class="d">Repères standards : vérifie toujours l'étiquette de ta pelote.</p>
         <div class="tablewrap">
@@ -398,20 +401,20 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
     </div>
   </section>
 
-  <footer>Retrouve toutes les créations sur <a href="https://linktr.ee/nymelia_crochet" target="_blank" rel="noopener">linktr.ee/nymelia_crochet</a></footer>
+  <footer>Toutes les créations : <a href="https://linktr.ee/nymelia_crochet" target="_blank" rel="noopener">linktr.ee/nymelia_crochet</a></footer>
 </div>
 
 <nav class="tabs" aria-label="Navigation">
-  <button data-tab="projets" class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M5 10c4-2 10-2 14 0M5 14c4 2 10 2 14 0M10 4.5c-2 5-2 10 0 15"/></svg>Projets</button>
-  <button data-tab="compteur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Compteur</button>
-  <button data-tab="points"><svg viewBox="0 0 24 24"><path d="M4 20L18 6"/><path d="M18 6c2-2 3 1 1 2"/><path d="M7 7l3 3M11 4l2 2M4 11l2 2"/></svg>Points</button>
-  <button data-tab="calculs"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M8 7h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Calculs</button>
+  <button data-tab="projets" class="on" aria-label="Projets"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="8.5" y="8.5" width="7" height="7" rx="1.5"/></svg><span>Projets</span></button>
+  <button data-tab="compteur" aria-label="Compteur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span>Compteur</span></button>
+  <button data-tab="points" aria-label="Points"><svg viewBox="0 0 24 24"><path d="M5 5l6 6M11 5l-6 6M14 14l6 6M20 14l-6 6M17 3v8M13 7h8"/></svg><span>Points</span></button>
+  <button data-tab="calculs" aria-label="Calculs"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/><path d="M17 14v6M14 17h6"/></svg><span>Calculs</span></button>
 </nav>
 
 <div class="modal" id="modal" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <div class="grab"></div>
-    <h2 style="font-size:1.4rem;font-weight:800" id="mTitle">Nouveau projet</h2>
+    <h2 style="font-size:1.45rem;font-weight:800" id="mTitle">Nouveau projet</h2>
     <div class="stack" style="margin-top:16px">
       <div><label for="pName">Nom</label><input id="pName" placeholder="Petit lapin, sac tote, bonnet…"></div>
       <div class="grid2">
@@ -421,8 +424,8 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
       <div><label for="pYarn">Laine</label><input id="pYarn" placeholder="Coton, acrylique, couleur…"></div>
       <div><label>Icône</label><div class="emojis" id="pEmoji"></div></div>
       <div><label>Couleur</label><div class="colors" id="pColor"></div></div>
-      <div class="row"><button class="btn berry" id="pSave" style="flex:1">Enregistrer</button><button class="btn line" id="pCancel">Annuler</button></div>
-      <div class="row" id="pExtra"><button class="btn soft sm" id="pDone">Marquer terminé</button><button class="btn danger sm" id="pDel">Supprimer</button></div>
+      <div class="row"><button class="btn coral" id="pSave" style="flex:1">Enregistrer</button><button class="btn line" id="pCancel">Annuler</button></div>
+      <div class="row" id="pExtra"><button class="btn mustard sm" id="pDone">Marquer terminé</button><button class="btn danger sm" id="pDel">Supprimer</button></div>
     </div>
   </div>
 </div>
@@ -431,7 +434,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
   <div class="sheet" role="alertdialog" aria-modal="true" aria-labelledby="askT">
     <div class="grab"></div>
     <h2 style="font-size:1.25rem;font-weight:800" id="askT"></h2>
-    <div class="row" style="margin-top:18px"><button class="btn berry" id="askYes" style="flex:1">Confirmer</button><button class="btn line" id="askNo">Annuler</button></div>
+    <div class="row" style="margin-top:18px"><button class="btn coral" id="askYes" style="flex:1">Confirmer</button><button class="btn line" id="askNo">Annuler</button></div>
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
@@ -440,7 +443,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
 (() => {
   const $ = s => document.querySelector(s);
   const KEY = 'nymeliaa-crochet-v1';
-  const COLORS = ['#ffc2d4','#ff8fb1','#ffd59e','#b8f2d0','#9fe3c5','#c9d8ff','#d6c6ff','#ffcfb5','#ece4da'];
+  const COLORS = ['#ff6f91','#ffc145','#3d5afe','#5cc99b','#b9a7ff','#ff9d6f','#8fd3ff','#f7b6d2','#e8dccb'];
   const EMOJIS = ['🧶','🐰','🐻','🌸','👜','🧣','🧢','🍓','🐙','🌼','💖','🐱'];
 
   let store = null;
@@ -465,7 +468,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
   const applyTheme = () => {
     if (store.theme) document.documentElement.dataset.theme = store.theme; else delete document.documentElement.dataset.theme;
     $('#themeIco').innerHTML = isDark() ? SUN : MOON;
-    document.querySelector('meta[name=theme-color]').content = isDark() ? '#120d1d' : '#f7f3fb';
+    document.querySelector('meta[name=theme-color]').content = isDark() ? '#141729' : '#e8f1ec';
   };
   $('#themeBtn').onclick = () => { store.theme = isDark() ? 'light' : 'dark'; save(); applyTheme(); };
   applyTheme();
@@ -479,7 +482,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
   const showTab = name => {
     document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
     document.querySelectorAll('section').forEach(s => s.classList.toggle('on', s.id === 'tab-' + name));
-    if (name === 'compteur') renderCounter();
+    if (name === 'compteur') renderCounter(true);
     setWake(name === 'compteur');
     window.scrollTo(0, 0);
   };
@@ -489,6 +492,11 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
   const fmtTime = s => { if (!s) return ''; const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return h ? `${h} h ${String(m).padStart(2, '0')}` : `${m} min`; };
   const cur = () => store.projects.find(p => p.id === store.current);
   const PENCIL = '<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>';
+  const chain = p => {
+    if (!p.goal && !p.done) return '';
+    const n = 14, on = p.done ? n : Math.round(Math.min(1, p.row / p.goal) * n);
+    return `<div class="chainbar" aria-hidden="true">${Array.from({length: n}, (_, i) => `<i class="${i < on ? 'on' : ''}"></i>`).join('')}</div>`;
+  };
   const renderProjects = () => {
     const ps = store.projects;
     $('#stA').textContent = ps.filter(p => !p.done).length;
@@ -496,24 +504,23 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
     $('#stC').textContent = ps.reduce((a, p) => a + (p.row || 0), 0);
     const el = $('#projList');
     if (!ps.length) {
-      el.innerHTML = `<div class="glass empty">
-        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="52" r="34" fill="var(--berry-soft)"/><g stroke="var(--berry)" stroke-width="3" fill="none" stroke-linecap="round"><path d="M20 46c18-10 42-10 60 0M20 60c18 10 42 10 60 0M40 20c-8 20-8 44 2 66M58 19c10 20 10 46-4 68"/></g></svg>
+      el.innerHTML = `<div class="block empty">
+        <div class="granny" aria-hidden="true"></div>
         <h3>Ton premier projet t'attend</h3>
         <p class="muted" style="margin:6px auto 16px;max-width:30ch">Crée un projet pour suivre tes rangs, ton temps et tes notes.</p>
-        <button class="btn berry" id="emptyNew">Créer un projet</button></div>`;
+        <button class="btn coral" id="emptyNew">Créer un projet</button></div>`;
       $('#emptyNew').onclick = () => openModal(null);
       return;
     }
     el.innerHTML = ps.map(p => {
-      const pct = p.done ? 100 : p.goal ? Math.min(100, Math.round(p.row / p.goal * 100)) : 0;
       const meta = [p.hook ? String(p.hook).replace('.', ',') + ' mm' : '', esc(p.yarn), fmtTime(p.time)].filter(Boolean).join(' · ') || 'Touche pour compter';
-      return `<div class="glass proj" data-id="${p.id}" role="button" tabindex="0">
+      return `<div class="block tight proj" data-id="${p.id}" role="button" tabindex="0">
         <div class="swatch" style="background:${p.color}">${p.emoji}</div>
         <div class="info">
           <div class="row between" style="flex-wrap:nowrap;gap:8px"><h3>${esc(p.name)}</h3>
-          ${p.done ? '<span class="pill done">Terminé ✨</span>' : `<span class="pill">R${p.row}${p.goal ? ' / ' + p.goal : ''}</span>`}</div>
+          ${p.done ? '<span class="pill done">terminé</span>' : `<span class="pill">R${p.row}${p.goal ? '/' + p.goal : ''}</span>`}</div>
           <div class="meta">${meta}</div>
-          ${p.goal || p.done ? `<div class="bar"><i style="width:${pct}%"></i></div>` : ''}
+          ${chain(p)}
         </div>
         <button class="edit" data-edit="${p.id}" aria-label="Modifier ${esc(p.name)}">${PENCIL}</button>
       </div>`;
@@ -569,7 +576,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
     });
   };
 
-  // ---------- Counter ----------
+  // ---------- Counter: each row draws a round of stitches ----------
   const clock = s => [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, '0')).join(':');
   const renderSelect = () => {
     $('#curProj').innerHTML = store.projects.length
@@ -578,30 +585,53 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
   };
   const free = { row: 0, stitches: 0, time: 0, notes: '' };
   const target = () => cur() || free;
-  const C = 2 * Math.PI * 90;
-  const renderCounter = () => {
+  const ROUND_COLORS = ['var(--coral)','var(--mustard)','var(--cobalt)','var(--mint)','var(--lav)'];
+  const MAX_ROUNDS = 9, R0 = 58, STEP = 10;
+  let drawn = -1;
+  const drawRounds = (row, animateLast) => {
+    const shown = Math.min(row, MAX_ROUNDS), first = row - shown; // oldest visible row index
+    let out = `<circle r="${R0 - 7}" fill="none" stroke="var(--stitch)" stroke-width="1.5" stroke-dasharray="3 5"/>`;
+    for (let k = 1; k <= MAX_ROUNDS; k++) {
+      const r = R0 + (k - 0.5) * STEP;
+      if (k > shown) { out += `<circle r="${r}" fill="none" stroke="var(--stitch)" stroke-width="1" stroke-dasharray="1.5 6"/>`; continue; }
+      const rowIdx = first + k; // actual row number this round represents
+      const col = ROUND_COLORS[(rowIdx - 1) % ROUND_COLORS.length];
+      const n = Math.max(6, Math.round(2 * Math.PI * r / 9));
+      const anim = animateLast && k === shown;
+      let g = `<g stroke="${col}" stroke-width="2.4" stroke-linecap="round">`;
+      for (let i = 0; i < n; i++) {
+        const a = (i / n) * Math.PI * 2 + (k % 2 ? 0 : Math.PI / n);
+        const x = (r * Math.cos(a)).toFixed(1), y = (r * Math.sin(a)).toFixed(1), s = 2.8;
+        const d = `M${(x - s).toFixed(1)} ${(y - s).toFixed(1)}l${s * 2} ${s * 2}M${(+x + s).toFixed(1)} ${(y - s).toFixed(1)}l${-s * 2} ${s * 2}`;
+        g += `<path d="${d}"${anim ? ` class="stitchmark" style="transform-origin:${x}px ${y}px;animation-delay:${(i * 8)}ms"` : ''}/>`;
+      }
+      out += g + '</g>';
+    }
+    $('#rounds').innerHTML = out;
+  };
+  const renderCounter = full => {
     renderSelect();
     const p = target();
     $('#cRow').textContent = p.row;
-    $('#cGoal').textContent = p.goal ? `sur ${p.goal} rangs` : (p.row > 1 ? 'rangs' : 'rang');
-    const frac = p.goal ? Math.min(1, p.row / p.goal) : (p.row % 10) / 10;
-    $('#ring').style.strokeDashoffset = C * (1 - frac);
+    $('#cGoal').textContent = p.row === 0 ? 'touche +1' : (p.row > 1 ? 'rangs' : 'rang');
+    $('#cGoalTxt').textContent = p.goal ? `${p.row}/${p.goal} · ${Math.min(100, Math.round(p.row / p.goal * 100))}\u00a0%` : '';
+    if (full || p.row !== drawn) { drawRounds(p.row, !full && p.row > drawn); drawn = p.row; }
     $('#sNum').textContent = p.stitches || 0;
     if (document.activeElement !== $('#cNotes')) $('#cNotes').value = p.notes || '';
     $('#tView').textContent = clock(p.time || 0);
   };
-  $('#curProj').onchange = e => { stopTimer(); store.current = e.target.value || null; save(); renderCounter(); };
+  $('#curProj').onchange = e => { stopTimer(); store.current = e.target.value || null; save(); renderCounter(true); };
   const bump = d => {
     const p = target(); p.row = Math.max(0, p.row + d); if (d > 0) p.stitches = 0;
     if (p.goal && p.row === p.goal && d > 0) toast('Dernier rang atteint ! 🎉');
-    vibrate(d > 0 ? 25 : 10); save(); renderCounter(); renderProjects();
+    vibrate(d > 0 ? 25 : 10); save(); renderCounter(false); renderProjects();
     const n = $('#cRow'); n.classList.remove('pop'); void n.offsetWidth; n.classList.add('pop');
   };
   $('#cPlus').onclick = () => bump(1);
   $('#cMinus').onclick = () => bump(-1);
-  $('#cReset').onclick = () => ask('Remettre le compteur à 0 ?', () => { const p = target(); p.row = 0; p.stitches = 0; save(); renderCounter(); renderProjects(); });
-  $('#sPlus').onclick = () => { const p = target(); p.stitches = (p.stitches || 0) + 1; vibrate(10); save(); renderCounter(); };
-  $('#sMinus').onclick = () => { const p = target(); p.stitches = Math.max(0, (p.stitches || 0) - 1); save(); renderCounter(); };
+  $('#cReset').onclick = () => ask('Remettre le compteur à 0 ?', () => { const p = target(); p.row = 0; p.stitches = 0; save(); renderCounter(true); renderProjects(); });
+  $('#sPlus').onclick = () => { const p = target(); p.stitches = (p.stitches || 0) + 1; vibrate(10); save(); renderCounter(false); };
+  $('#sMinus').onclick = () => { const p = target(); p.stitches = Math.max(0, (p.stitches || 0) - 1); save(); renderCounter(false); };
   $('#cNotes').oninput = e => { target().notes = e.target.value; save(); };
 
   const PLAY = '<path d="M7 4l13 8-13 8z" fill="currentColor"/>', PAUSE = '<path d="M7 4h3v16H7zM14 4h3v16h-3z" fill="currentColor"/>';
@@ -637,7 +667,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
     bkl:'<path d="M7 25h18M9 25V9h14v16"/>',
     crab:'<path d="M25 16H7M12 10l-5 6 5 6"/>',
   };
-  const TINTS = ['var(--berry-soft)','var(--mint-soft)'];
+  const TINTS = ['var(--coral)','var(--mustard)','var(--mint)','var(--lav)'];
   const STITCHES = [
     { s:'ml', n:'Maille en l\'air', ab:'ml · ch', lvl:'Débutant', d:'Jeté, ramène le fil à travers la boucle. C\'est la base de la chaînette de départ et des arceaux.' },
     { s:'mc', n:'Maille coulée', ab:'mc · sl st', lvl:'Débutant', d:'Pique, jeté, ramène le fil à travers la maille et la boucle du crochet. Sert à fermer un rond ou à se déplacer.' },
@@ -659,10 +689,10 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
   const renderStitches = () => {
     const q = $('#stSearch').value.trim().toLowerCase();
     const list = STITCHES.filter(s => (!lvl || s.lvl === lvl) && (!q || (s.n + ' ' + s.ab + ' ' + s.d).toLowerCase().includes(q)));
-    $('#stList').innerHTML = list.length ? list.map((s, i) => `<div class="glass stitch">
-      <div class="sym" style="background:${TINTS[i % 2]}"><svg viewBox="0 0 32 32" style="color:var(--ink)">${SYM[s.s]}</svg></div>
-      <div><h3>${s.n}<span class="lvl ${s.lvl === 'Intermédiaire' ? 'mid' : ''}">${s.lvl}</span></h3><div class="abbr">${s.ab}</div><p>${s.d}</p></div>
-    </div>`).join('') : '<div class="glass pad muted" style="text-align:center">Aucun point ne correspond à ta recherche.</div>';
+    $('#stList').innerHTML = list.length ? list.map((s, i) => `<div class="block tight stitch">
+      <div class="sym" style="background:${TINTS[i % TINTS.length]};transform:rotate(${i % 2 ? 3 : -3}deg)"><svg viewBox="0 0 32 32">${SYM[s.s]}</svg></div>
+      <div><h3>${s.n}<span class="lvl">${s.lvl.toLowerCase()}</span></h3><div class="abbr">${s.ab}</div><p>${s.d}</p></div>
+    </div>`).join('') : '<div class="block muted" style="text-align:center">Aucun point ne correspond à ta recherche.</div>';
   };
   $('#stSearch').oninput = renderStitches;
   document.querySelectorAll('#lvlChips .chip').forEach(c => c.onclick = () => {
@@ -714,7 +744,7 @@ footer a{color:var(--berry);font-weight:700;text-decoration:none}
     const need = n('#yNeed'), ball = n('#yBall');
     if (!need || !ball) { $('#yRes').textContent = 'Remplis les 2 cases.'; return; }
     const b = Math.ceil(need / ball), safe = Math.ceil(need * 1.1 / ball);
-    $('#yRes').innerHTML = `<b>${b}</b> pelote${b > 1 ? 's' : ''}<br><span class="muted" style="font-weight:500">Prends-en ${safe} pour garder 10 % de marge, dans le même bain de couleur.</span>`;
+    $('#yRes').innerHTML = `<b>${b}</b> pelote${b > 1 ? 's' : ''}<br>prends-en ${safe} pour garder 10 % de marge, dans le même bain`;
   };
   ['#incFrom','#incTo'].forEach(i => $(i).oninput = calcInc);
   ['#amStart','#amMax','#amFlat'].forEach(i => $(i).oninput = calcAm);
