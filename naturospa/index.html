@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NaturoSpa & PopArtSpa – Spa privatif à Calais</title>
+<meta name="description" content="NaturoSpa & PopArtSpa : spas privatifs pour deux à Calais. Jacuzzi, sauna infrarouge, chambre néon, ambiance pop art. Black November : déco romantique et petit-déjeuner offerts.">
+<meta property="og:title" content="NaturoSpa & PopArtSpa – Black November">
+<meta property="og:description" content="Une parenthèse à deux à Calais : jacuzzi, sauna, chambre néon. Déco romantique + petit-déj offerts !">
+<meta property="og:image" content="img/jacuzzi.jpg">
+<meta name="theme-color" content="#0b0710">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0710; --bg2:#140c1c; --card:#1b1124;
+  --pink:#ff2fa8; --pink2:#ff6ad5; --red:#e8172c; --yellow:#ffe14a; --cyan:#29e0ff; --wood:#d9a35c;
+  --txt:#f7eef8; --mute:#b9a6c2;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:Outfit,system-ui,sans-serif;line-height:1.55;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{width:min(1150px,100% - 32px);margin-inline:auto}
+.comic{font-family:Bangers,Impact,sans-serif;letter-spacing:.04em;font-weight:400}
+.halftone{background-image:radial-gradient(rgba(255,47,168,.22) 1.4px,transparent 1.6px);background-size:14px 14px}
+
+/* promo ribbon */
+.ribbon{background:#000;border-bottom:2px solid var(--pink);overflow:hidden;white-space:nowrap;font-size:.95rem}
+.ribbon .track{display:inline-flex;gap:48px;padding:9px 0;animation:marq 28s linear infinite}
+.ribbon span{display:inline-flex;gap:10px;align-items:center}
+.ribbon b{color:var(--pink2)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* nav */
+header{position:sticky;top:0;z-index:50;background:rgba(11,7,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,47,168,.18)}
+nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-family:Bangers;font-size:1.65rem;letter-spacing:.05em;text-decoration:none}
+.logo .n{color:var(--wood)} .logo .p{color:var(--pink);text-shadow:0 0 12px var(--pink)}
+.menu{display:flex;gap:26px;list-style:none}
+.menu a{text-decoration:none;font-weight:600;font-size:.95rem;opacity:.85}
+.menu a:hover{opacity:1;color:var(--pink2)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:800;text-decoration:none;border:0;cursor:pointer;font-size:1rem;transition:transform .2s, box-shadow .2s}
+.btn-pink{background:var(--pink);color:#fff;box-shadow:0 0 22px rgba(255,47,168,.55)}
+.btn-pink:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(255,47,168,.85)}
+.btn-ghost{border:2px solid var(--txt);color:var(--txt);background:transparent}
+.btn-ghost:hover{background:var(--txt);color:var(--bg)}
+.burger{display:none;background:none;border:0;color:var(--txt);font-size:1.8rem;cursor:pointer}
+nav .btn{padding:10px 18px;font-size:.9rem}
+
+/* hero */
+.hero{position:relative;min-height:calc(100svh - 106px);display:grid;align-items:center;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:url(img/salle-x.jpg) center/cover}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(11,7,16,.95) 0%,rgba(11,7,16,.75) 45%,rgba(11,7,16,.35) 100%),linear-gradient(0deg,var(--bg) 0%,transparent 30%)}
+.hero-inner{padding:70px 0 90px;max-width:680px}
+.badge{display:inline-block;background:#000;color:#fff;border:2px solid var(--pink);padding:7px 16px;border-radius:999px;font-weight:800;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 0 18px rgba(255,47,168,.5)}
+.hero h1{font-family:Bangers;font-weight:400;font-size:clamp(3rem,9vw,6.4rem);line-height:.92;margin:22px 0 18px;letter-spacing:.03em}
+.hero h1 .n{color:var(--wood);display:block}
+.hero h1 .amp{color:var(--yellow);font-size:.6em}
+.hero h1 .p{color:#fff;display:block;text-shadow:0 0 6px #fff,0 0 18px var(--pink),0 0 40px var(--pink),0 0 70px var(--pink)}
+.hero p.lead{font-size:clamp(1.05rem,2.3vw,1.3rem);color:#eadcef;max-width:540px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:22px;margin-top:34px;color:var(--mute);font-size:.95rem}
+.hero .meta b{color:var(--txt);font-size:1.25rem;display:block}
+.boom{position:absolute;right:6%;top:14%;width:190px;aspect-ratio:1;display:grid;place-items:center;text-align:center;color:#111;font-family:Bangers;font-size:1.6rem;line-height:1;background:var(--yellow);clip-path:polygon(50% 0,61% 18%,82% 7%,79% 30%,100% 32%,85% 50%,100% 68%,79% 70%,82% 93%,61% 82%,50% 100%,39% 82%,18% 93%,21% 70%,0 68%,15% 50%,0 32%,21% 30%,18% 7%,39% 18%);transform:rotate(10deg);animation:pop 2.6s ease-in-out infinite}
+.boom span{display:block;font-size:2.6rem;color:var(--red)}
+@keyframes pop{50%{transform:rotate(4deg) scale(1.08)}}
+
+section{padding:90px 0}
+.kicker{color:var(--pink2);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.8rem}
+h2{font-family:Bangers;font-weight:400;font-size:clamp(2.3rem,6vw,3.8rem);line-height:1;letter-spacing:.03em;margin:8px 0 18px}
+h2 em{font-style:normal;color:var(--pink);text-shadow:0 0 18px rgba(255,47,168,.6)}
+.sub{color:var(--mute);max-width:620px;font-size:1.08rem}
+
+/* black november */
+.bn{background:#000;position:relative;overflow:hidden;border-block:2px solid var(--pink)}
+.bn::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,47,168,.16) 1.4px,transparent 1.6px);background-size:16px 16px;mask:linear-gradient(90deg,transparent,#000 70%)}
+.bn-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px;position:relative;z-index:1}
+.countdown{display:flex;gap:10px}
+.countdown div{background:var(--card);border:1px solid rgba(255,47,168,.4);border-radius:12px;padding:10px 14px;text-align:center;min-width:68px}
+.countdown b{font-family:Bangers;font-size:2rem;display:block;line-height:1;color:var(--pink2)}
+.countdown small{color:var(--mute);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
+.offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;margin-top:44px;position:relative;z-index:1}
+.offer{background:linear-gradient(160deg,#22122e,#120a18);border:2px solid var(--pink);border-radius:var(--r);padding:30px;position:relative;box-shadow:8px 8px 0 var(--pink)}
+.offer:nth-child(2){border-color:var(--yellow);box-shadow:8px 8px 0 var(--yellow)}
+.offer .ico{font-size:2.4rem}
+.offer h3{font-family:Bangers;font-weight:400;font-size:2rem;letter-spacing:.03em;margin:10px 0 6px}
+.offer p{color:#e5d6ea}
+.offer .tag{position:absolute;top:-16px;right:20px;background:var(--red);color:#fff;font-family:Bangers;font-size:1.4rem;padding:4px 14px;border-radius:8px;transform:rotate(4deg)}
+.offer:nth-child(2) .tag{background:var(--yellow);color:#111}
+
+/* dispo */
+.cal{margin-top:40px;background:var(--card);border-radius:var(--r);padding:26px;border:1px solid rgba(255,255,255,.07)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+.cal-head h3{font-family:Bangers;font-weight:400;font-size:1.9rem;letter-spacing:.04em}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem;color:var(--mute)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+.grid7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.dow{text-align:center;font-size:.75rem;color:var(--mute);text-transform:uppercase;letter-spacing:.1em;padding-bottom:4px}
+.day{height:84px;border-radius:12px;background:#24182e;display:flex;flex-direction:column;justify-content:space-between;padding:8px;font-weight:800;font-size:1.05rem;position:relative;min-height:54px}
+.day small{font-weight:600;font-size:.62rem;line-height:1.15;color:var(--mute);overflow-wrap:anywhere}
+.day.past{opacity:.28}
+.day.both{background:linear-gradient(135deg,var(--pink),#a0127a);box-shadow:0 0 14px rgba(255,47,168,.45)}
+.day.both small{color:#ffe3f4}
+.day.naturo{background:linear-gradient(135deg,var(--wood),#8f5a22)}
+.day.naturo small{color:#fff3e0}
+.day.full{background:#3a0d14;color:#ff7d8a;text-decoration:line-through}
+.day.full small{color:#ff7d8a;text-decoration:none}
+.day.ask small{color:#8f7d99}
+.empty{visibility:hidden}
+.cal-note{margin-top:18px;color:var(--mute);font-size:.95rem}
+.cal-note a{color:var(--pink2);font-weight:800}
+
+/* spas */
+.spas{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;margin-top:44px}
+.spa{border-radius:var(--r);overflow:hidden;background:var(--card);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column}
+.spa .ph{aspect-ratio:4/3;overflow:hidden;position:relative}
+.spa .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.spa:hover .ph img{transform:scale(1.06)}
+.spa .ph .label{position:absolute;left:16px;bottom:16px;font-family:Bangers;font-size:2.4rem;letter-spacing:.04em;text-shadow:3px 3px 0 #000}
+.spa.n .label{color:var(--wood)} .spa.p .label{color:#fff;text-shadow:0 0 10px var(--pink),3px 3px 0 #000}
+.spa .body{padding:24px 26px 28px;flex:1;display:flex;flex-direction:column}
+.spa ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+.spa li{font-size:.85rem;background:#2a1b35;border:1px solid rgba(255,255,255,.08);padding:6px 12px;border-radius:999px}
+.spa .price{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.spa .price b{font-family:Bangers;font-size:2rem;color:var(--yellow);font-weight:400}
+.spa .price span{color:var(--mute);font-size:.85rem}
+
+/* features */
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:40px}
+.feat{background:var(--bg2);border-radius:var(--r);padding:24px;border:1px solid rgba(255,47,168,.15);transition:border-color .3s,transform .3s}
+.feat:hover{border-color:var(--pink);transform:translateY(-4px)}
+.feat .e{font-size:2rem}
+.feat h4{font-size:1.15rem;margin:8px 0 4px}
+.feat p{color:var(--mute);font-size:.95rem}
+
+/* gallery */
+.gal{columns:3 260px;column-gap:14px;margin-top:40px}
+.gal button{display:block;width:100%;margin-bottom:14px;border:0;padding:0;background:none;cursor:zoom-in;border-radius:14px;overflow:hidden;position:relative;break-inside:avoid}
+.gal img{width:100%;transition:transform .5s, filter .5s}
+.gal button:hover img{transform:scale(1.05);filter:saturate(1.25)}
+.gal button::after{content:attr(data-cap);position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.7);padding:4px 10px;border-radius:999px;font-size:.8rem;font-family:Outfit;color:#fff;opacity:0;transition:opacity .3s}
+.gal button:hover::after{opacity:1}
+.lb{position:fixed;inset:0;background:rgba(5,2,8,.94);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.lb.on{display:flex}
+.lb img{max-height:88vh;max-width:min(1100px,100%);border-radius:12px;box-shadow:0 0 60px rgba(255,47,168,.35)}
+.lb button{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;font-size:1.8rem;width:52px;height:52px;border-radius:50%;cursor:pointer}
+.lb .x{top:16px;right:16px}.lb .pv{left:12px}.lb .nx{right:12px}
+.lb button:hover{background:var(--pink)}
+
+/* reserve */
+.reserve{position:relative;overflow:hidden;text-align:center;background:linear-gradient(135deg,#2a0a24,#0b0710 60%)}
+.reserve .wrap{position:relative;z-index:1}
+.reserve h2{font-size:clamp(2.6rem,7vw,4.6rem)}
+.reserve .sub{margin-inline:auto}
+.contact{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:34px}
+.sign{margin-top:40px;font-family:Bangers;font-size:2rem;letter-spacing:.05em;color:var(--pink2)}
+.sign span{color:var(--red)}
+
+footer{padding:34px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--mute);font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+.tags{color:var(--pink2)}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .menu{position:fixed;top:66px;left:0;right:0;flex-direction:column;gap:0;background:#0b0710;border-bottom:2px solid var(--pink);transform:translateY(-140%);transition:transform .35s;padding:8px 16px 18px}
+  .menu.open{transform:none}
+  .menu a{display:block;padding:12px 0;font-size:1.1rem}
+  .burger{display:block}
+  nav .btn{display:none}
+  .boom{width:120px;font-size:1.05rem;right:4%;top:4%}
+  .boom span{font-size:1.6rem}
+  section{padding:70px 0}
+  .day{height:auto;aspect-ratio:1/1;padding:5px;font-size:.9rem;border-radius:9px;min-height:44px}
+  .day small{font-size:.5rem}
+  .cal{padding:16px}
+  .grid7{gap:5px}
+  .countdown div{min-width:58px;padding:8px 10px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="ribbon" aria-label="Promotion Black November">
+  <div class="track">
+    <span>🖤 <b>BLACK NOVEMBER</b> – Cartes cadeaux -10 € + déco romantique offerte</span>
+    <span>🥐 <b>10 prochaines réservations</b> : déco romantique + petit-déjeuner OFFERTS</span>
+    <span>💋 Spa privatif à <b>Calais</b> – nuits à partir de 150 €</span>
+    <span>🖤 <b>BLACK NOVEMBER</b> – Cartes cadeaux -10 € + déco romantique offerte</span>
+    <span>🥐 <b>10 prochaines réservations</b> : déco romantique + petit-déjeuner OFFERTS</span>
+    <span>💋 Spa privatif à <b>Calais</b> – nuits à partir de 150 €</span>
+  </div>
+</div>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo"><span class="n">Naturo</span>Spa <span style="color:var(--yellow)">&amp;</span> <span class="p">PopArt</span>Spa</a>
+    <ul class="menu" id="menu">
+      <li><a href="#promo">Black November</a></li>
+      <li><a href="#dispo">Disponibilités</a></li>
+      <li><a href="#spas">Nos spas</a></li>
+      <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#reserver">Réserver</a></li>
+    </ul>
+    <a href="#reserver" class="btn btn-pink">Réserver 💋</a>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0">
+    <div class="hero-bg" role="img" aria-label="Ambiance néon rose"></div>
+    <div class="boom" aria-hidden="true"><div>BLACK<span>NOV!</span>OFFERT</div></div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="badge">🖤 Black November · Calais</span>
+        <h1><span class="n">NaturoSpa</span><span class="amp">&amp;</span><span class="p">PopArtSpa</span></h1>
+        <p class="lead">Offrez-vous une parenthèse à deux… ou une soirée pour pimenter votre quotidien. Jacuzzi, sauna, chambre néon et ambiance pop art, rien que pour vous.</p>
+        <div class="cta">
+          <a href="#reserver" class="btn btn-pink">Je réserve ma nuit</a>
+          <a href="#dispo" class="btn btn-ghost">Voir les dispos</a>
+        </div>
+        <div class="meta">
+          <div><b>dès 150 €</b>la nuit (hors promo)</div>
+          <div><b>100 % privatif</b>pour deux</div>
+          <div><b>🥐 offert</b>petit-déj (promo)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bn" id="promo">
+    <div class="wrap">
+      <div class="bn-head reveal">
+        <div>
+          <div class="kicker">Offres limitées</div>
+          <h2>🖤 Black <em>November</em></h2>
+          <p class="sub">Tout le mois de novembre, on vous gâte. Premiers arrivés, premiers servis !</p>
+        </div>
+        <div>
+          <div class="kicker" style="margin-bottom:8px">Fin de l'offre dans</div>
+          <div class="countdown" id="cd">
+            <div><b id="cd-d">--</b><small>jours</small></div>
+            <div><b id="cd-h">--</b><small>heures</small></div>
+            <div><b id="cd-m">--</b><small>min</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="offers">
+        <article class="offer reveal">
+          <span class="tag">-10 €</span>
+          <div class="ico">🎁</div>
+          <h3>Cartes cadeaux</h3>
+          <p><strong>-10 €</strong> sur toutes les cartes cadeaux <strong>+ déco romantique OFFERTE</strong>. L'idée cadeau parfaite pour Noël, un anniversaire ou juste pour dire je t'aime.</p>
+        </article>
+        <article class="offer reveal">
+          <span class="tag">OFFERT</span>
+          <div class="ico">🥐</div>
+          <h3>10 prochaines réservations</h3>
+          <p>Pour les <strong>10 prochaines réservations</strong> : <strong>déco romantique + petit-déjeuner OFFERTS</strong>. Il n'y en aura pas pour tout le monde, faites vite !</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="dispo">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">Calendrier</div>
+        <h2>📅 Les <em>disponibilités</em></h2>
+        <p class="sub">Les prochaines dates en un coup d'œil. Pour toutes les autres dates, demandez-nous en message privé.</p>
+      </div>
+      <div class="cal reveal">
+        <div class="cal-head">
+          <h3>Novembre 2026</h3>
+          <div class="legend">
+            <span><i style="background:var(--pink)"></i>Les 2 spas dispo</span>
+            <span><i style="background:var(--wood)"></i>NaturoSpa uniquement</span>
+            <span><i style="background:#3a0d14;border:1px solid #ff7d8a"></i>Complet</span>
+            <span><i style="background:#24182e"></i>Nous demander</span>
+          </div>
+        </div>
+        <div class="grid7" id="cal"></div>
+        <p class="cal-note">Une autre date en tête ? <a href="#reserver">Demandez-moi les autres disponibilités →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="spas" class="halftone" style="background-color:var(--bg2)">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">Deux univers</div>
+        <h2>Choisissez votre <em>ambiance</em></h2>
+        <p class="sub">Deux spas privatifs, deux atmosphères. Bois chaleureux et douceur naturelle, ou explosion de couleurs et néons pop art.</p>
+      </div>
+      <div class="spas">
+        <article class="spa n reveal">
+          <div class="ph"><img src="img/sauna.jpg" alt="Sauna infrarouge et pouf géant" ><span class="label">NaturoSpa</span></div>
+          <div class="body">
+            <p>Bois brut, portes de grange, lumières chaudes : un cocon nature pour lâcher prise et se retrouver à deux.</p>
+            <ul><li>🛁 Jacuzzi</li><li>🔥 Sauna infrarouge</li><li>🛏️ Chambre cosy</li><li>🌿 Ambiance bois</li></ul>
+            <div class="price"><div><span>à partir de</span><br><b>150 € / nuit</b></div><a href="#reserver" class="btn btn-pink">Réserver</a></div>
+          </div>
+        </article>
+        <article class="spa p reveal">
+          <div class="ph"><img src="img/chambre-neon.jpg" alt="Chambre éclairée au néon rose" ><span class="label">PopArtSpa</span></div>
+          <div class="body">
+            <p>Canapé lèvres rouges, tableaux pop art, néons roses : un univers audacieux pour pimenter vos soirées.</p>
+            <ul><li>🛁 Jacuzzi</li><li>💡 Chambre LED</li><li>💋 Déco pop art</li><li>🌶️ Espace coquin</li></ul>
+            <div class="price"><div><span>à partir de</span><br><b>150 € / nuit</b></div><a href="#reserver" class="btn btn-pink">Réserver</a></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="feats">
+        <div class="feat reveal"><div class="e">🫧</div><h4>Jacuzzi privatif</h4><p>Bulles, jets massants et lumières bleues, rien que pour vous deux.</p></div>
+        <div class="feat reveal"><div class="e">🔥</div><h4>Sauna infrarouge</h4><p>Une chaleur douce pour se détendre en profondeur.</p></div>
+        <div class="feat reveal"><div class="e">💗</div><h4>Chambre néon</h4><p>Grand lit, éclairage LED d'ambiance et literie douillette.</p></div>
+        <div class="feat reveal"><div class="e">🌶️</div><h4>Espace coquin</h4><p>Pour celles et ceux qui veulent pimenter leur quotidien.</p></div>
+        <div class="feat reveal"><div class="e">🍳</div><h4>Cuisine équipée</h4><p>Coin repas, mange-debout et tout le nécessaire sur place.</p></div>
+        <div class="feat reveal"><div class="e">🌴</div><h4>Terrasse lounge</h4><p>Salon en palettes, coussins roses et barbecue.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="galerie">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">En images</div>
+        <h2>BOOM ! <em>La galerie</em></h2>
+        <p class="sub">Cliquez sur une photo pour l'agrandir.</p>
+      </div>
+      <div class="gal" id="gal">
+        <button data-cap="Jacuzzi"><img src="img/jacuzzi.jpg" alt="Jacuzzi illuminé en bleu" ></button>
+        <button data-cap="Salon & canapé lèvres"><img src="img/salon-levres.jpg" alt="Salon avec canapé lèvres rouge" ></button>
+        <button data-cap="Sauna infrarouge"><img src="img/sauna.jpg" alt="Sauna infrarouge" ></button>
+        <button data-cap="Chambre néon"><img src="img/chambre-neon.jpg" alt="Chambre néon rose" ></button>
+        <button data-cap="Espace coquin"><img src="img/salle-x.jpg" alt="Espace coquin aux néons roses" ></button>
+        <button data-cap="Chambre"><img src="img/chambre.jpg" alt="Chambre en journée" ></button>
+        <button data-cap="Couloir"><img src="img/couloir.jpg" alt="Couloir et rideau jean" ></button>
+        <button data-cap="Coin bar"><img src="img/bar.jpg" alt="Mange-debout et tableau pop art" ></button>
+        <button data-cap="Cuisine"><img src="img/cuisine.jpg" alt="Cuisine vue par la verrière" ></button>
+        <button data-cap="Terrasse lounge"><img src="img/terrasse.jpg" alt="Terrasse avec salon de palettes roses" ></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="reserve halftone" id="reserver">
+    <div class="wrap reveal">
+      <div class="kicker">Réservations</div>
+      <h2>❤️ Prêts pour une <em>parenthèse à deux</em> ?</h2>
+      <p class="sub">Les réservations se font en message privé. Dites-nous la date souhaitée et le spa qui vous fait envie, on vous répond rapidement !</p>
+      <div class="contact">
+        <!-- ⚠️ Remplacez les liens ci-dessous par vos vraies pages / numéro -->
+        <a class="btn btn-pink" href="https://www.facebook.com/" target="_blank" rel="noopener">💬 Message Facebook</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/" target="_blank" rel="noopener">📸 Instagram</a>
+        <a class="btn btn-ghost" href="tel:+33600000000">📞 Appeler</a>
+      </div>
+      <div class="sign">Élodie <span>&amp;</span> Sébastien</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>© <span id="y">2026</span> NaturoSpa &amp; PopArtSpa · Spa privatif à Calais · Réservé aux adultes (18+)</div>
+    <div class="tags">#BlackNovember #SpaPrivatif #Calais #NuitRomantique</div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo agrandie">
+  <button class="x" aria-label="Fermer">×</button>
+  <button class="pv" aria-label="Précédente">‹</button>
+  <img alt="">
+  <button class="nx" aria-label="Suivante">›</button>
+</div>
+
+<script>
+/* ===== Disponibilités : modifiez ici =====
+   "both" = les 2 spas dispo · "naturo" = NaturoSpa uniquement · "popart" = PopArtSpa uniquement · "full" = complet */
+const YEAR = 2026, MONTH = 11; // novembre
+const DISPO = { 2:"both", 3:"both", 4:"both", 5:"both", 6:"full", 7:"naturo" };
+const LABEL = { both:"Naturo + PopArt", naturo:"NaturoSpa", popart:"PopArtSpa", full:"Complet", ask:"Nous demander" };
+
+(function cal(){
+  const el = document.getElementById('cal');
+  ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(d=>el.insertAdjacentHTML('beforeend',`<div class="dow">${d}</div>`));
+  const first = new Date(YEAR, MONTH-1, 1), days = new Date(YEAR, MONTH, 0).getDate();
+  const offset = (first.getDay()+6)%7;
+  for(let i=0;i<offset;i++) el.insertAdjacentHTML('beforeend','<div class="day empty"></div>');
+  const today = new Date(); today.setHours(0,0,0,0);
+  for(let d=1; d<=days; d++){
+    const date = new Date(YEAR, MONTH-1, d);
+    const s = DISPO[d] || 'ask';
+    const past = date < today ? ' past' : '';
+    el.insertAdjacentHTML('beforeend',`<div class="day ${s}${past}">${d}<small>${LABEL[s]}</small></div>`);
+  }
+})();
+
+/* compte à rebours jusqu'au 30 novembre minuit */
+(function(){
+  const end = new Date(YEAR, MONTH, 1, 0, 0, 0);
+  const pad = n => String(n).padStart(2,'0');
+  function tick(){
+    let s = Math.max(0, (end - new Date())/1000);
+    document.getElementById('cd-d').textContent = pad(Math.floor(s/86400));
+    document.getElementById('cd-h').textContent = pad(Math.floor(s%86400/3600));
+    document.getElementById('cd-m').textContent = pad(Math.floor(s%3600/60));
+  }
+  tick(); setInterval(tick, 30000);
+})();
+
+/* menu mobile */
+const menu = document.getElementById('menu');
+document.getElementById('burger').onclick = () => menu.classList.toggle('open');
+menu.querySelectorAll('a').forEach(a => a.onclick = () => menu.classList.remove('open'));
+
+/* lightbox */
+const items = [...document.querySelectorAll('#gal button')], lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
+let cur = 0;
+const show = i => { cur = (i+items.length)%items.length; const im = items[cur].querySelector('img'); lbImg.src = im.src; lbImg.alt = im.alt; lb.classList.add('on'); };
+items.forEach((b,i)=> b.onclick = () => show(i));
+lb.querySelector('.x').onclick = () => lb.classList.remove('on');
+lb.querySelector('.pv').onclick = e => { e.stopPropagation(); show(cur-1); };
+lb.querySelector('.nx').onclick = e => { e.stopPropagation(); show(cur+1); };
+lb.onclick = e => { if(e.target === lb) lb.classList.remove('on'); };
+document.addEventListener('keydown', e => {
+  if(!lb.classList.contains('on')) return;
+  if(e.key==='Escape') lb.classList.remove('on');
+  if(e.key==='ArrowLeft') show(cur-1);
+  if(e.key==='ArrowRight') show(cur+1);
+});
+
+/* apparition au scroll */
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
